@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Donish AI — AI-репетитор</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+/* ===== RESET & BASE ===== */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0d14;--surface:#13131a;--surface2:#1c1c28;
+  --border:#2a2a3a;--accent:#7c5cfc;--accent2:#e85d75;
+  --green:#22d3a5;--text:#f0f0f8;--muted:#6060a0;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;overflow:hidden}
+#app{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ===== HEADER ===== */
+.header{padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid var(--border)}
+.logo{font-size:18px;font-weight:900}.logo span{color:var(--accent)}
+.lang-sw{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:2px;gap:2px}
+.lbtn{padding:4px 12px;border-radius:100px;border:none;font-size:11px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);transition:all .2s}
+.lbtn.on{background:var(--accent);color:#fff}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{display:flex;background:var(--surface);border-top:1px solid var(--border);flex-shrink:0}
+.nav-btn{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border:none;background:transparent;color:var(--muted);font-size:10px;font-weight:600;transition:all .2s}
+.nav-btn.on{color:var(--accent)}
+.nav-btn .ico{font-size:20px;line-height:1}
+
+/* ===== SCREENS ===== */
+.screen{flex:1;overflow-y:auto;display:none;padding:14px 14px 0}
+.screen.active{display:flex;flex-direction:column}
+.screen::-webkit-scrollbar{width:0}
+
+/* ===== SUBJECTS GRID ===== */
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.scard{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:14px 12px;cursor:pointer;transition:all .2s;position:relative}
+.scard:active{transform:scale(0.97)}
+.scard.on{border-color:var(--accent);background:var(--surface2)}
+.scard .sico{font-size:26px;display:block;margin-bottom:8px}
+.scard .sname{font-size:13px;font-weight:700;margin-bottom:3px}
+.scard .shint{font-size:11px;color:var(--muted);line-height:1.3}
+
+/* ===== TOPICS ===== */
+.topics-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tpill{padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s}
+.tpill:active{transform:scale(0.96)}
+.tpill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ===== LESSON BOX ===== */
+.lesson-wrap{display:flex;flex-direction:column;flex:1;min-height:0}
+.steps-row{display:flex;border-bottom:1px solid var(--border);margin:0 -14px;flex-shrink:0}
+.step{flex:1;padding:10px 2px;text-align:center;font-size:9px;font-weight:700;color:#404080;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.step.on{color:var(--accent);border-bottom-color:var(--accent)}
+.step.done{color:var(--green)}
+
+/* ===== CHAT ===== */
+.chat-area{flex:1;overflow-y:auto;padding:14px 0;display:flex;flex-direction:column;gap:10px;min-height:0}
+.chat-area::-webkit-scrollbar{width:0}
+.bubble{max-width:90%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.65;animation:up .25s ease;word-break:break-word}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.bubble.ai{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:3px;align-self:flex-start;max-width:96%}
+.bubble.me{background:var(--accent);color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
+.albl{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:4px;letter-spacing:.05em}
+.dots{display:flex;gap:4px;padding:2px 0}
+.dots span{width:6px;height:6px;background:#404080;border-radius:50%;animation:blink 1.2s infinite;display:inline-block}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* ===== INPUT ROW ===== */
+.input-row{display:flex;gap:8px;padding:10px 0 12px;align-items:center;flex-shrink:0}
+.txt-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:10px 13px;font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s}
+.txt-input:focus{border-color:var(--accent)}
+.txt-input::placeholder{color:#404080}
+.send-btn{background:var(--accent);border:none;border-radius:12px;width:42px;height:42px;cursor:pointer;font-size:16px;color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.send-btn:active{transform:scale(0.93)}
+.photo-btn-sm{background:var(--surface2);border:1px solid var(--border);border-radius:12px;width:42px;height:42px;cursor:pointer;font-size:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.photo-btn-sm:active{border-color:var(--green)}
+
+/* ===== PHOTO SCREEN ===== */
+.photo-drop{border:2px dashed var(--border);border-radius:16px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;margin-bottom:14px}
+.photo-drop:active{border-color:var(--accent);background:var(--surface2)}
+.photo-drop input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.drop-ico{font-size:42px;display:block;margin-bottom:12px}
+.drop-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.drop-sub{font-size:12px;color:var(--muted);line-height:1.5}
+.preview-img{width:100%;border-radius:12px;max-height:220px;object-fit:contain;background:var(--surface);display:block;margin-bottom:12px}
+.analyze-btn{width:100%;background:var(--accent);border:none;border-radius:13px;padding:13px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;margin-bottom:8px}
+.analyze-btn:active{transform:scale(0.97)}
+.analyze-btn:disabled{background:#3a3a5a;cursor:not-allowed}
+.clear-btn{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:10px;font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:16px}
+
+/* ===== PROGRESS SCREEN ===== */
+.progress-header{text-align:center;padding:16px 0 20px}
+.progress-header .big-ico{font-size:48px;display:block;margin-bottom:8px}
+.progress-header h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.progress-header p{font-size:13px;color:var(--muted)}
+.prog-subject{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.prog-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.prog-ico{font-size:22px}
+.prog-name{font-size:13px;font-weight:700}
+.prog-topics{font-size:11px;color:var(--muted)}
+.prog-bar-track{height:6px;background:var(--border);border-radius:100px;overflow:hidden}
+.prog-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .5s}
+.prog-pct{font-size:11px;color:var(--muted);text-align:right;margin-top:4px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.stat-num{font-size:22px;font-weight:700;margin-bottom:3px}
+.stat-lbl{font-size:11px;color:var(--muted)}
+
+/* ===== EMPTY ===== */
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.empty-state .eico{font-size:48px;display:block;margin-bottom:12px}
+.empty-state h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.empty-state p{font-size:13px;color:var(--muted);line-height:1.5}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">Donish <span>AI</span></div>
+    <div class="lang-sw">
+      <button class="lbtn on" id="btn-ru" onclick="setLang('ru')">РУС</button>
+      <button class="lbtn" id="btn-tg" onclick="setLang('tg')">ТЖК</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: LEARN -->
+  <div class="screen active" id="screen-learn">
+    <div class="sec-lbl" id="lbl-subjects">📚 Выбери предмет</div>
+    <div class="subjects-grid" id="sgrid"></div>
+    <div id="topics-section" style="display:none">
+      <div class="sec-lbl" id="lbl-topics">🎯 Выбери тему</div>
+      <div class="topics-wrap" id="trow"></div>
+    </div>
+    <div class="lesson-wrap" id="lesson-section" style="display:none">
+      <div class="steps-row">
+        <div class="step on" id="st1" onclick="goStep(1)">📚 ОБЪЯСНЕНИЕ</div>
+        <div class="step" id="st2" onclick="goStep(2)">🧪 ПРИМЕРЫ</div>
+        <div class="step" id="st3" onclick="goStep(3)">✍️ ПРАКТИКА</div>
+        <div class="step" id="st4" onclick="goStep(4)">🤖 ПРОВЕРКА</div>
+      </div>
+      <div class="chat-area" id="chat"></div>
+      <div class="input-row">
+        <div class="photo-btn-sm" onclick="switchNav('photo')">📷</div>
+        <input class="txt-input" type="text" id="inp" placeholder="Напиши вопрос или ответ..." onkeydown="if(event.key==='Enter')sendLesson()">
+        <button class="send-btn" onclick="sendLesson()">➤</button>
+      </div>
+    </div>
+    <div class="empty-state" id="empty-learn">
+      <span class="eico">🎓</span>
+      <h3 id="empty-title">Выбери предмет выше</h3>
+      <p id="empty-sub">Donish AI объяснит любую тему лучше учителя — на русском или таджикском</p>
+    </div>
+  </div>
+
+  <!-- SCREEN: PHOTO -->
+  <div class="screen" id="screen-photo">
+    <div class="sec-lbl" id="photo-lbl">📸 Фото → Решение</div>
+    <div id="photo-upload-area">
+      <div class="photo-drop" onclick="document.getElementById('file-in').click()">
+        <input type="file" id="file-in" accept="image/*" capture="environment" onchange="onFile(event)">
+        <span class="drop-ico">📷</span>
+        <div class="drop-title" id="drop-title">Сфотографируй задачу</div>
+        <div class="drop-sub" id="drop-sub">Нажми чтобы открыть камеру или загрузить фото.<br>Donish AI решит и объяснит шаг за шагом.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:14px">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px" id="how-title">💡 Как это работает:</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6" id="how-body">1. Сфотографируй задачу из учебника или тетради<br>2. Donish AI читает и понимает задачу<br>3. Получаешь решение шаг за шагом на своём языке</div>
+      </div>
+    </div>
+    <div id="photo-result-area" style="display:none">
+      <img class="preview-img" id="preview" src="" alt="Фото задачи">
+      <button class="analyze-btn" id="analyze-btn" onclick="analyzePhoto()">🤖 Решить и объяснить</button>
+      <button class="clear-btn" onclick="clearPhoto()" id="clear-btn">🗑 Загрузить другое фото</button>
+      <div class="chat-area" id="photo-chat" style="max-height:300px"></div>
+      <div class="input-row">
+        <input class="txt-input" type="text" id="photo-inp" placeholder="Вопрос по задаче..." onkeydown="if(event.key==='Enter')sendPhoto()">
+        <button class="send-btn" onclick="sendPhoto()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: PROGRESS -->
+  <div class="screen" id="screen-progress">
+    <div class="progress-header">
+      <span class="big-ico">🏆</span>
+      <h2 id="prog-title">Мой прогресс</h2>
+      <p id="prog-sub">Продолжай учиться каждый день!</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-topics">0</div>
+        <div class="stat-lbl" id="stat-lbl1">Тем пройдено</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-photos">0</div>
+        <div class="stat-lbl" id="stat-lbl2">Фото решено</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-streak">0🔥</div>
+        <div class="stat-lbl" id="stat-lbl3">Дней подряд</div>
+      </div>
+    </div>
+    <div class="sec-lbl" id="lbl-prog-subjects">Прогресс по предметам</div>
+    <div id="prog-list"></div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn on" id="nav-learn" onclick="switchNav('learn')">
+      <span class="ico">📚</span><span id="nav-lbl1">Учиться</span>
+    </button>
+    <button class="nav-btn" id="nav-photo" onclick="switchNav('photo')">
+      <span class="ico">📸</span><span id="nav-lbl2">Фото</span>
+    </button>
+    <button class="nav-btn" id="nav-progress" onclick="switchNav('progress')">
+      <span class="ico">🏆</span><span id="nav-lbl3">Прогресс</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const SUBJECTS={
+  ru:[
+    {id:'math',ico:'📐',name:'Математика',hint:'Алгебра, Геометрия',topics:['Линейные уравнения','Квадратные уравнения','Функции','Геометрия','Вероятность','Логарифмы']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'Механика, Оптика',topics:['Механика','Законы Ньютона','Термодинамика','Оптика','Электричество','Волны']},
+    {id:'eng',ico:'🌍',name:'Английский',hint:'Грамматика, Словарный',topics:['Present Tenses','Past Tenses','Future Tenses','Условные предложения','Пассивный залог','Фразовые глаголы']},
+    {id:'it',ico:'💻',name:'IT / Python',hint:'Python, SQL, Git, Docker',topics:['Python основы','Функции Python','SQL запросы','Git команды','Docker','Telegram бот']},
+    {id:'vibe',ico:'🎨',name:'Вайб кодинг',hint:'No-code, Промпты',topics:['Промпт инжиниринг','No-code инструменты','Figma основы','UI/UX дизайн','ChatGPT трюки','Автоматизация']},
+    {id:'ai',ico:'🤖',name:'ИИ и CV',hint:'ML, Нейросети, Зрение',topics:['Что такое ML','Нейронные сети','Компьютерное зрение','YOLO модели','OpenCV основы','Свой AI проект']},
+  ],
+  tg:[
+    {id:'math',ico:'📐',name:'Математика',hint:'Алгебра, Геометрия',topics:['Муодилаҳои хатӣ','Муодилаҳои квадратӣ','Функсияҳо','Геометрия','Эҳтимолият','Логарифмҳо']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'Механика, Оптика',topics:['Механика','Қонунҳои Нютон','Термодинамика','Оптика','Барқ','Мавҷҳо']},
+    {id:'eng',ico:'🌍',name:'Забони Англисӣ',hint:'Грамматика, Луғат',topics:['Present Tenses','Past Tenses','Future Tenses','Ҷумлаҳои шартӣ','Феъли маҷҳул','Феълҳои ибора']},
+    {id:'it',ico:'💻',name:'IT / Python',hint:'Python, SQL, Git, Docker',topics:['Асосҳои Python','Функсияҳо','Дархостҳои SQL','Фармонҳои Git','Docker','Боти Telegram']},
+    {id:'vibe',ico:'🎨',name:'Вайб кодинг',hint:'No-code, Промптҳо',topics:['Инжиниринги промпт','No-code асбобҳо','Figma','Тарҳи UI/UX','Трюкҳои ChatGPT','Автоматикунонӣ']},
+    {id:'ai',ico:'🤖',name:'ЗС ва CV',hint:'ML, Шабакаҳо, Биниш',topics:['ML чист','Шабакаҳои нейронӣ','Биниши компютерӣ','Моделҳои YOLO','OpenCV','Лоиҳаи AI']},
+  ]
+};
+
+const TX={
+  ru:{
+    navLearn:'Учиться',navPhoto:'Фото',navProg:'Прогресс',
+    lblSub:'📚 Выбери предмет',lblTopic:'🎯 Выбери тему',
+    emptyTitle:'Выбери предмет выше',emptySub:'Donish AI объяснит любую тему лучше учителя',
+    photoLbl:'📸 Фото → Решение',dropTitle:'Сфотографируй задачу',
+    dropSub:'Нажми чтобы открыть камеру или загрузить фото.\nDonish AI решит и объяснит шаг за шагом.',
+    howTitle:'💡 Как это работает:',
+    howBody:'1. Сфотографируй задачу из учебника или тетради\n2. Donish AI читает и понимает задачу\n3. Получаешь решение шаг за шагом',
+    analyzeBtn:'🤖 Решить и объяснить',clearBtn:'🗑 Загрузить другое фото',
+    photoInp:'Вопрос по задаче...',inp:'Напиши вопрос или ответ...',
+    progTitle:'Мой прогресс',progSub:'Продолжай учиться каждый день!',
+    stat1:'Тем пройдено',stat2:'Фото решено',stat3:'Дней подряд',
+    lblProgSub:'Прогресс по предметам',
+    steps:['📚 ОБЪЯСНЕНИЕ','🧪 ПРИМЕРЫ','✍️ ПРАКТИКА','🤖 ПРОВЕРКА'],
+  },
+  tg:{
+    navLearn:'Омӯхтан',navPhoto:'Акс',navProg:'Пешрафт',
+    lblSub:'📚 Фанро интихоб кун',lblTopic:'🎯 Мавзӯъро интихоб кун',
+    emptyTitle:'Фанро аз боло интихоб кун',emptySub:'Donish AI ҳар мавзӯъро беҳтар шарҳ медиҳад',
+    photoLbl:'📸 Акс → Ҳал',dropTitle:'Аз масъала акс бигир',
+    dropSub:'Барои кушодани камера пахш кун.\nDonish AI масъаларо ҳал мекунад ва шарҳ медиҳад.',
+    howTitle:'💡 Чӣ тавр кор мекунад:',
+    howBody:'1. Аз масъалаи китоб ё дафтар акс бигир\n2. Donish AI масъаларо мехонад\n3. Ҳалро қадам ба қадам мегирӣ',
+    analyzeBtn:'🤖 Ҳал кун ва шарҳ деҳ',clearBtn:'🗑 Акси дигар бор кун',
+    photoInp:'Савол дар бораи масъала...',inp:'Ҷавоб ё савол нависед...',
+    progTitle:'Пешрафти ман',progSub:'Ҳар рӯз омӯз!',
+    stat1:'Мавзӯъ гузашт',stat2:'Акс ҳал шуд',stat3:'Рӯзи пайдарпай',
+    lblProgSub:'Пешрафт аз рӯи фанҳо',
+    steps:['📚 ШАРҲ','🧪 МИСОЛҲО','✍️ МАШҚ','🤖 САНҶИШ'],
+  }
+};
+
+// ===================== STATE =====================
+let lang='ru', curSub=null, curTopic=null, curStep=1, done=[], mid=0;
+let photoBase64=null, photoAnalyzed=false;
+let progress=JSON.parse(localStorage.getItem('donish_progress')||'{}');
+let stats=JSON.parse(localStorage.getItem('donish_stats')||'{"topics":0,"photos":0,"streak":0,"lastDate":""}');
+
+// ===================== TELEGRAM INIT =====================
+const tg=window.Telegram?.WebApp;
+if(tg){
+  tg.ready();
+  tg.expand();
+  tg.setHeaderColor('#0d0d14');
+  tg.setBackgroundColor('#0d0d14');
+}
+
+// ===================== LANG =====================
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-ru').className='lbtn'+(l==='ru'?' on':'');
+  document.getElementById('btn-tg').className='lbtn'+(l==='tg'?' on':'');
+  const tx=TX[l];
+  document.getElementById('nav-lbl1').textContent=tx.navLearn;
+  document.getElementById('nav-lbl2').textContent=tx.navPhoto;
+  document.getElementById('nav-lbl3').textContent=tx.navProg;
+  document.getElementById('lbl-subjects').textContent=tx.lblSub;
+  document.getElementById('lbl-topics').textContent=tx.lblTopic;
+  document.getElementById('empty-title').textContent=tx.emptyTitle;
+  document.getElementById('empty-sub').textContent=tx.emptySub;
+  document.getElementById('photo-lbl').textContent=tx.photoLbl;
+  document.getElementById('drop-title').textContent=tx.dropTitle;
+  document.getElementById('drop-sub').textContent=tx.dropSub;
+  document.getElementById('how-title').textContent=tx.howTitle;
+  document.getElementById('how-body').innerHTML=tx.howBody.replace(/\n/g,'<br>');
+  document.getElementById('analyze-btn').textContent=tx.analyzeBtn;
+  document.getElementById('clear-btn').textContent=tx.clearBtn;
+  document.getElementById('photo-inp').placeholder=tx.photoInp;
+  document.getElementById('inp').placeholder=tx.inp;
+  document.getElementById('prog-title').textContent=tx.progTitle;
+  document.getElementById('prog-sub').textContent=tx.progSub;
+  document.getElementById('stat-lbl1').textContent=tx.stat1;
+  document.getElementById('stat-lbl2').textContent=tx.stat2;
+  document.getElementById('stat-lbl3').textContent=tx.stat3;
+  document.getElementById('lbl-prog-subjects').textContent=tx.lblProgSub;
+  renderSubs(); if(curSub) renderTopics(); updateSteps(); renderProgress();
+}
+
+// ===================== NAV =====================
+function switchNav(screen){
+  ['learn','photo','progress'].forEach(s=>{
+    document.getElementById('screen-'+s).classList.toggle('active', s===screen);
+    document.getElementById('nav-'+s).classList.toggle('on', s===screen);
+  });
+  if(screen==='progress') renderProgress();
+}
+
+// ===================== SUBJECTS =====================
+function renderSubs(){
+  const g=document.getElementById('sgrid'); g.innerHTML='';
+  SUBJECTS[lang].forEach(s=>{
+    const d=document.createElement('div');
+    d.className='scard'+(curSub&&curSub.id===s.id?' on':'');
+    const pct=getSubjectPct(s.id);
+    d.innerHTML=`<span class="sico">${s.ico}</span><div class="sname">${s.name}</div><div class="shint">${s.hint}</div>${pct>0?`<div style="margin-top:8px;height:3px;background:var(--border);border-radius:100px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--green);border-radius:100px"></div></div>`:''}`;
+    d.onclick=()=>pickSub(s); g.appendChild(d);
+  });
+}
+
+function pickSub(s){
+  curSub=s; curTopic=null; curStep=1; done=[];
+  renderSubs(); renderTopics();
+  document.getElementById('topics-section').style.display='block';
+  document.getElementById('lesson-section').style.display='none';
+  document.getElementById('empty-learn').style.display='none';
+}
+
+// ===================== TOPICS =====================
+function renderTopics(){
+  const r=document.getElementById('trow'); r.innerHTML='';
+  const done_topics=progress[curSub.id]||[];
+  curSub.topics.forEach(t=>{
+    const b=document.createElement('button');
+    const isDone=done_topics.includes(t);
+    b.className='tpill'+(curTopic===t?' on':'');
+    b.textContent=(isDone?'✅ ':'')+t;
+    b.onclick=()=>pickTopic(t); r.appendChild(b);
+  });
+}
+
+function pickTopic(t){
+  curTopic=t; curStep=1; done=[1]; renderTopics();
+  document.getElementById('lesson-section').style.display='flex';
+  document.getElementById('empty-learn').style.display='none';
+  document.getElementById('chat').innerHTML='';
+  updateSteps();
+  addAI(getExplain());
+}
+
+// ===================== STEPS =====================
+function goStep(n){
+  if(n>1&&!done.includes(n-1)) return;
+  curStep=n; updateSteps();
+  if(n===2&&!done.includes(2)){done.push(2);addAI(getExamples());updateSteps();}
+  else if(n===3&&!done.includes(3)){done.push(3);addAI(getPractice());updateSteps();}
+  else if(n===4){
+    if(!done.includes(3)){addAI(lang==='ru'?'✍️ Сначала выполни шаг 3!':'✍️ Аввал қадами 3!');curStep=3;updateSteps();}
+    else addAI(lang==='ru'?'✅ Напиши свой ответ — я проверю! 👇':'✅ Ҷавобро нависед! 👇');
+  }
+}
+
+function sendLesson(){
+  const inp=document.getElementById('inp');
+  const txt=inp.value.trim(); if(!txt||!curTopic) return;
+  inp.value=''; addUser(txt,'chat');
+  if(curStep===4||done.includes(3)){
+    if(!done.includes(4)){
+      done.push(4);
+      saveTopicDone(curSub.id, curTopic);
+    }
+    addAI(getCheck(txt));
+  } else {
+    addAI(getFree(txt));
+  }
+  updateSteps();
+}
+
+function updateSteps(){
+  TX[lang].steps.forEach((lbl,i)=>{
+    const el=document.getElementById('st'+(i+1)); if(!el) return;
+    el.textContent=lbl; const n=i+1;
+    el.className='step'+(n===curStep?' on':'')+(done.includes(n)&&n!==curStep?' done':'');
+  });
+}
+
+// ===================== AI CONTENT =====================
+function getExplain(){
+  const s=curSub.name, t=curTopic;
+  return lang==='ru'
+    ?`🎓 Тема: "${t}"\n\n💡 Простое объяснение:\n"${t}" — одна из ключевых тем в ${s}. Давай разберём шаг за шагом!\n\nПредставь это как строительство: сначала фундамент (основы), потом стены (правила), потом крыша (применение на практике).\n\n📝 Пример из жизни:\nМы используем принципы "${t}" каждый день — в магазине, в телефоне, в природе вокруг нас.\n\n❓ Твоё задание:\nОбъясни своими словами — что такое "${t}"? Напиши 2-3 предложения ниже, потом жми "🧪 ПРИМЕРЫ"! 👇`
+    :`🎓 Мавзӯъ: "${t}"\n\n💡 Шарҳи оддӣ:\n"${t}" — яке аз мавзӯъҳои муҳим дар ${s} аст. Қадам ба қадам меомӯзем!\n\nИнро мисли сохтмон тасаввур кун: аввал бунёд, баъд деворҳо, баъд бом.\n\n📝 Мисол аз зиндагӣ:\nМо принсипҳои "${t}"-ро ҳар рӯз истифода мебарем.\n\n❓ Супориши ту:\n"${t}"-ро бо калимаҳои худ шарҳ деҳ! 2-3 ҷумла нависед 👇`;
+}
+
+function getExamples(){
+  const s=curSub.name, t=curTopic;
+  return lang==='ru'
+    ?`🔍 Ещё 2 примера по теме "${t}":\n\n📌 Пример 1 — Теория:\nВ учебнике "${t}" объясняется через формулы и правила. Но главное — это понять идею, а не запомнить формулу.\n\n📌 Пример 2 — Практика:\n"${t}" используется в реальных задачах: от простых вычислений до сложных инженерных решений.\n\n💡 Ключевая идея:\nЕсли ты понял "${t}", ты сможешь решить любую задачу по этой теме.\n\n✅ Жми "✍️ ПРАКТИКА" для задания!`
+    :`🔍 Боз 2 мисол оид ба "${t}":\n\n📌 Мисол 1 — Назария:\nДар китоб "${t}" тавассути формулаҳо шарҳ дода мешавад. Аммо муҳимтарин чиз — идеяро фаҳмидан аст.\n\n📌 Мисол 2 — Амалия:\n"${t}" дар масъалаҳои воқеӣ истифода мешавад.\n\n💡 Идеяи калидӣ:\nАгар "${t}"-ро фаҳмидӣ, ҳар масъаларо ҳал карда метавонӣ.\n\n✅ "✍️ МАШҚ"-ро пахш кун!`;
+}
+
+function getPractice(){
+  const t=curTopic;
+  return lang==='ru'
+    ?`✍️ Практическое задание по "${t}":\n\n📝 Задача:\nПосмотри на "${t}" с разных сторон:\n• Где ты видел это в реальной жизни?\n• Как бы ты объяснил это другу?\n• Придумай свой пример\n\nНапиши ответ (минимум 2 предложения) и отправь — я проверю! 👇`
+    :`✍️ Супориши амалӣ оид ба "${t}":\n\n📝 Вазифа:\n"${t}"-ро аз ҷанбаҳои гуногун бин:\n• Инро дар зиндагӣ дар куҷо дидӣ?\n• Ба дӯст чӣ тавр шарҳ медодӣ?\n• Мисоли худро биёр\n\nҶавоб нависед (камаш 2 ҷумла) 👇`;
+}
+
+function getCheck(answer){
+  const t=curTopic;
+  return lang==='ru'
+    ?`✅ Отлично! Ты справился!\n\n🎯 Твой ответ показывает, что ты понял суть "${t}"!\n\nЧто ты сделал хорошо:\n• Попытался объяснить своими словами\n• Привёл пример — это лучший способ проверить знание\n\n💡 Для закрепления:\nПовтори тему через 1-2 дня — так информация остаётся надолго.\n\n🏆 Тема "${t}" — ПРОЙДЕНА! ⭐`
+    :`✅ Офарин! Ту баракс кардӣ!\n\n🎯 Ҷавоби ту нишон медиҳад, ки "${t}"-ро фаҳмидӣ!\n\n💡 Барои мустаҳкам кардан:\nМавзӯъро баъд аз 1-2 рӯз такрор кун.\n\n🏆 Мавзӯъи "${t}" — ГУЗАШТ! ⭐`;
+}
+
+function getFree(q){
+  const t=curTopic, s=curSub?.name||'';
+  return lang==='ru'
+    ?`💬 Хороший вопрос!\n\nВ контексте "${t}" (${s}):\nГлавное — понять логику, а не запомнить формулу. Попробуй разбить вопрос на части: что дано, что нужно найти, какой метод подходит.\n\n🌟 Продолжай задавать вопросы — это признак умного ученика!`
+    :`💬 Саволи хуб!\n\nДар бораи "${t}" (${s}):\nМуҳимтарин чиз — мантиқро фаҳмидан аст. Саволро ба қисмҳо тақсим кун.\n\n🌟 Саволҳо нишонаи хонандаи зирак аст!`;
+}
+
+// ===================== PHOTO =====================
+function onFile(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    photoBase64=ev.target.result;
+    document.getElementById('preview').src=photoBase64;
+    document.getElementById('photo-upload-area').style.display='none';
+    document.getElementById('photo-result-area').style.display='block';
+    document.getElementById('photo-chat').innerHTML='';
+    photoAnalyzed=false;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearPhoto(){
+  photoBase64=null; photoAnalyzed=false;
+  document.getElementById('file-in').value='';
+  document.getElementById('photo-upload-area').style.display='block';
+  document.getElementById('photo-result-area').style.display='none';
+  document.getElementById('photo-chat').innerHTML='';
+}
+
+function analyzePhoto(){
+  if(!photoBase64||photoAnalyzed) return;
+  const btn=document.getElementById('analyze-btn');
+  btn.disabled=true;
+  btn.textContent=lang==='ru'?'⏳ Анализирую...':'⏳ Таҳлил...';
+
+  const subName=curSub?curSub.name:(lang==='ru'?'общий предмет':'фанни умумӣ');
+  const id=addPhotoBubble(true);
+
+  setTimeout(()=>{
+    const result=lang==='ru'
+      ?`📸 Фото получено! Анализирую задачу...\n\n🔍 Вижу задачу по ${subName}.\n\n✅ Решение шаг за шагом:\n\n1️⃣ Читаем условие:\nВнимательно читаем что дано и что нужно найти.\n\n2️⃣ Выбираем метод:\nДля этого типа задачи применяем основной метод решения.\n\n3️⃣ Решаем:\nПрименяем нужную формулу или правило к данным.\n\n4️⃣ Проверяем:\nПодставляем ответ и проверяем правильность.\n\n💡 Совет:\nВсегда записывай: Дано → Найти → Решение → Ответ\n\n❓ Есть вопросы? Пиши ниже!`
+      :`📸 Акс гирифта шуд! Таҳлил мекунам...\n\n🔍 Масъала оид ба ${subName}.\n\n✅ Ҳал қадам ба қадам:\n\n1️⃣ Шартро мехонем:\nДода шуда ва ёфтан лозимро муайян мекунем.\n\n2️⃣ Усулро интихоб мекунем:\nБарои ин навъи масъала усули асосӣ татбиқ мешавад.\n\n3️⃣ Ҳал мекунем:\nФормула ё қоидаи лозимиро татбиқ мекунем.\n\n4️⃣ Месанҷем:\nҶавобро баргардонда месанҷем.\n\n💡 Маслиҳат:\nҲамеша нависед: Дода шуда → Ёфтан → Ҳал → Ҷавоб\n\n❓ Савол дорӣ? Поён нависед!`;
+
+    updateBubble('photo-chat', id, result);
+    photoAnalyzed=true;
+    btn.disabled=false;
+    btn.textContent=TX[lang].analyzeBtn;
+    stats.photos++;
+    saveStats();
+  }, 2000);
+}
+
+function sendPhoto(){
+  const inp=document.getElementById('photo-inp');
+  const txt=inp.value.trim(); if(!txt) return;
+  inp.value='';
+  addUser(txt,'photo-chat');
+  const id=addPhotoBubble(true);
+  setTimeout(()=>{
+    const reply=lang==='ru'
+      ?`💬 Хороший вопрос по задаче!\n\n"${txt}"\n\nВ контексте этой задачи: главное — правильно понять условие и применить подходящий метод. Каждая задача решается шаг за шагом. Если что-то ещё непонятно — спрашивай! 🌟`
+      :`💬 Саволи хуб!\n\n"${txt}"\n\nДар контексти ин масъала: муҳимтарин чиз — шартро дуруст фаҳмидан ва усули мувофиқро татбиқ кардан аст. 🌟`;
+    updateBubble('photo-chat', id, reply);
+  },1200);
+}
+
+// ===================== PROGRESS =====================
+function saveTopicDone(subId, topic){
+  if(!progress[subId]) progress[subId]=[];
+  if(!progress[subId].includes(topic)){
+    progress[subId].push(topic);
+    stats.topics++;
+    localStorage.setItem('donish_progress', JSON.stringify(progress));
+    saveStats();
+    renderSubs();
+  }
+}
+
+function saveStats(){
+  const today=new Date().toDateString();
+  if(stats.lastDate!==today){
+    const yesterday=new Date(Date.now()-86400000).toDateString();
+    stats.streak=stats.lastDate===yesterday?stats.streak+1:1;
+    stats.lastDate=today;
+  }
+  localStorage.setItem('donish_stats', JSON.stringify(stats));
+}
+
+function getSubjectPct(subId){
+  const subs=SUBJECTS[lang].find(s=>s.id===subId);
+  if(!subs) return 0;
+  const done=progress[subId]||[];
+  return Math.round(done.length/subs.topics.length*100);
+}
+
+function renderProgress(){
+  document.getElementById('stat-topics').textContent=stats.topics;
+  document.getElementById('stat-photos').textContent=stats.photos;
+  document.getElementById('stat-streak').textContent=stats.streak+'🔥';
+  const list=document.getElementById('prog-list');
+  list.innerHTML='';
+  SUBJECTS[lang].forEach(s=>{
+    const pct=getSubjectPct(s.id);
+    const doneCount=(progress[s.id]||[]).length;
+    const d=document.createElement('div');
+    d.className='prog-subject';
+    d.innerHTML=`<div class="prog-top"><span class="prog-ico">${s.ico}</span><div><div class="prog-name">${s.name}</div><div class="prog-topics">${doneCount}/${s.topics.length} ${lang==='ru'?'тем':'мавзӯъ'}</div></div></div><div class="prog-bar-track"><div class="prog-bar-fill" style="width:${pct}%"></div></div><div class="prog-pct">${pct}%</div>`;
+    d.onclick=()=>{pickSub(s);switchNav('learn');};
+    list.appendChild(d);
+  });
+}
+
+// ===================== BUBBLE HELPERS =====================
+function addAI(text, chatId='chat'){
+  const c=document.getElementById(chatId);
+  const d=document.createElement('div'); d.className='bubble ai';
+  d.innerHTML=`<div class="albl">Donish AI</div>${text.replace(/\n/g,'<br>')}`;
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
+}
+
+function addUser(text, chatId='chat'){
+  const c=document.getElementById(chatId);
+  const d=document.createElement('div'); d.className='bubble me'; d.textContent=text;
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
+}
+
+function addPhotoBubble(typing=false){
+  const id='pb'+(++mid);
+  const c=document.getElementById('photo-chat');
+  const d=document.createElement('div'); d.className='bubble ai'; d.id=id;
+  d.innerHTML=`<div class="albl">Donish AI</div>`+(typing?`<div class="dots"><span></span><span></span><span></span></div>`:'');
+  c.appendChild(d); c.scrollTop=c.scrollHeight; return id;
+}
+
+function updateBubble(chatId, id, text){
+  const el=document.getElementById(id);
+  if(el) el.innerHTML=`<div class="albl">Donish AI</div>${text.replace(/\n/g,'<br>')}`;
+  document.getElementById(chatId).scrollTop=9999;
+}
+
+// ===================== INIT =====================
+renderSubs();
+renderProgress();
+</script>
+</body>
+</html>
