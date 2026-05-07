@@ -1015,6 +1015,11 @@ function sendLesson(){
   const inp=document.getElementById('inp');
   const txt=inp.value.trim(); if(!txt||!curTopic) return;
   inp.value=''; addUser(txt,'chat');
+  if(isQuestionText(txt)){
+    addAI(getFree(txt));
+    updateSteps();
+    return;
+  }
   if(curStep===4||done.includes(3)){
     if(!done.includes(4)){done.push(4);saveTopicDone(curSub.id,curTopic);}
     addAI(getCheck(txt));
@@ -1036,15 +1041,30 @@ function isPercentTopic(){
   return curSub?.id==='math' && /процент|фоиз|percent/i.test(curTopic||'');
 }
 
+function isFractionTopic(){
+  return curSub?.id==='math' && /дроб|каср|fraction/i.test(curTopic||'');
+}
+
+function isQuestionText(text){
+  return /(\?|что|как|почему|зачем|объясни|расскажи|чӣ|чи|чаро|фаҳмон|what|how|why|explain)/i.test(text);
+}
+
 function getPercentExplain(){
   if(lang==='en') return `🎓 Topic: "${curTopic}"\n\n💡 What is a percent?\nPercent means "out of 100".\n\n📊 Visualization:\n100% = ██████████ = the whole thing\n50%  = █████░░░░░ = half\n25%  = ██░░░░░░░░ = one quarter\n\n🧠 Key idea:\nIf a chocolate has 100 pieces, then 25% means 25 pieces.\n\nFormula:\npercent value = number × percent / 100\n\nExample: 20% of 500\n500 × 20 / 100 = 100\n\nSo 20% of 500 is 100.`;
   if(lang==='tg') return `🎓 Мавзӯъ: "${curTopic}"\n\n💡 Фоиз чист?\nФоиз маънои "аз 100" дорад.\n\n📊 Визуалӣ:\n100% = ██████████ = ҳамааш\n50%  = █████░░░░░ = нисф\n25%  = ██░░░░░░░░ = чоряки он\n\n🧠 Идеяи асосӣ:\nАгар шоколад 100 қисм дошта бошад, 25% яъне 25 қисм.\n\nФормула:\nқимати фоиз = адад × фоиз / 100\n\nМисол: 20% аз 500\n500 × 20 / 100 = 100\n\nПас 20% аз 500 = 100.`;
   return `🎓 Тема: "${curTopic}"\n\n💡 Что такое процент?\nПроцент — это "часть из 100". Слово percent буквально означает "на 100".\n\n📊 Визуализация:\n100% = ██████████ = всё целое\n50%  = █████░░░░░ = половина\n25%  = ██░░░░░░░░ = четверть\n10%  = █░░░░░░░░░ = одна десятая\n\n🧠 Главная идея:\nЕсли шоколад разделить на 100 кусочков, то 25% — это 25 кусочков.\n\nФормула:\nзначение процента = число × процент / 100\n\nПример: найти 20% от 500\n500 × 20 / 100 = 100\n\nОтвет: 20% от 500 = 100.`;
 }
 
+function getFractionExplain(){
+  if(lang==='en') return `🎓 Topic: "${curTopic}"\n\n💡 What is a fraction?\nA fraction shows a part of a whole.\n\nExample: 1/2 means one part out of two equal parts.\n\n📊 Visualization:\n1 whole pizza:  🍕🍕\n1/2 pizza:      🍕░\n1/4 pizza:      ▰░░░\n3/4 pizza:      ▰▰▰░\n\nFraction parts:\nTop number = numerator = how many parts we take\nBottom number = denominator = how many equal parts total\n\nExample:\n3/5 means we split something into 5 equal parts and take 3 parts.`;
+  if(lang==='tg') return `🎓 Мавзӯъ: "${curTopic}"\n\n💡 Каср чист?\nКаср қисми як чизи пурраро нишон медиҳад.\n\nМисол: 1/2 яъне 1 қисм аз 2 қисми баробар.\n\n📊 Визуалӣ:\nПитсаи пурра:  🍕🍕\n1/2 питса:     🍕░\n1/4 питса:     ▰░░░\n3/4 питса:     ▰▰▰░\n\nҚисмҳои каср:\nРақами боло = сурат = чанд қисм гирифтем\nРақами поён = махраҷ = ҳамагӣ чанд қисм ҳаст\n\nМисол:\n3/5 яъне чизро ба 5 қисми баробар ҷудо кардем ва 3 қисми онро гирифтем.`;
+  return `🎓 Тема: "${curTopic}"\n\n💡 Что такое дробь?\nДробь показывает часть от целого.\n\nПример: 1/2 означает "одна часть из двух равных частей".\n\n📊 Визуализация:\nЦелая пицца:   🍕🍕\n1/2 пиццы:     🍕░\n1/4 пиццы:     ▰░░░\n3/4 пиццы:     ▰▰▰░\n\nИз чего состоит дробь:\nВерхнее число = числитель = сколько частей взяли\nНижнее число = знаменатель = на сколько равных частей разделили\n\nПример:\n3/5 означает: целое разделили на 5 равных частей и взяли 3 части.\n\nГлавная мысль: дробь всегда отвечает на вопрос "какая часть от целого?".`;
+}
+
 function getSpecialExplain(){
   const id=curSub?.id,t=curTopic;
   if(isPercentTopic()) return getPercentExplain();
+  if(isFractionTopic()) return getFractionExplain();
   if(id==='eng'){
     if(lang==='en') return `🇬🇧 English grammar topic: "${t}"\n\nThis section has 1000 A1/A2 grammar tests. We learn one rule, see examples, then answer a mini-test.\n\nFormat:\n1. Rule\n2. Correct example\n3. Incorrect example\n4. Test question\n\nStart with the rule: read the topic name and tell me what you already know about it.`;
     if(lang==='tg') return `🇬🇧 Мавзӯи English grammar: "${t}"\n\nДар ин қисм 1000 тест барои A1/A2 ҳаст. Мо аввал қоидаро мефаҳмем, баъд мисол мебинем ва баъд тест ҳал мекунем.\n\nФормат:\n1. Қоида\n2. Мисоли дуруст\n3. Мисоли нодуруст\n4. Саволи тестӣ`;
@@ -1094,6 +1114,11 @@ function getExamples(){
     if(lang==='tg') return `🧪 Мисолҳо: "${t}"\n\nМисол 1: Тахфиф дар мағоза\nКуртка 800 сомонӣ аст. Тахфиф 25%.\n\nҚадам 1: 25% аз 800-ро меёбем\n800 × 25 / 100 = 200\n\nҚадам 2: Тахфифро кам мекунем\n800 - 200 = 600\n\n✅ Нархи нав: 600 сомонӣ\n\n📊 Визуалӣ:\nНархи пурра 100%: ██████████ 800\nТахфиф 25%:       ██░░░░░░░░ 200\nПардохт 75%:      ███████░░░ 600\n\nҲила:\n10% = ба 10 тақсим кун\n50% = ба 2 тақсим кун\n25% = ба 4 тақсим кун`;
     return `🧪 Примеры по теме "${t}"\n\nПример 1: скидка в магазине\nКуртка стоит 800 сомони. Скидка 25%.\n\nШаг 1: находим 25% от 800\n800 × 25 / 100 = 200\n\nШаг 2: вычитаем скидку\n800 - 200 = 600\n\n✅ Новая цена: 600 сомони\n\n📊 Визуализация:\nПолная цена 100%: ██████████ 800\nСкидка 25%:       ██░░░░░░░░ 200\nПлатим 75%:       ███████░░░ 600\n\n⚡ Быстрые правила:\n10% = разделить на 10\n50% = разделить на 2\n25% = разделить на 4\n1% = разделить на 100`;
   }
+  if(isFractionTopic()){
+    if(lang==='en') return `🧪 Examples: "${t}"\n\nExample 1: You ate 2 slices from 6 slices of pizza.\n\nFraction = eaten slices / all slices = 2/6\n\n📊 Visual:\nEaten:  ██░░░░\nAll:    6 slices\n\n2/6 can be simplified:\n2/6 = 1/3\n\nWhy? Divide top and bottom by 2:\n2 ÷ 2 = 1\n6 ÷ 2 = 3\n\n✅ So 2/6 and 1/3 show the same part.`;
+    if(lang==='tg') return `🧪 Мисолҳо: "${t}"\n\nМисол 1: Аз 6 қисми питса 2 қисми онро хӯрдӣ.\n\nКаср = қисми хӯрдашуда / ҳамаи қисмҳо = 2/6\n\n📊 Визуалӣ:\nХӯрдашуда: ██░░░░\nҲамааш:    6 қисм\n\n2/6-ро сода мекунем:\n2/6 = 1/3\n\nЧаро? Рақами боло ва поёнро ба 2 тақсим мекунем:\n2 ÷ 2 = 1\n6 ÷ 2 = 3\n\n✅ Пас 2/6 ва 1/3 як маъно доранд.`;
+    return `🧪 Примеры по теме "${t}"\n\nПример 1: ты съел 2 кусочка пиццы из 6.\n\nДробь = съеденные кусочки / все кусочки = 2/6\n\n📊 Визуализация:\nСъел:  ██░░░░\nВсего: 6 кусочков\n\n2/6 можно сократить:\n2/6 = 1/3\n\nПочему? Делим верх и низ на 2:\n2 ÷ 2 = 1\n6 ÷ 2 = 3\n\n✅ Значит 2/6 и 1/3 показывают одну и ту же часть.\n\nПример 2: 3/4 стакана воды\nЭто значит: стакан разделили на 4 части и заполнили 3 части.\n\n📊 3/4 = ███░`;
+  }
   if(lang==='ru') return `🔍 Дополнительные примеры по теме "${t}":\n\n📌 Пример 1 — В теории:\nВ учебнике "${t}" объясняется через формулы и правила. Но главное — понять идею, а не просто запомнить.\n\n📌 Пример 2 — На практике:\n"${t}" используется в реальных задачах: от простых вычислений до сложных инженерных решений. Инженеры, программисты, учёные применяют это каждый день.\n\n💡 Главная идея:\nКогда ты понял "${t}" — ты можешь решить ЛЮБУЮ задачу по этой теме.\n\n✅ Теперь жми "✍️ ПРАКТИКА" чтобы проверить себя!`;
   if(lang==='en') return `🔍 More examples for "${t}":\n\n📌 Example 1 - Theory:\nIn textbooks, "${t}" is explained with formulas and rules. The key is understanding the idea, not memorizing.\n\n📌 Example 2 - Practice:\n"${t}" appears in real tasks from simple calculations to complex engineering solutions.\n\n💡 Core idea:\nWhen you understand "${t}", you can solve many types of problems.\n\n✅ Tap "✍️ PRACTICE" to test yourself!`;
   return `🔍 Мисолҳои иловагӣ оид ба "${t}":\n\n📌 Мисол 1 — Назария:\nДар китоб "${t}" тавассути формулаҳо шарҳ дода мешавад. Аммо муҳимтарин чиз — идеяро фаҳмидан аст.\n\n📌 Мисол 2 — Амалия:\n"${t}" дар масъалаҳои воқеӣ — аз ҳисобҳои оддӣ то қарорҳои мураккаби муҳандисӣ истифода мешавад.\n\n💡 Идеяи асосӣ:\nВақте ки "${t}"-ро фаҳмидӣ — ҳар масъаларо ҳал карда метавонӣ.\n\n✅ "✍️ МАШҚ"-ро пахш кун!`;
@@ -1105,6 +1130,11 @@ function getPractice(){
     if(lang==='en') return `✍️ Practice\n\nA phone costs 1200 somoni. Discount is 15%.\n\n1. Find 15% of 1200\n2. Subtract the discount\n3. Write the final price\n\nHint:\n15% = 10% + 5%\n10% of 1200 = 120\n5% is half of 10% = 60\n\nSend your solution step by step.`;
     if(lang==='tg') return `✍️ Машқ\n\nТелефон 1200 сомонӣ аст. Тахфиф 15%.\n\n1. 15% аз 1200-ро ёб\n2. Тахфифро аз нарх кам кун\n3. Нархи охиринро навис\n\nЁрӣ:\n15% = 10% + 5%\n10% аз 1200 = 120\n5% нисфи 10% = 60\n\nҲалро қадам ба қадам фирист.`;
     return `✍️ Практика\n\nТелефон стоит 1200 сомони. Скидка 15%.\n\n1. Найди 15% от 1200\n2. Вычти скидку из цены\n3. Напиши итоговую цену\n\nПодсказка:\n15% = 10% + 5%\n10% от 1200 = 120\n5% — это половина от 10%, значит 60\n\nНапиши решение по шагам — я проверю.`;
+  }
+  if(isFractionTopic()){
+    if(lang==='en') return `✍️ Practice\n\nA cake is cut into 8 equal pieces. You ate 3 pieces.\n\n1. Write the fraction\n2. Name the numerator\n3. Name the denominator\n\nHint:\nfraction = eaten pieces / all pieces\n\nSend your answer like this: 3/8, numerator 3, denominator 8.`;
+    if(lang==='tg') return `✍️ Машқ\n\nТортро ба 8 қисми баробар буриданд. Ту 3 қисмашро хӯрдӣ.\n\n1. Касрро навис\n2. Суратро номбар кун\n3. Махраҷро номбар кун\n\nЁрӣ:\nкаср = қисми хӯрдашуда / ҳамаи қисмҳо\n\nҶавобро чунин фирист: 3/8, сурат 3, махраҷ 8.`;
+    return `✍️ Практика\n\nТорт разрезали на 8 равных кусочков. Ты съел 3 кусочка.\n\n1. Запиши дробь\n2. Назови числитель\n3. Назови знаменатель\n\nПодсказка:\nдробь = съеденные кусочки / все кусочки\n\nОтвет напиши так: 3/8, числитель 3, знаменатель 8.`;
   }
   if(curSub?.id==='eng'){
     if(lang==='en') return `📝 English test #1 / 1000\n\nQuestion: Choose the correct answer for "${t}".\n\nOptions:\nA) I am student.\nB) I am a student.\nC) I a student.\nD) I be a student.\n\nSend A, B, C, or D. I will check your answer and explain why.`;
@@ -1136,6 +1166,19 @@ function getCheck(answer){
       ?`✅ Правильно! 15% от 1200 = 180, значит итоговая цена: 1200 - 180 = 1020 сомони.\n\nТы понял главное: процент — это часть от 100. Отличная работа!`
       :`Почти! Давай решим вместе:\n\n10% от 1200 = 120\n5% от 1200 = 60\n15% = 120 + 60 = 180\nИтоговая цена = 1200 - 180 = 1020\n\nТеперь попробуй написать это своими шагами.`;
   }
+  if(isFractionTopic()){
+    const cleaned=answer.toLowerCase().replace(/\s+/g,'');
+    const ok=/3\/8/.test(cleaned) && (/числитель3|numerator3|сурат3/.test(cleaned) || /3.*8/.test(cleaned));
+    if(lang==='en') return ok
+      ?`✅ Correct! The fraction is 3/8.\n\nNumerator = 3 because you ate 3 pieces.\nDenominator = 8 because the cake had 8 equal pieces.\n\nGreat: you connected the fraction to a real object.`
+      :`Almost! Let's solve it:\n\nAll pieces: 8\nEaten pieces: 3\nFraction = eaten / all = 3/8\n\nNumerator: 3\nDenominator: 8\n\nTry again using this structure.`;
+    if(lang==='tg') return ok
+      ?`✅ Дуруст! Каср 3/8 аст.\n\nСурат = 3, чун 3 қисм хӯрдӣ.\nМахраҷ = 8, чун торт 8 қисми баробар дошт.`
+      :`Қариб! Ҳал чунин аст:\n\nҲамаи қисмҳо: 8\nҚисми хӯрдашуда: 3\nКаср = хӯрдашуда / ҳама = 3/8\n\nСурат: 3\nМахраҷ: 8`;
+    return ok
+      ?`✅ Правильно! Дробь: 3/8.\n\nЧислитель = 3, потому что ты съел 3 кусочка.\nЗнаменатель = 8, потому что всего было 8 равных кусочков.\n\nОтлично: ты связал дробь с реальным предметом.`
+      :`Почти! Решаем вместе:\n\nВсего кусочков: 8\nСъел кусочков: 3\nДробь = съел / всего = 3/8\n\nЧислитель: 3\nЗнаменатель: 8\n\nПопробуй написать ещё раз в таком формате.`;
+  }
   if(curSub?.id==='eng'){
     const ok=answer.trim().toUpperCase().startsWith('B');
     if(lang==='en') return ok
@@ -1155,6 +1198,11 @@ function getCheck(answer){
 
 function getFree(q){
   const t=curTopic,s=curSub?.name||'';
+  if(isFractionTopic()){
+    if(lang==='en') return `💬 Good question!\n\nA fraction is a way to show a part of a whole.\n\nExample:\nIf a pizza is cut into 4 equal pieces and you take 1 piece, that is 1/4.\n\n1 = numerator: how many pieces you take\n4 = denominator: how many equal pieces total\n\nVisual:\n1/4 = █░░░\n2/4 = ██░░\n3/4 = ███░\n4/4 = ████ = one whole`;
+    if(lang==='tg') return `💬 Саволи хуб!\n\nКаср қисми як чизи пурраро нишон медиҳад.\n\nМисол:\nАгар питса ба 4 қисми баробар бурида шавад ва ту 1 қисмашро гирӣ, ин 1/4 мешавад.\n\n1 = сурат: чанд қисм гирифтӣ\n4 = махраҷ: ҳамагӣ чанд қисми баробар аст\n\nВизуалӣ:\n1/4 = █░░░\n2/4 = ██░░\n3/4 = ███░\n4/4 = ████ = як чизи пурра`;
+    return `💬 Хороший вопрос!\n\nДробь — это способ показать часть от целого.\n\nПример:\nЕсли пиццу разделили на 4 равные части и ты взял 1 часть, это 1/4.\n\n1 = числитель: сколько частей взяли\n4 = знаменатель: на сколько равных частей разделили целое\n\n📊 Визуально:\n1/4 = █░░░\n2/4 = ██░░\n3/4 = ███░\n4/4 = ████ = целое\n\nПоэтому дробь отвечает на вопрос: "какую часть мы взяли?".`;
+  }
   if(lang==='ru') return `💬 Хороший вопрос!\n\nВ контексте "${t}" (${s}):\nГлавное — понять логику, а не запомнить формулу. Попробуй разбить вопрос на части:\n\n1. Что дано?\n2. Что нужно найти?\n3. Какой метод подходит?\n\nЕсли разобьёшь задачу на шаги — решение придёт само! 🌟`;
   if(lang==='en') return `💬 Good question!\n\nIn the context of "${t}" (${s}):\nFocus on logic, not memorization. Break the problem into steps:\n\n1. What is given?\n2. What is required?\n3. Which method fits?\n\nWhen the structure is clear, the answer gets easier. 🌟`;
   return `💬 Саволи хуб!\n\nДар бораи "${t}" (${s}):\nМуҳимтарин чиз — мантиқро фаҳмидан аст. Саволро ба қисмҳо тақсим кун:\n\n1. Чӣ дода шудааст?\n2. Чӣ ёфтан лозим?\n3. Кадом усул мувофиқ аст?\n\nАгар масъаларо ба қадамҳо тақсим кунӣ — ҳал худаш меояд! 🌟`;
