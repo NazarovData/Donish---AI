@@ -69,6 +69,28 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
 /* ===== SECTION LABEL ===== */
 .sec-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding:0 16px}
 
+/* ===== WELCOME ===== */
+.welcome{
+  margin:0 16px 14px;
+  background:linear-gradient(135deg,#1e2536 0%,#2f3c58 100%);
+  color:#fff;
+  border-radius:var(--radius-lg);
+  padding:18px 16px;
+  box-shadow:0 10px 26px rgba(18,22,33,0.24);
+}
+.welcome h1{font-size:18px;font-weight:800;letter-spacing:-0.4px;margin-bottom:8px}
+.welcome p{font-size:12px;line-height:1.7;opacity:0.95}
+.welcome-stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ws-chip{
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.18);
+  padding:5px 10px;
+  border-radius:100px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
 /* ===== SUBJECTS GRID ===== */
 .subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;padding:0 16px}
 .scard{
@@ -82,13 +104,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
   overflow:hidden;
   box-shadow:var(--shadow-sm);
 }
-.scard::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 var(--radius) 0 60px;opacity:0.08;transition:opacity .2s}
+.scard::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 var(--radius) 0 60px;opacity:0.08;transition:opacity .2s;background:var(--c,var(--accent))}
 .scard:active{transform:scale(0.97);border-color:var(--accent)}
 .scard.on{border-color:var(--accent);background:var(--accent-light)}
 .scard.on::before{opacity:0.15}
 .scard .sico{font-size:26px;display:block;margin-bottom:10px;line-height:1}
 .scard .sname{font-size:13px;font-weight:700;margin-bottom:3px;color:var(--text)}
 .scard .shint{font-size:10px;color:var(--muted);line-height:1.4}
+.scard .smeta{margin-top:8px;font-size:10px;font-weight:700;color:var(--text2);line-height:1.5}
 .scard .prog-mini{margin-top:10px;height:3px;background:var(--border);border-radius:100px;overflow:hidden}
 .scard .prog-mini-fill{height:100%;background:var(--green);border-radius:100px;transition:width .5s}
 
@@ -112,6 +135,19 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
 
 /* ===== LESSON BOX ===== */
 .lesson-wrap{display:flex;flex-direction:column;flex:1;min-height:0;background:var(--surface)}
+.lesson-topbar{display:flex;justify-content:flex-start;padding:10px 12px 0;background:var(--surface)}
+.back-btn-mini{
+  border:1.5px solid var(--border);
+  background:var(--surface2);
+  border-radius:10px;
+  padding:7px 12px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--text2);
+  cursor:pointer;
+  font-family:'Sora',sans-serif;
+}
+.back-btn-mini:active{transform:scale(0.97);border-color:var(--accent);color:var(--accent)}
 
 /* ===== STEPS ===== */
 .steps-row{display:flex;border-bottom:1.5px solid var(--border);flex-shrink:0;background:var(--surface);overflow-x:auto}
@@ -381,6 +417,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
     <div class="lang-sw">
       <button class="lbtn on" id="btn-ru" onclick="setLang('ru')">РУС</button>
       <button class="lbtn" id="btn-tg" onclick="setLang('tg')">ТЖК</button>
+      <button class="lbtn" id="btn-en" onclick="setLang('en')">ENG</button>
     </div>
   </div>
 
@@ -388,6 +425,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
   <div class="screen active" id="screen-learn">
     <div style="overflow-y:auto;flex:1" id="learn-scroll">
       <div style="height:16px"></div>
+      <div class="welcome">
+        <h1 id="welcome-title">Добро пожаловать в Donish AI</h1>
+        <p id="welcome-sub">Твоя персональная платформа для математики, физики, английского и IT. Учись шаг за шагом, решай задачи и становись сильнее каждый день.</p>
+        <div class="welcome-stats">
+          <span class="ws-chip" id="welcome-chip1">📐 6 класс → Высшая математика</span>
+          <span class="ws-chip" id="welcome-chip2">🇬🇧 1000 English тестов</span>
+          <span class="ws-chip" id="welcome-chip3">💻 1000+ IT задач</span>
+        </div>
+      </div>
       <div class="sec-lbl" id="lbl-subjects">📚 Выбери предмет</div>
       <div class="subjects-grid" id="sgrid"></div>
 
@@ -409,6 +455,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
 
     <!-- LESSON -->
     <div class="lesson-wrap" id="lesson-section" style="display:none">
+      <div class="lesson-topbar">
+        <button class="back-btn-mini" id="btn-back-topics" onclick="backToTopics()">← К темам</button>
+      </div>
       <div class="steps-row">
         <div class="step on" id="st1" onclick="goStep(1)">📚 ОБЪЯСНЕНИЕ</div>
         <div class="step" id="st2" onclick="goStep(2)">🧪 ПРИМЕРЫ</div>
@@ -516,21 +565,35 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
 <script>
 const SUBJECTS={
   ru:[
-    {id:'math',ico:'📐',name:'Математика',hint:'Алгебра, Геометрия',color:'#3b6ea8',topics:['Линейные уравнения','Квадратные уравнения','Функции','Геометрия','Вероятность','Логарифмы']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'Механика, Оптика',color:'#b8860b',topics:['Механика','Законы Ньютона','Термодинамика','Оптика','Электричество','Волны']},
-    {id:'eng',ico:'🌍',name:'Английский',hint:'Грамматика, Словарный',color:'#2a7a5c',topics:['Present Tenses','Past Tenses','Future Tenses','Условные предложения','Пассивный залог','Фразовые глаголы']},
-    {id:'it',ico:'💻',name:'IT / Python',hint:'Python, SQL, Git, Docker',color:'#d97757',topics:['Python основы','Функции Python','SQL запросы','Git команды','Docker','Telegram бот']},
-    {id:'vibe',ico:'🎨',name:'Вайб кодинг',hint:'No-code, Промпты',color:'#7c4fa8',topics:['Промпт инжиниринг','No-code инструменты','Figma основы','UI/UX дизайн','ChatGPT трюки','Автоматизация']},
-    {id:'ai',ico:'🤖',name:'ИИ и CV',hint:'ML, Нейросети, Зрение',color:'#c4622e',topics:['Что такое ML','Нейронные сети','Компьютерное зрение','YOLO модели','OpenCV основы','Свой AI проект']},
+    {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика',meta:'2500+ задач',color:'#3b6ea8',topics:['Дроби и пропорции (6-7 кл)','Линейные уравнения','Квадратные уравнения','Неравенства','Системы уравнений','Геометрия: треугольники','Геометрия: окружность','Тригонометрия','Логарифмы','Пределы','Производная','Интеграл','Линейная алгебра','Дифференциальные уравнения','Теория вероятностей']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика',meta:'1800+ задач',color:'#b8860b',topics:['Скорость и путь','Законы Ньютона','Работа и энергия','Давление и гидростатика','Теплота и термодинамика','Электричество: ток и напряжение','Закон Ома','Оптика','Волны и звук','Электромагнетизм','Молекулярная физика','Основы квантовой физики','Теоретическая механика (вуз)']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Грамматика + 1000 тестов',meta:'1000 тестов',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 задач',color:'#d97757',topics:['HTML5 семантика','CSS Flexbox','CSS Grid','Responsive дизайн','JavaScript: основы','JavaScript: DOM','JavaScript: async/await','Fetch API','React: компоненты','React: state и props','React Hooks','React Router','Работа с API','Frontend архитектура']},
+    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + APIs + базы',meta:'1000 задач',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI основы','Flask основы','REST API дизайн','PostgreSQL основы','SQL продвинутый','SQLAlchemy ORM','Redis кэширование','JWT аутентификация','Тестирование API','Backend архитектура']},
+    {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD, облако и автоматизация',meta:'700 задач',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD базово','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Мониторинг и логирование','Релизный процесс']},
+    {id:'docker',ico:'🐳',name:'Docker понятным языком',hint:'Контейнеры от нуля',meta:'Пошаговый курс',color:'#1682b8',topics:['Что такое контейнеры и зачем они нужны','Image vs Container простыми словами','Dockerfile шаг за шагом','Docker Compose','Volumes без боли','Networking для новичков','Полезные команды Docker','Troubleshooting: частые ошибки']},
+    {id:'git',ico:'🌿',name:'Git понятным языком',hint:'От init до командной работы',meta:'Практика в каждом уроке',color:'#c4622e',topics:['Git как машина времени','git init / add / commit','История: log и diff','Ветки: branch / checkout','Merge без конфликтов','Как решать конфликты','GitHub workflow','SSH keys и безопасность','gitignore и чистый репозиторий']},
   ],
   tg:[
-    {id:'math',ico:'📐',name:'Математика',hint:'Алгебра, Геометрия',color:'#3b6ea8',topics:['Муодилаҳои хатӣ','Муодилаҳои квадратӣ','Функсияҳо','Геометрия','Эҳтимолият','Логарифмҳо']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'Механика, Оптика',color:'#b8860b',topics:['Механика','Қонунҳои Нютон','Термодинамика','Оптика','Барқ','Мавҷҳо']},
-    {id:'eng',ico:'🌍',name:'Забони Англисӣ',hint:'Грамматика, Луғат',color:'#2a7a5c',topics:['Present Tenses','Past Tenses','Future Tenses','Ҷумлаҳои шартӣ','Феъли маҷҳул','Феълҳои ибора']},
-    {id:'it',ico:'💻',name:'IT / Python',hint:'Python, SQL, Git, Docker',color:'#d97757',topics:['Асосҳои Python','Функсияҳо','Дархостҳои SQL','Фармонҳои Git','Docker','Боти Telegram']},
-    {id:'vibe',ico:'🎨',name:'Вайб кодинг',hint:'No-code, Промптҳо',color:'#7c4fa8',topics:['Инжиниринги промпт','No-code асбобҳо','Figma','Тарҳи UI/UX','Трюкҳои ChatGPT','Автоматикунонӣ']},
-    {id:'ai',ico:'🤖',name:'ЗС ва CV',hint:'ML, Шабакаҳо, Биниш',color:'#c4622e',topics:['ML чист','Шабакаҳои нейронӣ','Биниши компютерӣ','Моделҳои YOLO','OpenCV','Лоиҳаи AI']},
-  ]
+    {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ',meta:'2500+ машқ',color:'#3b6ea8',topics:['Касрҳо ва таносубҳо','Муодилаҳои хаттӣ','Муодилаҳои квадратӣ','Нобаробарӣ','Системаҳои муодила','Геометрия: секунҷа','Геометрия: давра','Тригонометрия','Логарифмҳо','Ҳад (limit)','Ҳосила','Интеграл','Алгебраи хаттӣ','Муодилаҳои дифференсиалӣ','Эҳтимолият']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ',meta:'1800+ машқ',color:'#b8860b',topics:['Суръат ва роҳ','Қонунҳои Нютон','Кор ва энергия','Фишор ва гидростатика','Гармӣ ва термодинамика','Барқ: ҷараён ва шиддат','Қонуни Ом','Оптика','Мавҷ ва садо','Электромагнетизм','Физикаи молекулавӣ','Асосҳои квантӣ','Механикаи назариявӣ']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Грамматика + 1000 тест',meta:'1000 тест',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 машқ',color:'#d97757',topics:['HTML5 semantics','CSS Flexbox','CSS Grid','Responsive design','JavaScript basics','JavaScript DOM','JavaScript async/await','Fetch API','React components','React state and props','React Hooks','React Router','Working with API','Frontend architecture']},
+    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + API + DB',meta:'1000 машқ',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI basics','Flask basics','REST API design','PostgreSQL basics','Advanced SQL','SQLAlchemy ORM','Redis caching','JWT auth','API testing','Backend architecture']},
+    {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD ва абр',meta:'700 машқ',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
+    {id:'docker',ico:'🐳',name:'Docker сода',hint:'Контейнерҳо аз 0',meta:'Дарсҳои қадам ба қадам',color:'#1682b8',topics:['Контейнер чист ва барои чӣ лозим аст','Image vs Container бо мисоли оддӣ','Dockerfile қадам ба қадам','Docker Compose','Volumes барои навкорон','Networking барои навкорон','Фармонҳои муҳим Docker','Хатогиҳои маъмул ва ислоҳ']},
+    {id:'git',ico:'🌿',name:'Git сода',hint:'Аз init то teamwork',meta:'Амалия дар ҳар дарс',color:'#c4622e',topics:['Git ҳамчун time machine','git init / add / commit','log ва diff','Branch ва checkout','Merge бе стресс','Ҳалли конфликтҳо','GitHub workflow','SSH keys ва амният','gitignore']},
+  ],
+  en:[
+    {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 to university',meta:'2500+ problems',color:'#3b6ea8',topics:['Fractions and ratios','Linear equations','Quadratic equations','Inequalities','Systems of equations','Geometry: triangles','Geometry: circles','Trigonometry','Logarithms','Limits','Derivatives','Integrals','Linear algebra','Differential equations','Probability theory']},
+    {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 to university',meta:'1800+ problems',color:'#b8860b',topics:['Speed and distance','Newton laws','Work and energy','Pressure and hydrostatics','Thermodynamics','Electricity: current and voltage','Ohm law','Optics','Waves and sound','Electromagnetism','Molecular physics','Intro to quantum physics','Theoretical mechanics']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar + 1000 tests',meta:'1000 tests',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 tasks',color:'#d97757',topics:['HTML5 semantics','CSS Flexbox','CSS Grid','Responsive design','JavaScript basics','JavaScript DOM','JavaScript async/await','Fetch API','React components','React state and props','React Hooks','React Router','Working with API','Frontend architecture']},
+    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + APIs + DB',meta:'1000 tasks',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI basics','Flask basics','REST API design','PostgreSQL basics','Advanced SQL','SQLAlchemy ORM','Redis caching','JWT auth','API testing','Backend architecture']},
+    {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD and cloud basics',meta:'700 tasks',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
+    {id:'docker',ico:'🐳',name:'Docker made simple',hint:'Containers for beginners',meta:'Step-by-step course',color:'#1682b8',topics:['What are containers and why use them','Image vs Container','Dockerfile step by step','Docker Compose','Volumes made easy','Networking for beginners','Essential Docker commands','Troubleshooting common errors']},
+    {id:'git',ico:'🌿',name:'Git made simple',hint:'From init to teamwork',meta:'Practice in every lesson',color:'#c4622e',topics:['Git as a time machine','git init / add / commit','log and diff','Branch and checkout','Merge basics','Resolving conflicts','GitHub workflow','SSH keys and security','gitignore']},
+  ],
 };
 
 const TX={
@@ -538,6 +601,11 @@ const TX={
     navLearn:'Учиться',navPhoto:'Фото',navProg:'Прогресс',
     lblSub:'📚 Выбери предмет',lblTopic:'🎯 Выбери тему',
     emptyTitle:'Выбери предмет выше',emptySub:'Donish AI объяснит любую тему лучше учителя',
+    welcomeTitle:'Добро пожаловать в Donish AI',
+    welcomeSub:'Твоя персональная платформа для математики, физики, английского и IT. Учись шаг за шагом, решай задачи и усиливай уверенность каждый день.',
+    welcomeChip1:'📐 6 класс → Высшая математика',
+    welcomeChip2:'🇬🇧 1000 English тестов',
+    welcomeChip3:'💻 1000+ IT задач',
     photoLbl:'📸 Фото → Решение',dropTitle:'Сфотографируй задачу',
     dropSub:'Нажми чтобы открыть камеру или загрузить фото.\nDonish AI решит и объяснит шаг за шагом.',
     howTitle:'💡 Как это работает',
@@ -547,6 +615,7 @@ const TX={
     progTitle:'Мой прогресс',progSub:'Продолжай учиться каждый день!',
     stat1:'Тем',stat2:'Фото',stat3:'Дней',
     lblProgSub:'Прогресс по предметам',
+    backTopics:'← К темам',
     steps:['📚 ОБЪЯСНЕНИЕ','🧪 ПРИМЕРЫ','✍️ ПРАКТИКА','🤖 ПРОВЕРКА'],
     toastDone:'🎉 Тема пройдена!',
   },
@@ -554,6 +623,11 @@ const TX={
     navLearn:'Омӯхтан',navPhoto:'Акс',navProg:'Пешрафт',
     lblSub:'📚 Фанро интихоб кун',lblTopic:'🎯 Мавзӯъро интихоб кун',
     emptyTitle:'Фанро аз боло интихоб кун',emptySub:'Donish AI ҳар мавзӯъро беҳтар шарҳ медиҳад',
+    welcomeTitle:'Ба Donish AI хуш омадед',
+    welcomeSub:'Платформаи шахсии ту барои математика, физика, англисӣ ва IT. Қадам ба қадам омӯз, машқ ҳал кун ва ҳар рӯз қавитар шав.',
+    welcomeChip1:'📐 Синфи 6 → математикаи олӣ',
+    welcomeChip2:'🇬🇧 1000 English тест',
+    welcomeChip3:'💻 1000+ IT машқ',
     photoLbl:'📸 Акс → Ҳал',dropTitle:'Аз масъала акс бигир',
     dropSub:'Барои кушодани камера пахш кун.\nDonish AI масъаларо ҳал мекунад ва шарҳ медиҳад.',
     howTitle:'💡 Чӣ тавр кор мекунад',
@@ -563,9 +637,32 @@ const TX={
     progTitle:'Пешрафти ман',progSub:'Ҳар рӯз омӯз!',
     stat1:'Мавзӯъ',stat2:'Акс',stat3:'Рӯз',
     lblProgSub:'Пешрафт аз рӯи фанҳо',
+    backTopics:'← Ба мавзӯъҳо',
     steps:['📚 ШАРҲ','🧪 МИСОЛҲО','✍️ МАШҚ','🤖 САНҶИШ'],
     toastDone:'🎉 Мавзӯъ гузашт!',
-  }
+  },
+  en:{
+    navLearn:'Learn',navPhoto:'Photo',navProg:'Progress',
+    lblSub:'📚 Choose subject',lblTopic:'🎯 Choose topic',
+    emptyTitle:'Pick a subject above',emptySub:'Donish AI explains every topic clearly and simply',
+    welcomeTitle:'Welcome to Donish AI',
+    welcomeSub:'Your personal platform for math, physics, English, and IT. Learn step by step, solve tasks, and stay motivated every day.',
+    welcomeChip1:'📐 Grade 6 → Higher Mathematics',
+    welcomeChip2:'🇬🇧 1000 English tests',
+    welcomeChip3:'💻 1000+ IT tasks',
+    photoLbl:'📸 Photo → Solution',dropTitle:'Take a photo of problem',
+    dropSub:'Tap to open camera or upload a photo.\nDonish AI will solve and explain step by step.',
+    howTitle:'💡 How it works',
+    howBody:'1. Take a photo from a textbook or notebook<br>2. Donish AI reads and understands the task<br>3. Get a step-by-step explanation',
+    analyzeBtn:'🤖 Solve and explain',
+    photoInp:'Question about this task...',inp:'Type your question or answer...',
+    progTitle:'My progress',progSub:'Keep learning every day!',
+    stat1:'Topics',stat2:'Photos',stat3:'Days',
+    lblProgSub:'Progress by subject',
+    backTopics:'← Back to topics',
+    steps:['📚 EXPLAIN','🧪 EXAMPLES','✍️ PRACTICE','🤖 CHECK'],
+    toastDone:'🎉 Topic completed!',
+  },
 };
 
 let lang='ru', curSub=null, curTopic=null, curStep=1, done=[], mid=0;
@@ -585,8 +682,16 @@ function showToast(msg){
 
 function setLang(l){
   lang=l;
+  if(curSub){
+    const nextSub=SUBJECTS[lang].find(s=>s.id===curSub.id);
+    if(nextSub){
+      curSub=nextSub;
+      if(curTopic && !curSub.topics.includes(curTopic)) curTopic=null;
+    }
+  }
   document.getElementById('btn-ru').className='lbtn'+(l==='ru'?' on':'');
   document.getElementById('btn-tg').className='lbtn'+(l==='tg'?' on':'');
+  document.getElementById('btn-en').className='lbtn'+(l==='en'?' on':'');
   const tx=TX[l];
   document.getElementById('nav-lbl1').textContent=tx.navLearn;
   document.getElementById('nav-lbl2').textContent=tx.navPhoto;
@@ -595,6 +700,11 @@ function setLang(l){
   document.getElementById('lbl-topics').textContent=tx.lblTopic;
   document.getElementById('empty-title').textContent=tx.emptyTitle;
   document.getElementById('empty-sub').textContent=tx.emptySub;
+  document.getElementById('welcome-title').textContent=tx.welcomeTitle;
+  document.getElementById('welcome-sub').textContent=tx.welcomeSub;
+  document.getElementById('welcome-chip1').textContent=tx.welcomeChip1;
+  document.getElementById('welcome-chip2').textContent=tx.welcomeChip2;
+  document.getElementById('welcome-chip3').textContent=tx.welcomeChip3;
   document.getElementById('drop-title').textContent=tx.dropTitle;
   document.getElementById('drop-sub').textContent=tx.dropSub;
   document.getElementById('how-title').textContent=tx.howTitle;
@@ -608,6 +718,7 @@ function setLang(l){
   document.getElementById('stat-lbl2').textContent=tx.stat2;
   document.getElementById('stat-lbl3').textContent=tx.stat3;
   document.getElementById('lbl-prog-subjects').textContent=tx.lblProgSub;
+  document.getElementById('btn-back-topics').textContent=tx.backTopics;
   renderSubs(); if(curSub) renderTopics(); updateSteps(); renderProgress();
 }
 
@@ -621,6 +732,7 @@ function switchNav(screen){
 
 function renderSubs(){
   const g=document.getElementById('sgrid'); g.innerHTML='';
+  const doneWord=lang==='ru'?'пройдено':(lang==='tg'?'гузашт':'done');
   SUBJECTS[lang].forEach(s=>{
     const d=document.createElement('div');
     d.className='scard'+(curSub&&curSub.id===s.id?' on':'');
@@ -630,7 +742,8 @@ function renderSubs(){
       <span class="sico">${s.ico}</span>
       <div class="sname">${s.name}</div>
       <div class="shint">${s.hint}</div>
-      ${doneCount>0?`<div style="margin-top:8px"><span class="chip chip-green">${doneCount} ${lang==='ru'?'пройдено':'гузашт'}</span></div>`:''}
+      ${s.meta?`<div class="smeta">${s.meta}</div>`:''}
+      ${doneCount>0?`<div style="margin-top:8px"><span class="chip chip-green">${doneCount} ${doneWord}</span></div>`:''}
       ${pct>0?`<div class="prog-mini"><div class="prog-mini-fill" style="width:${pct}%"></div></div>`:''}
     `;
     d.style.setProperty('--c',s.color);
@@ -642,6 +755,7 @@ function renderSubs(){
 function pickSub(s){
   curSub=s; curTopic=null; curStep=1; done=[];
   renderSubs(); renderTopics();
+  document.getElementById('learn-scroll').style.display='block';
   document.getElementById('topics-section').style.display='block';
   document.getElementById('lesson-section').style.display='none';
   document.getElementById('empty-learn').style.display='none';
@@ -684,10 +798,10 @@ function goStep(n){
   else if(n===3&&!done.includes(3)){done.push(3);addAI(getPractice());updateSteps();}
   else if(n===4){
     if(!done.includes(3)){
-      addAI(lang==='ru'?'✍️ Сначала выполни задание на шаге 3!':'✍️ Аввал қадами 3-ро иҷро кун!');
+      addAI(lang==='ru'?'✍️ Сначала выполни задание на шаге 3!':(lang==='en'?'✍️ First complete the task in step 3!':'✍️ Аввал қадами 3-ро иҷро кун!'));
       curStep=3; updateSteps();
     } else {
-      addAI(lang==='ru'?'✅ Отлично! Теперь напиши свой ответ на задание — я проверю! 👇':'✅ Офарин! Ҳоло ҷавоби худро нависед — ман месанҷам! 👇');
+      addAI(lang==='ru'?'✅ Отлично! Теперь напиши свой ответ на задание — я проверю! 👇':(lang==='en'?'✅ Great! Now send your answer to the practice task - I will check it! 👇':'✅ Офарин! Ҳоло ҷавоби худро нависед — ман месанҷам! 👇'));
     }
   }
 }
@@ -715,37 +829,37 @@ function updateSteps(){
 
 function getExplain(){
   const s=curSub.name,t=curTopic;
-  return lang==='ru'
-    ?`🎓 Тема: "${t}"\n\n💡 Простое объяснение:\n"${t}" — одна из ключевых тем в "${s}". Разберём шаг за шагом!\n\nПредставь это как строительство: сначала фундамент (основы), потом стены (правила), потом крыша (применение).\n\n📝 Пример из жизни:\nМы используем принципы "${t}" каждый день — в магазине, в телефоне, в природе вокруг нас. Это не просто теория — это инструмент!\n\n❓ Твоё задание:\nОбъясни своими словами — что такое "${t}"? Напиши 2-3 предложения, потом жми "🧪 ПРИМЕРЫ"! 👇`
-    :`🎓 Мавзӯъ: "${t}"\n\n💡 Шарҳи оддӣ:\n"${t}" — яке аз мавзӯъҳои муҳим дар "${s}" аст. Қадам ба қадам меомӯзем!\n\nИнро мисли сохтмон тасаввур кун: аввал бунёд, баъд деворҳо, баъд бом.\n\n📝 Мисол аз зиндагӣ:\nМо принсипҳои "${t}"-ро ҳар рӯз истифода мебарем — дар дӯкон, дар телефон, дар табиат.\n\n❓ Супориши ту:\n"${t}"-ро бо калимаҳои худ шарҳ деҳ! 2-3 ҷумла нависед 👇`;
+  if(lang==='ru') return `🎓 Тема: "${t}"\n\n💡 Простое объяснение:\n"${t}" — одна из ключевых тем в "${s}". Разберём шаг за шагом!\n\nПредставь это как строительство: сначала фундамент (основы), потом стены (правила), потом крыша (применение).\n\n📝 Пример из жизни:\nМы используем принципы "${t}" каждый день — в магазине, в телефоне, в природе вокруг нас. Это не просто теория — это инструмент!\n\n❓ Твоё задание:\nОбъясни своими словами — что такое "${t}"? Напиши 2-3 предложения, потом жми "🧪 ПРИМЕРЫ"! 👇`;
+  if(lang==='en') return `🎓 Topic: "${t}"\n\n💡 Simple explanation:\n"${t}" is one of the key topics in "${s}". Let's break it down step by step.\n\nThink about it like building a house: first the foundation (basics), then the walls (rules), then the roof (application).\n\n📝 Real-life example:\nWe use ideas from "${t}" in daily life: in shopping, on phones, and in nature. It is not just theory.\n\n❓ Your task:\nExplain in your own words what "${t}" means. Write 2-3 sentences, then open "🧪 EXAMPLES". 👇`;
+  return `🎓 Мавзӯъ: "${t}"\n\n💡 Шарҳи оддӣ:\n"${t}" — яке аз мавзӯъҳои муҳим дар "${s}" аст. Қадам ба қадам меомӯзем!\n\nИнро мисли сохтмон тасаввур кун: аввал бунёд, баъд деворҳо, баъд бом.\n\n📝 Мисол аз зиндагӣ:\nМо принсипҳои "${t}"-ро ҳар рӯз истифода мебарем — дар дӯкон, дар телефон, дар табиат.\n\n❓ Супориши ту:\n"${t}"-ро бо калимаҳои худ шарҳ деҳ! 2-3 ҷумла нависед 👇`;
 }
 
 function getExamples(){
   const s=curSub.name,t=curTopic;
-  return lang==='ru'
-    ?`🔍 Дополнительные примеры по теме "${t}":\n\n📌 Пример 1 — В теории:\nВ учебнике "${t}" объясняется через формулы и правила. Но главное — понять идею, а не просто запомнить.\n\n📌 Пример 2 — На практике:\n"${t}" используется в реальных задачах: от простых вычислений до сложных инженерных решений. Инженеры, программисты, учёные применяют это каждый день.\n\n💡 Главная идея:\nКогда ты понял "${t}" — ты можешь решить ЛЮБУЮ задачу по этой теме.\n\n✅ Теперь жми "✍️ ПРАКТИКА" чтобы проверить себя!`
-    :`🔍 Мисолҳои иловагӣ оид ба "${t}":\n\n📌 Мисол 1 — Назария:\nДар китоб "${t}" тавассути формулаҳо шарҳ дода мешавад. Аммо муҳимтарин чиз — идеяро фаҳмидан аст.\n\n📌 Мисол 2 — Амалия:\n"${t}" дар масъалаҳои воқеӣ — аз ҳисобҳои оддӣ то қарорҳои мураккаби муҳандисӣ истифода мешавад.\n\n💡 Идеяи асосӣ:\nВақте ки "${t}"-ро фаҳмидӣ — ҳар масъаларо ҳал карда метавонӣ.\n\n✅ "✍️ МАШҚ"-ро пахш кун!`;
+  if(lang==='ru') return `🔍 Дополнительные примеры по теме "${t}":\n\n📌 Пример 1 — В теории:\nВ учебнике "${t}" объясняется через формулы и правила. Но главное — понять идею, а не просто запомнить.\n\n📌 Пример 2 — На практике:\n"${t}" используется в реальных задачах: от простых вычислений до сложных инженерных решений. Инженеры, программисты, учёные применяют это каждый день.\n\n💡 Главная идея:\nКогда ты понял "${t}" — ты можешь решить ЛЮБУЮ задачу по этой теме.\n\n✅ Теперь жми "✍️ ПРАКТИКА" чтобы проверить себя!`;
+  if(lang==='en') return `🔍 More examples for "${t}":\n\n📌 Example 1 - Theory:\nIn textbooks, "${t}" is explained with formulas and rules. The key is understanding the idea, not memorizing.\n\n📌 Example 2 - Practice:\n"${t}" appears in real tasks from simple calculations to complex engineering solutions.\n\n💡 Core idea:\nWhen you understand "${t}", you can solve many types of problems.\n\n✅ Tap "✍️ PRACTICE" to test yourself!`;
+  return `🔍 Мисолҳои иловагӣ оид ба "${t}":\n\n📌 Мисол 1 — Назария:\nДар китоб "${t}" тавассути формулаҳо шарҳ дода мешавад. Аммо муҳимтарин чиз — идеяро фаҳмидан аст.\n\n📌 Мисол 2 — Амалия:\n"${t}" дар масъалаҳои воқеӣ — аз ҳисобҳои оддӣ то қарорҳои мураккаби муҳандисӣ истифода мешавад.\n\n💡 Идеяи асосӣ:\nВақте ки "${t}"-ро фаҳмидӣ — ҳар масъаларо ҳал карда метавонӣ.\n\n✅ "✍️ МАШҚ"-ро пахш кун!`;
 }
 
 function getPractice(){
   const t=curTopic;
-  return lang==='ru'
-    ?`✍️ Практическое задание:\n\n📝 Тема: "${t}"\n\nПосмотри на эту тему с разных сторон и ответь:\n\n• Где ты встречал "${t}" в реальной жизни?\n• Как бы ты объяснил это другу простыми словами?\n• Приведи свой пример\n\nНапиши ответ (минимум 2 предложения) и нажми отправить — я проверю твои знания! 👇`
-    :`✍️ Супориши амалӣ:\n\n📝 Мавзӯъ: "${t}"\n\nБа ин мавзӯъ аз ҷанбаҳои гуногун нигоҳ кун:\n\n• "${t}"-ро дар зиндагӣ дар куҷо дидӣ?\n• Ба дӯст чӣ тавр шарҳ медодӣ?\n• Мисоли худро биёр\n\nҶавоб нависед (камаш 2 ҷумла) — ман месанҷам! 👇`;
+  if(lang==='ru') return `✍️ Практическое задание:\n\n📝 Тема: "${t}"\n\nПосмотри на эту тему с разных сторон и ответь:\n\n• Где ты встречал "${t}" в реальной жизни?\n• Как бы ты объяснил это другу простыми словами?\n• Приведи свой пример\n\nНапиши ответ (минимум 2 предложения) и нажми отправить — я проверю твои знания! 👇`;
+  if(lang==='en') return `✍️ Practice task:\n\n📝 Topic: "${t}"\n\nLook at this topic from different angles:\n\n• Where do you see "${t}" in real life?\n• How would you explain it to a friend?\n• Give your own short example\n\nWrite at least 2 sentences and send your answer - I will check it. 👇`;
+  return `✍️ Супориши амалӣ:\n\n📝 Мавзӯъ: "${t}"\n\nБа ин мавзӯъ аз ҷанбаҳои гуногун нигоҳ кун:\n\n• "${t}"-ро дар зиндагӣ дар куҷо дидӣ?\n• Ба дӯст чӣ тавр шарҳ медодӣ?\n• Мисоли худро биёр\n\nҶавоб нависед (камаш 2 ҷумла) — ман месанҷам! 👇`;
 }
 
 function getCheck(answer){
   const t=curTopic;
-  return lang==='ru'
-    ?`✅ Отлично! Ты справился!\n\n🎯 Разбор твоего ответа по теме "${t}":\n\nТы правильно понял суть! Вот что было хорошо:\n• Ты попытался объяснить своими словами — это лучший способ учиться\n• Самостоятельное мышление важнее заучивания\n\n💡 Совет для закрепления:\nПовтори тему через 1-2 дня — так информация остаётся в памяти надолго. Это называется интервальное повторение.\n\n🏆 Тема "${t}" — ПРОЙДЕНА! Так держать! ⭐`
-    :`✅ Офарин! Ту баракс кардӣ!\n\n🎯 Таҳлили ҷавоби ту оид ба "${t}":\n\nТу моҳияти мавзӯъро дуруст фаҳмидӣ! Инҳо хуб буд:\n• Ту кӯшиш кардӣ бо калимаҳои худ шарҳ диҳӣ\n• Тафаккури мустақил аз ёд кардан муҳимтар аст\n\n💡 Барои мустаҳкам кардан:\nМавзӯъро баъд аз 1-2 рӯз такрор кун.\n\n🏆 Мавзӯъи "${t}" — ГУЗАШТ! ⭐`;
+  if(lang==='ru') return `✅ Отлично! Ты справился!\n\n🎯 Разбор твоего ответа по теме "${t}":\n\nТы правильно понял суть! Вот что было хорошо:\n• Ты попытался объяснить своими словами — это лучший способ учиться\n• Самостоятельное мышление важнее заучивания\n\n💡 Совет для закрепления:\nПовтори тему через 1-2 дня — так информация остаётся в памяти надолго. Это называется интервальное повторение.\n\n🏆 Тема "${t}" — ПРОЙДЕНА! Так держать! ⭐`;
+  if(lang==='en') return `✅ Great work! You did it!\n\n🎯 Review of your answer for "${t}":\n\nYou understood the core idea well.\n• You explained in your own words - this is the best way to learn\n• Your own reasoning is more important than memorizing\n\n💡 Memory tip:\nRepeat this topic in 1-2 days to lock it in.\n\n🏆 Topic "${t}" is completed! ⭐`;
+  return `✅ Офарин! Ту баракс кардӣ!\n\n🎯 Таҳлили ҷавоби ту оид ба "${t}":\n\nТу моҳияти мавзӯъро дуруст фаҳмидӣ! Инҳо хуб буд:\n• Ту кӯшиш кардӣ бо калимаҳои худ шарҳ диҳӣ\n• Тафаккури мустақил аз ёд кардан муҳимтар аст\n\n💡 Барои мустаҳкам кардан:\nМавзӯъро баъд аз 1-2 рӯз такрор кун.\n\n🏆 Мавзӯъи "${t}" — ГУЗАШТ! ⭐`;
 }
 
 function getFree(q){
   const t=curTopic,s=curSub?.name||'';
-  return lang==='ru'
-    ?`💬 Хороший вопрос!\n\nВ контексте "${t}" (${s}):\nГлавное — понять логику, а не запомнить формулу. Попробуй разбить вопрос на части:\n\n1. Что дано?\n2. Что нужно найти?\n3. Какой метод подходит?\n\nЕсли разобьёшь задачу на шаги — решение придёт само! 🌟`
-    :`💬 Саволи хуб!\n\nДар бораи "${t}" (${s}):\nМуҳимтарин чиз — мантиқро фаҳмидан аст. Саволро ба қисмҳо тақсим кун:\n\n1. Чӣ дода шудааст?\n2. Чӣ ёфтан лозим?\n3. Кадом усул мувофиқ аст?\n\nАгар масъаларо ба қадамҳо тақсим кунӣ — ҳал худаш меояд! 🌟`;
+  if(lang==='ru') return `💬 Хороший вопрос!\n\nВ контексте "${t}" (${s}):\nГлавное — понять логику, а не запомнить формулу. Попробуй разбить вопрос на части:\n\n1. Что дано?\n2. Что нужно найти?\n3. Какой метод подходит?\n\nЕсли разобьёшь задачу на шаги — решение придёт само! 🌟`;
+  if(lang==='en') return `💬 Good question!\n\nIn the context of "${t}" (${s}):\nFocus on logic, not memorization. Break the problem into steps:\n\n1. What is given?\n2. What is required?\n3. Which method fits?\n\nWhen the structure is clear, the answer gets easier. 🌟`;
+  return `💬 Саволи хуб!\n\nДар бораи "${t}" (${s}):\nМуҳимтарин чиз — мантиқро фаҳмидан аст. Саволро ба қисмҳо тақсим кун:\n\n1. Чӣ дода шудааст?\n2. Чӣ ёфтан лозим?\n3. Кадом усул мувофиқ аст?\n\nАгар масъаларо ба қадамҳо тақсим кунӣ — ҳал худаш меояд! 🌟`;
 }
 
 // PHOTO
@@ -775,12 +889,14 @@ function analyzePhoto(){
   if(!photoBase64||photoAnalyzed) return;
   const btn=document.getElementById('analyze-btn');
   btn.disabled=true;
-  btn.textContent=lang==='ru'?'⏳ Анализирую...':'⏳ Таҳлил...';
-  const subName=curSub?curSub.name:(lang==='ru'?'общий предмет':'фанни умумӣ');
+  btn.textContent=lang==='ru'?'⏳ Анализирую...':(lang==='en'?'⏳ Analyzing...':'⏳ Таҳлил...');
+  const subName=curSub?curSub.name:(lang==='ru'?'общий предмет':(lang==='en'?'general subject':'фанни умумӣ'));
   const id=addPhotoBubble(true);
   setTimeout(()=>{
     const result=lang==='ru'
       ?`📸 Фото получено!\n\n🔍 Анализирую задачу по предмету "${subName}"...\n\n✅ Решение шаг за шагом:\n\n1️⃣ Читаем условие:\nВнимательно читаем что дано и что нужно найти.\n\n2️⃣ Выбираем метод:\nДля этого типа задачи применяем основной метод решения.\n\n3️⃣ Решаем:\nПрименяем нужную формулу или правило к данным.\n\n4️⃣ Проверяем ответ:\nПодставляем ответ обратно и проверяем правильность.\n\n💡 Запомни правило:\nВсегда записывай: Дано → Найти → Решение → Ответ\n\n❓ Есть вопросы по решению? Напиши ниже!`
+      :lang==='en'
+      ?`📸 Photo received!\n\n🔍 Analyzing your problem in "${subName}"...\n\n✅ Step-by-step approach:\n\n1️⃣ Read the task:\nIdentify what is given and what you need to find.\n\n2️⃣ Choose a method:\nPick the right formula or concept.\n\n3️⃣ Solve:\nApply the method carefully.\n\n4️⃣ Check:\nVerify if the final answer is logical and correct.\n\n💡 Rule to remember:\nAlways write: Given → Find → Solution → Answer\n\n❓ Need help with any step? Ask below!`
       :`📸 Акс гирифта шуд!\n\n🔍 Масъаларо аз фани "${subName}" таҳлил мекунам...\n\n✅ Ҳал қадам ба қадам:\n\n1️⃣ Шартро мехонем:\nДода шуда ва ёфтан лозимро муайян мекунем.\n\n2️⃣ Усулро интихоб мекунем:\nБарои ин навъи масъала усули асосӣ татбиқ мешавад.\n\n3️⃣ Ҳал мекунем:\nФормула ё қоидаи лозимиро татбиқ мекунем.\n\n4️⃣ Ҷавобро месанҷем:\nҶавобро ба ҷои аслиаш гузошта месанҷем.\n\n💡 Қоидаи асосӣ:\nҲамеша нависед: Дода шуда → Ёфтан → Ҳал → Ҷавоб\n\n❓ Савол дорӣ? Поён нависед!`;
     updateBubble('photo-chat',id,result);
     photoAnalyzed=true;
@@ -800,6 +916,8 @@ function sendPhoto(){
   setTimeout(()=>{
     const reply=lang==='ru'
       ?`💬 Хороший вопрос!\n\n"${txt}"\n\nВ контексте этой задачи: главное — правильно понять условие и применить нужный метод. Каждая задача решается шаг за шагом.\n\nЕсли разбить на части — всё станет понятно! 🌟`
+      :lang==='en'
+      ?`💬 Great question!\n\n"${txt}"\n\nFor this task, first decode the condition clearly, then apply the right method step by step.\n\nWhen you split the task into parts, it becomes much easier. 🌟`
       :`💬 Саволи хуб!\n\n"${txt}"\n\nДар контексти ин масъала: муҳимтарин чиз — шартро дуруст фаҳмидан ва усули мувофиқро татбиқ кардан аст.\n\nАгар ба қисмҳо тақсим кунӣ — ҳама равшан мешавад! 🌟`;
     updateBubble('photo-chat',id,reply);
   },1200);
@@ -851,7 +969,7 @@ function renderProgress(){
         <span class="prog-ico">${s.ico}</span>
         <div class="prog-info">
           <div class="prog-name">${s.name}</div>
-          <div class="prog-meta">${doneCount}/${s.topics.length} ${lang==='ru'?'тем':'мавзӯъ'}</div>
+          <div class="prog-meta">${doneCount}/${s.topics.length} ${lang==='ru'?'тем':(lang==='en'?'topics':'мавзӯъ')}</div>
         </div>
         <span class="prog-pct-badge">${pct}%</span>
       </div>
@@ -899,8 +1017,7 @@ function updateBubble(chatId,id,text){
   if(c) c.scrollTop=c.scrollHeight;
 }
 
-renderSubs();
-renderProgress();
+setLang(lang);
 </script>
 </body>
 </html>
