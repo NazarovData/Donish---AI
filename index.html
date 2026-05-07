@@ -90,6 +90,33 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
   font-weight:700;
   letter-spacing:.04em;
 }
+.welcome-cta{
+  width:100%;
+  margin-top:12px;
+  border:none;
+  border-radius:14px;
+  padding:12px 14px;
+  background:#fff;
+  color:#1e2536;
+  font-size:12px;
+  font-weight:800;
+  font-family:'Sora',sans-serif;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.14);
+}
+.welcome-cta:active{transform:scale(0.98)}
+.motivation-card{
+  margin:0 16px 16px;
+  background:var(--gold-light);
+  border:1.5px solid #f1df9d;
+  border-radius:var(--radius);
+  padding:12px 14px;
+  color:#5d4306;
+  font-size:12px;
+  line-height:1.6;
+  box-shadow:var(--shadow-sm);
+}
+.motivation-card strong{display:block;font-size:12px;margin-bottom:4px;color:#8a6407}
 
 /* ===== SUBJECTS GRID ===== */
 .subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;padding:0 16px}
@@ -433,6 +460,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
           <span class="ws-chip" id="welcome-chip2">🇬🇧 1000 English тестов</span>
           <span class="ws-chip" id="welcome-chip3">💻 1000+ IT задач</span>
         </div>
+        <button class="welcome-cta" id="welcome-cta" onclick="document.getElementById('sgrid').scrollIntoView({behavior:'smooth',block:'start'})">Начать обучение ↓</button>
+      </div>
+      <div class="motivation-card">
+        <strong id="motivation-title">Мотивация дня</strong>
+        <span id="motivation-text">Не нужно понимать всё сразу. Выбери одну тему, сделай один шаг — и завтра ты уже сильнее, чем сегодня.</span>
       </div>
       <div class="sec-lbl" id="lbl-subjects">📚 Выбери предмет</div>
       <div class="subjects-grid" id="sgrid"></div>
@@ -565,34 +597,40 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sora',
 <script>
 const SUBJECTS={
   ru:[
-    {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика',meta:'2500+ задач',color:'#3b6ea8',topics:['Дроби и пропорции (6-7 кл)','Линейные уравнения','Квадратные уравнения','Неравенства','Системы уравнений','Геометрия: треугольники','Геометрия: окружность','Тригонометрия','Логарифмы','Пределы','Производная','Интеграл','Линейная алгебра','Дифференциальные уравнения','Теория вероятностей']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика',meta:'1800+ задач',color:'#b8860b',topics:['Скорость и путь','Законы Ньютона','Работа и энергия','Давление и гидростатика','Теплота и термодинамика','Электричество: ток и напряжение','Закон Ома','Оптика','Волны и звук','Электромагнетизм','Молекулярная физика','Основы квантовой физики','Теоретическая механика (вуз)']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Грамматика + 1000 тестов',meta:'1000 тестов',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
-    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 задач',color:'#d97757',topics:['HTML5 семантика','CSS Flexbox','CSS Grid','Responsive дизайн','JavaScript: основы','JavaScript: DOM','JavaScript: async/await','Fetch API','React: компоненты','React: state и props','React Hooks','React Router','Работа с API','Frontend архитектура']},
-    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + APIs + базы',meta:'1000 задач',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI основы','Flask основы','REST API дизайн','PostgreSQL основы','SQL продвинутый','SQLAlchemy ORM','Redis кэширование','JWT аутентификация','Тестирование API','Backend архитектура']},
+    {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика',meta:'2500+ задач и пошаговые решения',color:'#3b6ea8',topics:['6 класс: натуральные числа','6 класс: дроби','6 класс: проценты','6 класс: пропорции','7 класс: выражения и формулы','7 класс: линейные уравнения','7 класс: координатная плоскость','8 класс: квадратные корни','8 класс: квадратные уравнения','8 класс: теорема Пифагора','9 класс: функции и графики','9 класс: системы уравнений','9 класс: неравенства','10 класс: тригонометрия','10 класс: степени и логарифмы','10 класс: прогрессии','11 класс: производная','11 класс: интеграл','11 класс: стереометрия','Вуз: пределы','Вуз: математический анализ','Вуз: линейная алгебра','Вуз: матрицы и векторы','Вуз: дифференциальные уравнения','Вуз: теория вероятностей','Вуз: статистика']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика',meta:'1800+ задач и формулы простым языком',color:'#b8860b',topics:['6 класс: физические величины','6 класс: измерения','7 класс: движение и скорость','7 класс: масса и плотность','7 класс: сила и давление','8 класс: работа и энергия','8 класс: тепловые явления','8 класс: электрический ток','8 класс: закон Ома','9 класс: законы Ньютона','9 класс: импульс','9 класс: механические колебания','10 класс: кинематика','10 класс: динамика','10 класс: молекулярная физика','10 класс: термодинамика','11 класс: электромагнетизм','11 класс: оптика','11 класс: волны','11 класс: атомная физика','Вуз: теоретическая механика','Вуз: электродинамика','Вуз: квантовая физика','Вуз: статистическая физика']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 tests',meta:'1000 тестов: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend разработчик',hint:'HTML/CSS/JS/React',meta:'1000 задач + уроки по проектам',color:'#d97757',topics:['Урок 1: HTML структура страницы','Урок 2: Формы и таблицы','Урок 3: CSS selectors','Урок 4: Flexbox','Урок 5: CSS Grid','Урок 6: Responsive дизайн','Урок 7: JavaScript basics','Урок 8: DOM events','Урок 9: Fetch API','Урок 10: async/await','Урок 11: Git для frontend','Урок 12: React components','Урок 13: State and props','Урок 14: React Hooks','Урок 15: React Router','Урок 16: API integration','Урок 17: UI/UX basics','Урок 18: Portfolio project','1000 frontend задач: от кнопки до SPA']},
+    {id:'backend',ico:'🧠',name:'Backend разработчик',hint:'Python + API + базы данных',meta:'1000 задач + backend lessons',color:'#7c4fa8',topics:['Урок 1: Python core','Урок 2: Функции и модули','Урок 3: OOP','Урок 4: Exceptions','Урок 5: Files and JSON','Урок 6: HTTP basics','Урок 7: FastAPI start','Урок 8: REST API routes','Урок 9: PostgreSQL basics','Урок 10: SQL joins','Урок 11: SQLAlchemy ORM','Урок 12: Auth and JWT','Урок 13: Redis cache','Урок 14: API testing','Урок 15: Docker для backend','Урок 16: Deploy backend','Урок 17: Clean architecture','1000 backend задач: API, DB, auth, deploy']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD, облако и автоматизация',meta:'700 задач',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD базово','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Мониторинг и логирование','Релизный процесс']},
     {id:'docker',ico:'🐳',name:'Docker понятным языком',hint:'Контейнеры от нуля',meta:'Пошаговый курс',color:'#1682b8',topics:['Что такое контейнеры и зачем они нужны','Image vs Container простыми словами','Dockerfile шаг за шагом','Docker Compose','Volumes без боли','Networking для новичков','Полезные команды Docker','Troubleshooting: частые ошибки']},
-    {id:'git',ico:'🌿',name:'Git понятным языком',hint:'От init до командной работы',meta:'Практика в каждом уроке',color:'#c4622e',topics:['Git как машина времени','git init / add / commit','История: log и diff','Ветки: branch / checkout','Merge без конфликтов','Как решать конфликты','GitHub workflow','SSH keys и безопасность','gitignore и чистый репозиторий']},
+    {id:'git',ico:'🌿',name:'Git понятным языком',hint:'От init до командной работы',meta:'Git = машина времени для кода',color:'#c4622e',topics:['Git как машина времени','Что такое репозиторий','git init / add / commit','История: log и diff','Ветки: branch / checkout','Merge без конфликтов','Как решать конфликты','GitHub workflow','Pull request простыми словами','SSH keys и безопасность','gitignore и чистый репозиторий']},
+    {id:'python',ico:'🐍',name:'Python',hint:'От нуля до проектов',meta:'700+ задач',color:'#2f8a68',topics:['Переменные и типы','Условия','Циклы','Списки и словари','Функции','Файлы','Ошибки','ООП','Модули','Работа с API','Pandas basics','NumPy basics','Mini projects']},
+    {id:'aicv',ico:'🤖',name:'ИИ и CV',hint:'AI, ML, Computer Vision',meta:'Практика с проектами',color:'#6f55d9',topics:['Что такое AI','Что такое ML','Данные и признаки','Нейронные сети простыми словами','Computer Vision','OpenCV basics','YOLO модели','Prompt Engineering','Claude API','RAG простыми словами','AI проект для портфолио']},
   ],
   tg:[
-    {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ',meta:'2500+ машқ',color:'#3b6ea8',topics:['Касрҳо ва таносубҳо','Муодилаҳои хаттӣ','Муодилаҳои квадратӣ','Нобаробарӣ','Системаҳои муодила','Геометрия: секунҷа','Геометрия: давра','Тригонометрия','Логарифмҳо','Ҳад (limit)','Ҳосила','Интеграл','Алгебраи хаттӣ','Муодилаҳои дифференсиалӣ','Эҳтимолият']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ',meta:'1800+ машқ',color:'#b8860b',topics:['Суръат ва роҳ','Қонунҳои Нютон','Кор ва энергия','Фишор ва гидростатика','Гармӣ ва термодинамика','Барқ: ҷараён ва шиддат','Қонуни Ом','Оптика','Мавҷ ва садо','Электромагнетизм','Физикаи молекулавӣ','Асосҳои квантӣ','Механикаи назариявӣ']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Грамматика + 1000 тест',meta:'1000 тест',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
-    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 машқ',color:'#d97757',topics:['HTML5 semantics','CSS Flexbox','CSS Grid','Responsive design','JavaScript basics','JavaScript DOM','JavaScript async/await','Fetch API','React components','React state and props','React Hooks','React Router','Working with API','Frontend architecture']},
-    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + API + DB',meta:'1000 машқ',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI basics','Flask basics','REST API design','PostgreSQL basics','Advanced SQL','SQLAlchemy ORM','Redis caching','JWT auth','API testing','Backend architecture']},
+    {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ',meta:'2500+ машқ ва ҳалҳои қадам ба қадам',color:'#3b6ea8',topics:['Синфи 6: ададҳои натуралӣ','Синфи 6: касрҳо','Синфи 6: фоизҳо','Синфи 6: таносуб','Синфи 7: ифодаҳо ва формулаҳо','Синфи 7: муодилаҳои хаттӣ','Синфи 8: решаҳои квадратӣ','Синфи 8: муодилаҳои квадратӣ','Синфи 8: теоремаи Пифагор','Синфи 9: функсияҳо ва графикҳо','Синфи 9: системаҳои муодила','Синфи 9: нобаробарӣ','Синфи 10: тригонометрия','Синфи 10: логарифмҳо','Синфи 11: ҳосила','Синфи 11: интеграл','Донишгоҳ: ҳадҳо','Донишгоҳ: анализи математикӣ','Донишгоҳ: алгебраи хаттӣ','Донишгоҳ: муодилаҳои дифференсиалӣ','Донишгоҳ: эҳтимолият ва статистика']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ',meta:'1800+ машқ ва формулаҳо сода',color:'#b8860b',topics:['Синфи 6: бузургиҳои физикӣ','Синфи 6: ченкунӣ','Синфи 7: ҳаракат ва суръат','Синфи 7: масса ва зичӣ','Синфи 7: қувва ва фишор','Синфи 8: кор ва энергия','Синфи 8: гармӣ','Синфи 8: ҷараёни барқ','Синфи 8: қонуни Ом','Синфи 9: қонунҳои Нютон','Синфи 9: импулс','Синфи 10: кинематика','Синфи 10: динамика','Синфи 10: термодинамика','Синфи 11: электромагнетизм','Синфи 11: оптика','Синфи 11: мавҷҳо','Донишгоҳ: механикаи назариявӣ','Донишгоҳ: электродинамика','Донишгоҳ: физикаи квантӣ']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 тест',meta:'1000 тест: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend developer',hint:'HTML/CSS/JS/React',meta:'1000 машқ + project lessons',color:'#d97757',topics:['Lesson 1: HTML structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','1000 frontend tasks']},
+    {id:'backend',ico:'🧠',name:'Backend developer',hint:'Python + API + DB',meta:'1000 машқ + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD ва абр',meta:'700 машқ',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
     {id:'docker',ico:'🐳',name:'Docker сода',hint:'Контейнерҳо аз 0',meta:'Дарсҳои қадам ба қадам',color:'#1682b8',topics:['Контейнер чист ва барои чӣ лозим аст','Image vs Container бо мисоли оддӣ','Dockerfile қадам ба қадам','Docker Compose','Volumes барои навкорон','Networking барои навкорон','Фармонҳои муҳим Docker','Хатогиҳои маъмул ва ислоҳ']},
-    {id:'git',ico:'🌿',name:'Git сода',hint:'Аз init то teamwork',meta:'Амалия дар ҳар дарс',color:'#c4622e',topics:['Git ҳамчун time machine','git init / add / commit','log ва diff','Branch ва checkout','Merge бе стресс','Ҳалли конфликтҳо','GitHub workflow','SSH keys ва амният','gitignore']},
+    {id:'git',ico:'🌿',name:'Git сода',hint:'Аз init то teamwork',meta:'Git = time machine барои код',color:'#c4622e',topics:['Git ҳамчун time machine','Repository чист','git init / add / commit','log ва diff','Branch ва checkout','Merge бе стресс','Ҳалли конфликтҳо','GitHub workflow','Pull request сода','SSH keys ва амният','gitignore']},
+    {id:'python',ico:'🐍',name:'Python',hint:'Аз сифр то project',meta:'700+ машқ',color:'#2f8a68',topics:['Variables and types','Conditions','Loops','Lists and dictionaries','Functions','Files','Errors','OOP','Modules','Working with API','Pandas basics','NumPy basics','Mini projects']},
+    {id:'aicv',ico:'🤖',name:'AI ва CV',hint:'AI, ML, Computer Vision',meta:'Project practice',color:'#6f55d9',topics:['AI чист','ML чист','Data and features','Neural networks simple','Computer Vision','OpenCV basics','YOLO models','Prompt Engineering','Claude API','RAG simple','AI portfolio project']},
   ],
   en:[
-    {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 to university',meta:'2500+ problems',color:'#3b6ea8',topics:['Fractions and ratios','Linear equations','Quadratic equations','Inequalities','Systems of equations','Geometry: triangles','Geometry: circles','Trigonometry','Logarithms','Limits','Derivatives','Integrals','Linear algebra','Differential equations','Probability theory']},
-    {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 to university',meta:'1800+ problems',color:'#b8860b',topics:['Speed and distance','Newton laws','Work and energy','Pressure and hydrostatics','Thermodynamics','Electricity: current and voltage','Ohm law','Optics','Waves and sound','Electromagnetism','Molecular physics','Intro to quantum physics','Theoretical mechanics']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar + 1000 tests',meta:'1000 tests',color:'#2a7a5c',topics:['A1: Verb to be','A1: Subject Pronouns','A1: Possessive Adjectives','A1: Present Simple','A1: Articles a/an/the','A1: Plural Nouns','A1: There is / There are','A1: Can / Can not','A1: Basic Questions','A1: Prepositions in/on/at','A2: Past Simple','A2: Future (going to)','A2: Present Continuous','A2: Comparatives and Superlatives','A2: Countable / Uncountable','A2: Some / Any','A2: Adverbs of Frequency','A2: Modal Verbs (have to / should)','A2: Object Pronouns','A2: Linking Words']},
-    {id:'frontend',ico:'🖥️',name:'Frontend Dev',hint:'HTML/CSS/JS/React',meta:'1000 tasks',color:'#d97757',topics:['HTML5 semantics','CSS Flexbox','CSS Grid','Responsive design','JavaScript basics','JavaScript DOM','JavaScript async/await','Fetch API','React components','React state and props','React Hooks','React Router','Working with API','Frontend architecture']},
-    {id:'backend',ico:'🧠',name:'Backend Dev',hint:'Python + APIs + DB',meta:'1000 tasks',color:'#7c4fa8',topics:['Python core','Python OOP','Decorators and generators','FastAPI basics','Flask basics','REST API design','PostgreSQL basics','Advanced SQL','SQLAlchemy ORM','Redis caching','JWT auth','API testing','Backend architecture']},
+    {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 to university',meta:'2500+ problems and steps',color:'#3b6ea8',topics:['Grade 6: natural numbers','Grade 6: fractions','Grade 6: percentages','Grade 6: proportions','Grade 7: expressions and formulas','Grade 7: linear equations','Grade 8: square roots','Grade 8: quadratic equations','Grade 8: Pythagorean theorem','Grade 9: functions and graphs','Grade 9: systems of equations','Grade 9: inequalities','Grade 10: trigonometry','Grade 10: logarithms','Grade 11: derivatives','Grade 11: integrals','University: limits','University: calculus','University: linear algebra','University: matrices and vectors','University: differential equations','University: probability and statistics']},
+    {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 to university',meta:'1800+ problems and formulas',color:'#b8860b',topics:['Grade 6: physical quantities','Grade 6: measurement','Grade 7: motion and speed','Grade 7: mass and density','Grade 7: force and pressure','Grade 8: work and energy','Grade 8: heat','Grade 8: electric current','Grade 8: Ohm law','Grade 9: Newton laws','Grade 9: momentum','Grade 10: kinematics','Grade 10: dynamics','Grade 10: thermodynamics','Grade 11: electromagnetism','Grade 11: optics','Grade 11: waves','University: theoretical mechanics','University: electrodynamics','University: quantum physics']},
+    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 tests',meta:'1000 tests: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'frontend',ico:'🖥️',name:'Frontend Developer',hint:'HTML/CSS/JS/React',meta:'1000 tasks + project lessons',color:'#d97757',topics:['Lesson 1: HTML page structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','Lesson 17: UI/UX basics','Lesson 18: Portfolio project','1000 frontend tasks']},
+    {id:'backend',ico:'🧠',name:'Backend Developer',hint:'Python + APIs + DB',meta:'1000 tasks + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','Lesson 16: Deploy backend','Lesson 17: Clean architecture','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD and cloud basics',meta:'700 tasks',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
     {id:'docker',ico:'🐳',name:'Docker made simple',hint:'Containers for beginners',meta:'Step-by-step course',color:'#1682b8',topics:['What are containers and why use them','Image vs Container','Dockerfile step by step','Docker Compose','Volumes made easy','Networking for beginners','Essential Docker commands','Troubleshooting common errors']},
-    {id:'git',ico:'🌿',name:'Git made simple',hint:'From init to teamwork',meta:'Practice in every lesson',color:'#c4622e',topics:['Git as a time machine','git init / add / commit','log and diff','Branch and checkout','Merge basics','Resolving conflicts','GitHub workflow','SSH keys and security','gitignore']},
+    {id:'git',ico:'🌿',name:'Git made simple',hint:'From init to teamwork',meta:'Git = time machine for code',color:'#c4622e',topics:['Git as a time machine','What is a repository','git init / add / commit','log and diff','Branch and checkout','Merge basics','Resolving conflicts','GitHub workflow','Pull request made simple','SSH keys and security','gitignore']},
+    {id:'python',ico:'🐍',name:'Python',hint:'From zero to projects',meta:'700+ tasks',color:'#2f8a68',topics:['Variables and types','Conditions','Loops','Lists and dictionaries','Functions','Files','Errors','OOP','Modules','Working with API','Pandas basics','NumPy basics','Mini projects']},
+    {id:'aicv',ico:'🤖',name:'AI and CV',hint:'AI, ML, Computer Vision',meta:'Project practice',color:'#6f55d9',topics:['What is AI','What is ML','Data and features','Neural networks simply','Computer Vision','OpenCV basics','YOLO models','Prompt Engineering','Claude API','RAG simply','AI portfolio project']},
   ],
 };
 
@@ -601,11 +639,14 @@ const TX={
     navLearn:'Учиться',navPhoto:'Фото',navProg:'Прогресс',
     lblSub:'📚 Выбери предмет',lblTopic:'🎯 Выбери тему',
     emptyTitle:'Выбери предмет выше',emptySub:'Donish AI объяснит любую тему лучше учителя',
-    welcomeTitle:'Добро пожаловать в Donish AI',
-    welcomeSub:'Твоя персональная платформа для математики, физики, английского и IT. Учись шаг за шагом, решай задачи и усиливай уверенность каждый день.',
+    welcomeTitle:'Салом, Nazarov! Я Donish AI — твой AI-репетитор',
+    welcomeSub:'Я помогу тебе с математикой, физикой, английским, IT, Python, Docker, Git, искусственным интеллектом и Computer Vision. Можешь учиться по темам или отправить фото задачи.',
     welcomeChip1:'📐 6 класс → Высшая математика',
     welcomeChip2:'🇬🇧 1000 English тестов',
-    welcomeChip3:'💻 1000+ IT задач',
+    welcomeChip3:'💻 Frontend / Backend / DevOps',
+    welcomeCta:'Нажми кнопку ниже чтобы начать ↓',
+    motivationTitle:'Мотивация дня',
+    motivationText:'Не нужно понимать всё сразу. Выбери одну тему, сделай один шаг — и завтра ты уже сильнее, чем сегодня.',
     photoLbl:'📸 Фото → Решение',dropTitle:'Сфотографируй задачу',
     dropSub:'Нажми чтобы открыть камеру или загрузить фото.\nDonish AI решит и объяснит шаг за шагом.',
     howTitle:'💡 Как это работает',
@@ -623,11 +664,14 @@ const TX={
     navLearn:'Омӯхтан',navPhoto:'Акс',navProg:'Пешрафт',
     lblSub:'📚 Фанро интихоб кун',lblTopic:'🎯 Мавзӯъро интихоб кун',
     emptyTitle:'Фанро аз боло интихоб кун',emptySub:'Donish AI ҳар мавзӯъро беҳтар шарҳ медиҳад',
-    welcomeTitle:'Ба Donish AI хуш омадед',
-    welcomeSub:'Платформаи шахсии ту барои математика, физика, англисӣ ва IT. Қадам ба қадам омӯз, машқ ҳал кун ва ҳар рӯз қавитар шав.',
+    welcomeTitle:'Салом, Nazarov! Ман Donish AI — AI-репетитори ту',
+    welcomeSub:'Ман ба ту дар математика, физика, English, IT, Python, Docker, Git, AI ва Computer Vision кӯмак мекунам. Мавзӯъро интихоб кун ё аз масъала акс фирист.',
     welcomeChip1:'📐 Синфи 6 → математикаи олӣ',
     welcomeChip2:'🇬🇧 1000 English тест',
-    welcomeChip3:'💻 1000+ IT машқ',
+    welcomeChip3:'💻 Frontend / Backend / DevOps',
+    welcomeCta:'Барои оғоз кардан пахш кун ↓',
+    motivationTitle:'Мотивацияи рӯз',
+    motivationText:'Ҳама чизро якбора фаҳмидан шарт нест. Як мавзӯъ интихоб кун, як қадам гузор — пагоҳ аз имрӯз қавитар мешавӣ.',
     photoLbl:'📸 Акс → Ҳал',dropTitle:'Аз масъала акс бигир',
     dropSub:'Барои кушодани камера пахш кун.\nDonish AI масъаларо ҳал мекунад ва шарҳ медиҳад.',
     howTitle:'💡 Чӣ тавр кор мекунад',
@@ -645,11 +689,14 @@ const TX={
     navLearn:'Learn',navPhoto:'Photo',navProg:'Progress',
     lblSub:'📚 Choose subject',lblTopic:'🎯 Choose topic',
     emptyTitle:'Pick a subject above',emptySub:'Donish AI explains every topic clearly and simply',
-    welcomeTitle:'Welcome to Donish AI',
-    welcomeSub:'Your personal platform for math, physics, English, and IT. Learn step by step, solve tasks, and stay motivated every day.',
+    welcomeTitle:'Salom, Nazarov! I am Donish AI — your AI tutor',
+    welcomeSub:'I help with mathematics, physics, English, IT, Python, Docker, Git, artificial intelligence, and Computer Vision. Choose a topic or send a photo of a problem.',
     welcomeChip1:'📐 Grade 6 → Higher Mathematics',
     welcomeChip2:'🇬🇧 1000 English tests',
-    welcomeChip3:'💻 1000+ IT tasks',
+    welcomeChip3:'💻 Frontend / Backend / DevOps',
+    welcomeCta:'Tap below to start ↓',
+    motivationTitle:'Daily motivation',
+    motivationText:'You do not need to understand everything at once. Pick one topic, take one step, and tomorrow you will be stronger than today.',
     photoLbl:'📸 Photo → Solution',dropTitle:'Take a photo of problem',
     dropSub:'Tap to open camera or upload a photo.\nDonish AI will solve and explain step by step.',
     howTitle:'💡 How it works',
@@ -705,6 +752,9 @@ function setLang(l){
   document.getElementById('welcome-chip1').textContent=tx.welcomeChip1;
   document.getElementById('welcome-chip2').textContent=tx.welcomeChip2;
   document.getElementById('welcome-chip3').textContent=tx.welcomeChip3;
+  document.getElementById('welcome-cta').textContent=tx.welcomeCta;
+  document.getElementById('motivation-title').textContent=tx.motivationTitle;
+  document.getElementById('motivation-text').textContent=tx.motivationText;
   document.getElementById('drop-title').textContent=tx.dropTitle;
   document.getElementById('drop-sub').textContent=tx.dropSub;
   document.getElementById('how-title').textContent=tx.howTitle;
@@ -827,8 +877,35 @@ function updateSteps(){
   });
 }
 
+function getSpecialExplain(){
+  const id=curSub?.id,t=curTopic;
+  if(id==='eng'){
+    if(lang==='en') return `🇬🇧 English grammar topic: "${t}"\n\nThis section has 1000 A1/A2 grammar tests. We learn one rule, see examples, then answer a mini-test.\n\nFormat:\n1. Rule\n2. Correct example\n3. Incorrect example\n4. Test question\n\nStart with the rule: read the topic name and tell me what you already know about it.`;
+    if(lang==='tg') return `🇬🇧 Мавзӯи English grammar: "${t}"\n\nДар ин қисм 1000 тест барои A1/A2 ҳаст. Мо аввал қоидаро мефаҳмем, баъд мисол мебинем ва баъд тест ҳал мекунем.\n\nФормат:\n1. Қоида\n2. Мисоли дуруст\n3. Мисоли нодуруст\n4. Саволи тестӣ`;
+    return `🇬🇧 English grammar: "${t}"\n\nЗдесь будет база из 1000 тестов по A1/A2. Мы идём просто: правило → правильный пример → неправильный пример → мини-тест.\n\nГлавная цель — не зубрить, а понимать, почему ответ правильный.\n\nГотов? Нажми "🧪 ПРИМЕРЫ", и я покажу правило на понятных примерах.`;
+  }
+  if(id==='docker'){
+    if(lang==='en') return `🐳 Docker made simple: "${t}"\n\nImagine Docker as a shipping container for your app. Everything your app needs travels together: code, settings, dependencies.\n\nWhy it matters: your project works the same on your laptop, your friend's laptop, and the server.`;
+    if(lang==='tg') return `🐳 Docker сода: "${t}"\n\nDocker-ро мисли контейнер тасаввур кун: тамоми код, dependency ва settings якҷоя меравад.\n\nБарои чӣ лозим? То project дар ноутбуки ту, ноутбуки дӯстат ва server як хел кор кунад.`;
+    return `🐳 Docker понятным языком: "${t}"\n\nПредставь Docker как контейнер для перевозки приложения. Внутри контейнера лежит всё: код, зависимости, настройки.\n\nЗачем это нужно? Чтобы проект одинаково работал у тебя, у друга и на сервере.`;
+  }
+  if(id==='git'){
+    if(lang==='en') return `🌿 Git made simple: "${t}"\n\nGit is a time machine for code. Every commit is a saved checkpoint. If something breaks, you can compare, return, or create a new branch safely.`;
+    if(lang==='tg') return `🌿 Git сода: "${t}"\n\nGit мисли time machine барои код аст. Ҳар commit як нуқтаи захирашуда мебошад. Агар чизе вайрон шавад, метавонӣ муқоиса кунӣ ё баргардӣ.`;
+    return `🌿 Git понятным языком: "${t}"\n\nGit — это машина времени для кода. Каждый commit — сохранённая точка. Если что-то сломалось, можно сравнить, вернуться назад или работать в отдельной ветке.`;
+  }
+  if(['frontend','backend','devops'].includes(id)){
+    if(lang==='en') return `💻 Career track: "${curSub.name}"\n\nTopic: "${t}". This track is built as lessons + practical tasks. You learn a small concept, then solve a task like a real developer.`;
+    if(lang==='tg') return `💻 Роҳи касбӣ: "${curSub.name}"\n\nМавзӯъ: "${t}". Ин трек аз дарсҳо ва машқҳои амалӣ иборат аст. Аввал як идея, баъд task мисли developer воқеӣ.`;
+    return `💻 Трек профессии: "${curSub.name}"\n\nТема: "${t}". Здесь обучение идёт как у настоящего разработчика: короткий урок → пример → практическая задача.`;
+  }
+  return null;
+}
+
 function getExplain(){
   const s=curSub.name,t=curTopic;
+  const special=getSpecialExplain();
+  if(special) return special;
   if(lang==='ru') return `🎓 Тема: "${t}"\n\n💡 Простое объяснение:\n"${t}" — одна из ключевых тем в "${s}". Разберём шаг за шагом!\n\nПредставь это как строительство: сначала фундамент (основы), потом стены (правила), потом крыша (применение).\n\n📝 Пример из жизни:\nМы используем принципы "${t}" каждый день — в магазине, в телефоне, в природе вокруг нас. Это не просто теория — это инструмент!\n\n❓ Твоё задание:\nОбъясни своими словами — что такое "${t}"? Напиши 2-3 предложения, потом жми "🧪 ПРИМЕРЫ"! 👇`;
   if(lang==='en') return `🎓 Topic: "${t}"\n\n💡 Simple explanation:\n"${t}" is one of the key topics in "${s}". Let's break it down step by step.\n\nThink about it like building a house: first the foundation (basics), then the walls (rules), then the roof (application).\n\n📝 Real-life example:\nWe use ideas from "${t}" in daily life: in shopping, on phones, and in nature. It is not just theory.\n\n❓ Your task:\nExplain in your own words what "${t}" means. Write 2-3 sentences, then open "🧪 EXAMPLES". 👇`;
   return `🎓 Мавзӯъ: "${t}"\n\n💡 Шарҳи оддӣ:\n"${t}" — яке аз мавзӯъҳои муҳим дар "${s}" аст. Қадам ба қадам меомӯзем!\n\nИнро мисли сохтмон тасаввур кун: аввал бунёд, баъд деворҳо, баъд бом.\n\n📝 Мисол аз зиндагӣ:\nМо принсипҳои "${t}"-ро ҳар рӯз истифода мебарем — дар дӯкон, дар телефон, дар табиат.\n\n❓ Супориши ту:\n"${t}"-ро бо калимаҳои худ шарҳ деҳ! 2-3 ҷумла нависед 👇`;
@@ -843,6 +920,16 @@ function getExamples(){
 
 function getPractice(){
   const t=curTopic;
+  if(curSub?.id==='eng'){
+    if(lang==='en') return `📝 English test #1 / 1000\n\nQuestion: Choose the correct answer for "${t}".\n\nOptions:\nA) I am student.\nB) I am a student.\nC) I a student.\nD) I be a student.\n\nSend A, B, C, or D. I will check your answer and explain why.`;
+    if(lang==='tg') return `📝 English test #1 / 1000\n\nСавол: Ҷавоби дурустро барои "${t}" интихоб кун.\n\nOptions:\nA) I am student.\nB) I am a student.\nC) I a student.\nD) I be a student.\n\nA, B, C ё D навис. Ман ҷавобро месанҷам.`;
+    return `📝 English тест #1 / 1000\n\nВопрос: выбери правильный ответ по теме "${t}".\n\nOptions:\nA) I am student.\nB) I am a student.\nC) I a student.\nD) I be a student.\n\nНапиши A, B, C или D — я проверю и объясню.`;
+  }
+  if(['frontend','backend','devops'].includes(curSub?.id)){
+    if(lang==='en') return `✍️ Developer task\n\nTopic: "${t}"\n\nBuild a tiny example or explain the steps you would take in a real project. Keep it simple: goal → steps → result.`;
+    if(lang==='tg') return `✍️ Developer task\n\nМавзӯъ: "${t}"\n\nЯк мисоли хурд соз ё қадамҳои project-ро навис: мақсад → қадамҳо → натиҷа.`;
+    return `✍️ Задача разработчика\n\nТема: "${t}"\n\nСделай маленький пример или напиши план как в реальном проекте: цель → шаги → результат. Это одна из 1000 практических задач.`;
+  }
   if(lang==='ru') return `✍️ Практическое задание:\n\n📝 Тема: "${t}"\n\nПосмотри на эту тему с разных сторон и ответь:\n\n• Где ты встречал "${t}" в реальной жизни?\n• Как бы ты объяснил это другу простыми словами?\n• Приведи свой пример\n\nНапиши ответ (минимум 2 предложения) и нажми отправить — я проверю твои знания! 👇`;
   if(lang==='en') return `✍️ Practice task:\n\n📝 Topic: "${t}"\n\nLook at this topic from different angles:\n\n• Where do you see "${t}" in real life?\n• How would you explain it to a friend?\n• Give your own short example\n\nWrite at least 2 sentences and send your answer - I will check it. 👇`;
   return `✍️ Супориши амалӣ:\n\n📝 Мавзӯъ: "${t}"\n\nБа ин мавзӯъ аз ҷанбаҳои гуногун нигоҳ кун:\n\n• "${t}"-ро дар зиндагӣ дар куҷо дидӣ?\n• Ба дӯст чӣ тавр шарҳ медодӣ?\n• Мисоли худро биёр\n\nҶавоб нависед (камаш 2 ҷумла) — ман месанҷам! 👇`;
@@ -850,6 +937,18 @@ function getPractice(){
 
 function getCheck(answer){
   const t=curTopic;
+  if(curSub?.id==='eng'){
+    const ok=answer.trim().toUpperCase().startsWith('B');
+    if(lang==='en') return ok
+      ?`✅ Correct! The answer is B) "I am a student."\n\nWhy: with a singular countable noun like "student", we usually need an article: a/an.\n\nNext test will be a little harder.`
+      :`Almost! The correct answer is B) "I am a student."\n\nWhy: "student" is a singular countable noun, so we need the article "a". Try the next one and you will get it.`;
+    if(lang==='tg') return ok
+      ?`✅ Дуруст! Ҷавоб B) "I am a student."\n\nЧаро: "student" исми шумурдашавандаи ягона аст, барои ҳамин "a" лозим.`
+      :`Қариб! Ҷавоби дуруст B) "I am a student."\n\nЧаро: пеш аз "student" дар ин ҷумла article "a" лозим аст.`;
+    return ok
+      ?`✅ Правильно! Ответ B) "I am a student."\n\nПочему: "student" — исчисляемое существительное в единственном числе, поэтому нужен артикль "a".\n\nСледующий тест будет чуть сложнее.`
+      :`Почти! Правильный ответ B) "I am a student."\n\nПочему: "student" — исчисляемое существительное в единственном числе, поэтому нужен артикль "a". Давай попробуем следующий тест.`;
+  }
   if(lang==='ru') return `✅ Отлично! Ты справился!\n\n🎯 Разбор твоего ответа по теме "${t}":\n\nТы правильно понял суть! Вот что было хорошо:\n• Ты попытался объяснить своими словами — это лучший способ учиться\n• Самостоятельное мышление важнее заучивания\n\n💡 Совет для закрепления:\nПовтори тему через 1-2 дня — так информация остаётся в памяти надолго. Это называется интервальное повторение.\n\n🏆 Тема "${t}" — ПРОЙДЕНА! Так держать! ⭐`;
   if(lang==='en') return `✅ Great work! You did it!\n\n🎯 Review of your answer for "${t}":\n\nYou understood the core idea well.\n• You explained in your own words - this is the best way to learn\n• Your own reasoning is more important than memorizing\n\n💡 Memory tip:\nRepeat this topic in 1-2 days to lock it in.\n\n🏆 Topic "${t}" is completed! ⭐`;
   return `✅ Офарин! Ту баракс кардӣ!\n\n🎯 Таҳлили ҷавоби ту оид ба "${t}":\n\nТу моҳияти мавзӯъро дуруст фаҳмидӣ! Инҳо хуб буд:\n• Ту кӯшиш кардӣ бо калимаҳои худ шарҳ диҳӣ\n• Тафаккури мустақил аз ёд кардан муҳимтар аст\n\n💡 Барои мустаҳкам кардан:\nМавзӯъро баъд аз 1-2 рӯз такрор кун.\n\n🏆 Мавзӯъи "${t}" — ГУЗАШТ! ⭐`;
