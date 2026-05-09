@@ -619,6 +619,141 @@ body::before{
   box-shadow:0 4px 16px rgba(0,0,0,0.2);
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== IT START HUB ===== */
+.it-start-wrap{padding:0 16px 22px;display:none}
+.it-start-card{
+  background:linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,250,244,0.86));
+  border:1.5px solid rgba(255,255,255,0.98);
+  border-radius:28px;
+  box-shadow:0 18px 42px rgba(64,45,30,0.12);
+  padding:14px;
+  backdrop-filter:blur(16px);
+}
+.it-start-hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  padding:18px 16px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 88% 12%,rgba(255,255,255,0.22),transparent 26%),
+    radial-gradient(circle at 14% 90%,rgba(255,201,157,0.34),transparent 28%),
+    linear-gradient(135deg,#1a1916 0%,#4b3329 52%,#d97757 100%);
+  box-shadow:0 18px 38px rgba(217,119,87,0.28);
+}
+.it-start-hero::after{
+  content:'</>';
+  position:absolute;
+  right:14px;
+  bottom:-8px;
+  font-size:62px;
+  font-weight:800;
+  opacity:.12;
+  letter-spacing:-4px;
+}
+.it-start-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;position:relative;z-index:1}
+.it-start-title{font-size:24px;font-weight:800;letter-spacing:-.9px;line-height:1.05}
+.it-start-sub{font-size:12px;color:rgba(255,255,255,0.86);line-height:1.6;margin-top:7px;max-width:250px}
+.it-hero-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;position:relative;z-index:1}
+.it-hero-chip{
+  font-size:10px;
+  font-weight:800;
+  padding:6px 9px;
+  border-radius:100px;
+  background:rgba(255,255,255,0.13);
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(10px);
+}
+.it-back-btn{
+  border:1.5px solid rgba(255,255,255,0.28);
+  background:rgba(255,255,255,0.16);
+  color:#fff;
+  border-radius:100px;
+  padding:8px 11px;
+  font-family:'Sora',sans-serif;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+.it-course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:14px}
+.it-course-card{
+  border:1.5px solid rgba(255,255,255,0.96);
+  background:
+    radial-gradient(circle at 88% 10%,color-mix(in srgb,var(--course-color,var(--accent)) 18%,transparent),transparent 32%),
+    #fff;
+  border-radius:22px;
+  padding:15px 14px;
+  text-align:left;
+  font-family:'Sora',sans-serif;
+  cursor:pointer;
+  box-shadow:0 10px 28px rgba(32,24,18,0.08);
+  position:relative;
+  overflow:hidden;
+  min-height:172px;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+}
+.it-course-card::before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--course-color,var(--accent)),transparent)}
+.it-course-card:hover{box-shadow:0 16px 34px rgba(32,24,18,0.12);border-color:color-mix(in srgb,var(--course-color,var(--accent)) 38%,white)}
+.it-course-card:active{transform:scale(.98)}
+.it-course-emoji{width:44px;height:44px;border-radius:17px;background:color-mix(in srgb,var(--course-color,var(--accent)) 14%,white);display:flex;align-items:center;justify-content:center;font-size:25px;margin-bottom:10px}
+.it-course-title{font-size:14px;font-weight:800;color:#1a1916;line-height:1.24;letter-spacing:-.25px}
+.it-course-desc{font-size:11px;color:#6b625c;line-height:1.5;margin-top:6px}
+.it-course-meta{display:inline-flex;margin-top:10px;font-size:10px;font-weight:800;color:var(--course-color,var(--accent));background:color-mix(in srgb,var(--course-color,var(--accent)) 10%,white);border-radius:100px;padding:5px 8px}
+.it-card-progress{height:5px;border-radius:100px;background:#eee6df;overflow:hidden;margin-top:12px}
+.it-card-progress span{display:block;height:100%;width:12%;border-radius:100px;background:linear-gradient(90deg,var(--course-color,var(--accent)),#d97757)}
+.it-course-open{font-size:11px;font-weight:800;color:#1a1916;margin-top:11px;display:flex;align-items:center;justify-content:space-between}
+.it-course-shell{
+  display:grid;
+  grid-template-columns:126px 1fr;
+  gap:11px;
+  margin-top:14px;
+}
+.it-course-hero{
+  border-radius:22px;
+  padding:15px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 84% 18%,rgba(255,255,255,0.22),transparent 28%),
+    linear-gradient(135deg,#1a1916,var(--course-color,var(--accent)));
+  box-shadow:0 16px 34px color-mix(in srgb,var(--course-color,var(--accent)) 24%,transparent);
+}
+.it-course-hero-title{font-size:20px;font-weight:800;letter-spacing:-.6px}
+.it-course-hero-sub{font-size:11px;line-height:1.55;opacity:.86;margin-top:5px}
+.it-sidebar{display:flex;flex-direction:column;gap:7px}
+.it-sidebar-btn{
+  border:1.5px solid rgba(255,255,255,0.96);
+  background:rgba(255,255,255,0.92);
+  border-radius:14px;
+  padding:10px 9px;
+  text-align:left;
+  font-family:'Sora',sans-serif;
+  font-size:10px;
+  font-weight:800;
+  color:var(--text2);
+  box-shadow:var(--shadow-sm);
+}
+.it-sidebar-btn.on{border-color:color-mix(in srgb,var(--course-color,var(--accent)) 45%,white);background:color-mix(in srgb,var(--course-color,var(--accent)) 10%,white);color:var(--course-color,var(--accent))}
+.it-course-content{
+  border:1.5px solid rgba(255,255,255,0.96);
+  background:rgba(255,255,255,0.94);
+  border-radius:18px;
+  padding:14px;
+  min-height:170px;
+  box-shadow:var(--shadow-sm);
+}
+.it-progress-top{display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:800;color:rgba(255,255,255,0.86);margin-top:12px}
+.it-progress-track{height:7px;background:rgba(255,255,255,0.26);border-radius:100px;overflow:hidden;margin:7px 0 0}
+.it-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--course-color,var(--accent)),var(--green));border-radius:100px}
+.it-course-content-title{font-size:15px;font-weight:800;color:#1a1916;margin-bottom:7px}
+.it-lesson-preview{margin-top:10px;display:grid;gap:8px}
+.it-lesson-item{border:1.5px solid var(--border);border-radius:13px;background:#faf7f3;padding:9px 10px;font-size:11px;font-weight:700;color:var(--text2)}
+@media (max-width:420px){
+  .it-course-grid{grid-template-columns:1fr}
+  .it-course-shell{grid-template-columns:1fr}
+  .it-start-title{font-size:22px}
+}
 </style>
 </head>
 <body>
@@ -659,7 +794,7 @@ body::before{
       <div class="quick-grid">
         <button class="quick-btn" onclick="quickPick('eng')"><span class="qico">🇬🇧</span><span class="qlbl" id="quick-english">English test</span></button>
         <button class="quick-btn" onclick="switchNav('photo')"><span class="qico">📸</span><span class="qlbl" id="quick-photo">Фото задачи</span></button>
-        <button class="quick-btn" onclick="quickPick('frontend')"><span class="qico">💻</span><span class="qlbl" id="quick-it">IT старт</span></button>
+        <button class="quick-btn" onclick="quickPick('it')"><span class="qico">💻</span><span class="qlbl" id="quick-it">IT старт</span></button>
       </div>
       <div class="path-card">
         <div class="path-head">
@@ -710,6 +845,29 @@ body::before{
           <div class="core-tabs" id="core-tabs"></div>
           <div class="core-topic-grid" id="core-topic-grid"></div>
           <div class="core-panel" id="core-panel"></div>
+        </div>
+      </div>
+
+      <div class="it-start-wrap" id="it-start-wrap">
+        <div class="it-start-card">
+          <div class="it-start-hero">
+            <div class="it-start-head">
+              <div>
+                <div class="it-start-title" id="it-start-title">💻 IT-Старт</div>
+                <div class="it-start-sub" id="it-start-sub">Все IT-курсы внутри Donish AI</div>
+              </div>
+              <button class="it-back-btn" id="it-back-catalog" onclick="backToItCatalog()" style="display:none">← Курсы</button>
+            </div>
+            <div class="it-hero-chips">
+              <span class="it-hero-chip">6 курсов</span>
+              <span class="it-hero-chip">3000+ задач</span>
+              <span class="it-hero-chip">от нуля до проектов</span>
+            </div>
+          </div>
+          <div id="it-catalog-view">
+            <div class="it-course-grid" id="it-course-grid"></div>
+          </div>
+          <div id="it-course-view" style="display:none"></div>
         </div>
       </div>
 
@@ -835,6 +993,7 @@ const SUBJECTS={
     {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика • 2500+ задач',meta:'4 уровня: 6-7, 8-9, 10-11, Университет',color:'#3b6ea8',topics:['6 класс: натуральные числа','6 класс: дроби','6 класс: проценты','6 класс: пропорции','7 класс: выражения и формулы','7 класс: линейные уравнения','7 класс: координатная плоскость','8 класс: квадратные корни','8 класс: квадратные уравнения','8 класс: теорема Пифагора','9 класс: функции и графики','9 класс: системы уравнений','9 класс: неравенства','10 класс: тригонометрия','10 класс: степени и логарифмы','10 класс: прогрессии','11 класс: производная','11 класс: интеграл','11 класс: стереометрия','Вуз: пределы','Вуз: математический анализ','Вуз: линейная алгебра','Вуз: матрицы и векторы','Вуз: дифференциальные уравнения','Вуз: теория вероятностей','Вуз: статистика']},
     {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика • 1800+ задач',meta:'4 уровня + формулы простым языком',color:'#b8860b',topics:['6 класс: физические величины','6 класс: измерения','7 класс: движение и скорость','7 класс: масса и плотность','7 класс: сила и давление','8 класс: работа и энергия','8 класс: тепловые явления','8 класс: электрический ток','8 класс: закон Ома','9 класс: законы Ньютона','9 класс: импульс','9 класс: механические колебания','10 класс: кинематика','10 класс: динамика','10 класс: молекулярная физика','10 класс: термодинамика','11 класс: электромагнетизм','11 класс: оптика','11 класс: волны','11 класс: атомная физика','Вуз: теоретическая механика','Вуз: электродинамика','Вуз: квантовая физика','Вуз: статистическая физика']},
     {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 тестов',meta:'Грамматика + тестовый режим',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'it',ico:'💻',name:'IT-Старт',hint:'Python · Frontend · Backend · DevOps · Docker · Git',meta:'Все IT-курсы внутри одного раздела',color:'#d97757',topics:['Каталог IT-курсов']},
     {id:'frontend',ico:'🖥️',name:'Frontend разработчик',hint:'HTML/CSS/JS/React',meta:'1000 задач + уроки по проектам',color:'#d97757',topics:['Урок 1: HTML структура страницы','Урок 2: Формы и таблицы','Урок 3: CSS selectors','Урок 4: Flexbox','Урок 5: CSS Grid','Урок 6: Responsive дизайн','Урок 7: JavaScript basics','Урок 8: DOM events','Урок 9: Fetch API','Урок 10: async/await','Урок 11: Git для frontend','Урок 12: React components','Урок 13: State and props','Урок 14: React Hooks','Урок 15: React Router','Урок 16: API integration','Урок 17: UI/UX basics','Урок 18: Portfolio project','1000 frontend задач: от кнопки до SPA']},
     {id:'backend',ico:'🧠',name:'Backend разработчик',hint:'Python + API + базы данных',meta:'1000 задач + backend lessons',color:'#7c4fa8',topics:['Урок 1: Python core','Урок 2: Функции и модули','Урок 3: OOP','Урок 4: Exceptions','Урок 5: Files and JSON','Урок 6: HTTP basics','Урок 7: FastAPI start','Урок 8: REST API routes','Урок 9: PostgreSQL basics','Урок 10: SQL joins','Урок 11: SQLAlchemy ORM','Урок 12: Auth and JWT','Урок 13: Redis cache','Урок 14: API testing','Урок 15: Docker для backend','Урок 16: Deploy backend','Урок 17: Clean architecture','1000 backend задач: API, DB, auth, deploy']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD, облако и автоматизация',meta:'700 задач',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD базово','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Мониторинг и логирование','Релизный процесс']},
@@ -847,6 +1006,7 @@ const SUBJECTS={
     {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ • 2500+ машқ',meta:'4 сатҳ: 6-7, 8-9, 10-11, донишгоҳ',color:'#3b6ea8',topics:['Синфи 6: ададҳои натуралӣ','Синфи 6: касрҳо','Синфи 6: фоизҳо','Синфи 6: таносуб','Синфи 7: ифодаҳо ва формулаҳо','Синфи 7: муодилаҳои хаттӣ','Синфи 8: решаҳои квадратӣ','Синфи 8: муодилаҳои квадратӣ','Синфи 8: теоремаи Пифагор','Синфи 9: функсияҳо ва графикҳо','Синфи 9: системаҳои муодила','Синфи 9: нобаробарӣ','Синфи 10: тригонометрия','Синфи 10: логарифмҳо','Синфи 11: ҳосила','Синфи 11: интеграл','Донишгоҳ: ҳадҳо','Донишгоҳ: анализи математикӣ','Донишгоҳ: алгебраи хаттӣ','Донишгоҳ: муодилаҳои дифференсиалӣ','Донишгоҳ: эҳтимолият ва статистика']},
     {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ • 1800+ машқ',meta:'4 сатҳ + формулаҳо сода',color:'#b8860b',topics:['Синфи 6: бузургиҳои физикӣ','Синфи 6: ченкунӣ','Синфи 7: ҳаракат ва суръат','Синфи 7: масса ва зичӣ','Синфи 7: қувва ва фишор','Синфи 8: кор ва энергия','Синфи 8: гармӣ','Синфи 8: ҷараёни барқ','Синфи 8: қонуни Ом','Синфи 9: қонунҳои Нютон','Синфи 9: импулс','Синфи 10: кинематика','Синфи 10: динамика','Синфи 10: термодинамика','Синфи 11: электромагнетизм','Синфи 11: оптика','Синфи 11: мавҷҳо','Донишгоҳ: механикаи назариявӣ','Донишгоҳ: электродинамика','Донишгоҳ: физикаи квантӣ']},
     {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 тест',meta:'Грамматика + тестҳо',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'it',ico:'💻',name:'IT-Старт',hint:'Python · Frontend · Backend · DevOps · Docker · Git',meta:'Ҳама курсҳои IT дар як қисм',color:'#d97757',topics:['Каталоги курсҳои IT']},
     {id:'frontend',ico:'🖥️',name:'Frontend developer',hint:'HTML/CSS/JS/React',meta:'1000 машқ + project lessons',color:'#d97757',topics:['Lesson 1: HTML structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','1000 frontend tasks']},
     {id:'backend',ico:'🧠',name:'Backend developer',hint:'Python + API + DB',meta:'1000 машқ + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD ва абр',meta:'700 машқ',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
@@ -859,6 +1019,7 @@ const SUBJECTS={
     {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 → Higher math • 2500+ tasks',meta:'4 levels + roadmap',color:'#3b6ea8',topics:['Grade 6: natural numbers','Grade 6: fractions','Grade 6: percentages','Grade 6: proportions','Grade 7: expressions and formulas','Grade 7: linear equations','Grade 8: square roots','Grade 8: quadratic equations','Grade 8: Pythagorean theorem','Grade 9: functions and graphs','Grade 9: systems of equations','Grade 9: inequalities','Grade 10: trigonometry','Grade 10: logarithms','Grade 11: derivatives','Grade 11: integrals','University: limits','University: calculus','University: linear algebra','University: matrices and vectors','University: differential equations','University: probability and statistics']},
     {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 → Higher physics • 1800+ tasks',meta:'4 levels + formulas',color:'#b8860b',topics:['Grade 6: physical quantities','Grade 6: measurement','Grade 7: motion and speed','Grade 7: mass and density','Grade 7: force and pressure','Grade 8: work and energy','Grade 8: heat','Grade 8: electric current','Grade 8: Ohm law','Grade 9: Newton laws','Grade 9: momentum','Grade 10: kinematics','Grade 10: dynamics','Grade 10: thermodynamics','Grade 11: electromagnetism','Grade 11: optics','Grade 11: waves','University: theoretical mechanics','University: electrodynamics','University: quantum physics']},
     {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 tests',meta:'Grammar + tests mode',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'it',ico:'💻',name:'IT Start',hint:'Python · Frontend · Backend · DevOps · Docker · Git',meta:'All IT courses in one section',color:'#d97757',topics:['IT course catalog']},
     {id:'frontend',ico:'🖥️',name:'Frontend Developer',hint:'HTML/CSS/JS/React',meta:'1000 tasks + project lessons',color:'#d97757',topics:['Lesson 1: HTML page structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','Lesson 17: UI/UX basics','Lesson 18: Portfolio project','1000 frontend tasks']},
     {id:'backend',ico:'🧠',name:'Backend Developer',hint:'Python + APIs + DB',meta:'1000 tasks + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','Lesson 16: Deploy backend','Lesson 17: Clean architecture','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD and cloud basics',meta:'700 tasks',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
@@ -974,8 +1135,18 @@ let progress=JSON.parse(localStorage.getItem('donish_progress')||'{}');
 let stats=JSON.parse(localStorage.getItem('donish_stats')||'{"topics":0,"photos":0,"streak":0,"lastDate":""}');
 let coreProgress=JSON.parse(localStorage.getItem('donish_core_progress')||'{}');
 let coreState={subjectId:null,levelId:null,tab:'lessons',topicId:null,timer:null,secondsLeft:30};
+let itState={view:'catalog',courseId:null};
 
 const CORE_IDS=['math','phys','eng'];
+const IT_COURSE_IDS=['python','frontend','backend','devops','docker','git'];
+const IT_COURSES=[
+  {id:'python',title:'Python',emoji:'🐍',description:'От нуля до проектов',tasks:'700+ задач',color:'#3B82F6'},
+  {id:'frontend',title:'Frontend разработчик',emoji:'🖥️',description:'HTML / CSS / JS / React',tasks:'1000 задач',color:'#8B5CF6'},
+  {id:'backend',title:'Backend разработчик',emoji:'🔧',description:'Python + API + базы данных',tasks:'1000 задач',color:'#10B981'},
+  {id:'devops',title:'DevOps',emoji:'🛠️',description:'CI/CD, облако и автоматизация',tasks:'700 задач',color:'#F59E0B'},
+  {id:'docker',title:'Docker понятным языком',emoji:'🐳',description:'Контейнеры от нуля. Пошаговый курс',tasks:'Пошаговый курс',color:'#0EA5E9'},
+  {id:'git',title:'Git понятным языком',emoji:'🌿',description:'От init до командной работы',tasks:'От init до PR',color:'#F97316'},
+];
 const CORE_UI={
   ru:{tabs:{lessons:'📚 Уроки',tasks:'🧩 Задачи',projects:'🚀 Проекты',roadmap:'🗺️ Роадмап'},search:'Поиск по темам...',hintBtn:'💡 Подсказка',checkBtn:'Проверить',bookmark:'🔖 В закладки',doneBtn:'Пройдено ✓',prev:'← Предыдущий',next:'Следующий →',timer:'⏱ Осталось',locked:'🔒 Откроется после предыдущей темы',topics:'тем',result:'Результат: ',streak:'дней подряд',solved:'решено',of:'из',timedOut:'⏰ Время вышло. Попробуй ещё раз.',start:'🏁 Начни с первой темы'},
   tg:{tabs:{lessons:'📚 Дарсҳо',tasks:'🧩 Машқҳо',projects:'🚀 Лоиҳаҳо',roadmap:'🗺️ Нақша'},search:'Ҷустуҷӯи мавзӯъ...',hintBtn:'💡 Ёрӣ',checkBtn:'Санҷиш',bookmark:'🔖 Нишона',doneBtn:'Гузашт ✓',prev:'← Пешина',next:'Баъдӣ →',timer:'⏱ Боқӣ монд',locked:'🔒 Баъд аз мавзӯи пешина боз мешавад',topics:'мавзӯъ',result:'Натиҷа: ',streak:'рӯз пайдарпай',solved:'ҳал шуд',of:'аз',timedOut:'⏰ Вақт тамом шуд. Боз як бор кӯшиш кун.',start:'🏁 Аз мавзӯи аввал оғоз кун'},
@@ -1147,9 +1318,16 @@ function setLang(l){
     if(isCoreSubject(curSub.id)){
       document.getElementById('core-subject-wrap').style.display='block';
       document.getElementById('topics-section').style.display='none';
+      document.getElementById('it-start-wrap').style.display='none';
       renderCoreHub();
+    }else if(curSub.id==='it'){
+      document.getElementById('core-subject-wrap').style.display='none';
+      document.getElementById('topics-section').style.display='none';
+      document.getElementById('it-start-wrap').style.display='block';
+      renderItStart();
     }else{
       document.getElementById('core-subject-wrap').style.display='none';
+      document.getElementById('it-start-wrap').style.display='none';
       renderTopics();
     }
   }
@@ -1164,6 +1342,93 @@ function switchNav(screen){
   });
   stopCoreTimer();
   if(screen==='progress') renderProgress();
+}
+
+function isItStandaloneCourse(id){
+  return IT_COURSE_IDS.includes(id);
+}
+
+function renderItStart(){
+  const title=document.getElementById('it-start-title');
+  const sub=document.getElementById('it-start-sub');
+  const catalog=document.getElementById('it-catalog-view');
+  const courseView=document.getElementById('it-course-view');
+  const backBtn=document.getElementById('it-back-catalog');
+  title.textContent=lang==='en'?'💻 IT Start':'💻 IT-Старт';
+  sub.textContent=lang==='tg'
+    ?'Ҳама курсҳои IT дар дохили Donish AI'
+    :lang==='en'
+      ?'All IT courses inside Donish AI'
+      :'Все IT-курсы внутри Donish AI';
+  catalog.style.display=itState.view==='catalog'?'block':'none';
+  courseView.style.display=itState.view==='course'?'block':'none';
+  backBtn.style.display=itState.view==='course'?'inline-flex':'none';
+  if(itState.view==='catalog') renderItCatalog();
+  else renderItCourseShell();
+}
+
+function renderItCatalog(){
+  const grid=document.getElementById('it-course-grid');
+  grid.innerHTML='';
+  IT_COURSES.forEach(course=>{
+    const d=document.createElement('button');
+    d.className='it-course-card';
+    d.style.setProperty('--course-color',course.color);
+    d.innerHTML=`
+      <span class="it-course-emoji">${course.emoji}</span>
+      <div class="it-course-title">${course.title}</div>
+      <div class="it-course-desc">${course.description}</div>
+      <div class="it-course-meta">${course.tasks}</div>
+      <div class="it-card-progress"><span></span></div>
+      <div class="it-course-open"><span>${lang==='en'?'Start':(lang==='tg'?'Оғоз':'Начать')}</span><span>→</span></div>
+    `;
+    d.onclick=()=>openItCourse(course.id);
+    grid.appendChild(d);
+  });
+}
+
+function openItCourse(courseId){
+  itState.view='course';
+  itState.courseId=courseId;
+  renderItStart();
+}
+
+function backToItCatalog(){
+  itState.view='catalog';
+  itState.courseId=null;
+  renderItStart();
+}
+
+function renderItCourseShell(){
+  const course=IT_COURSES.find(c=>c.id===itState.courseId)||IT_COURSES[0];
+  const el=document.getElementById('it-course-view');
+  el.style.setProperty('--course-color',course.color);
+  el.innerHTML=`
+    <div class="it-course-hero">
+      <div class="core-breadcrumbs" style="color:rgba(255,255,255,.72)">IT-Старт → ${course.title}</div>
+      <div class="it-course-hero-title">${course.emoji} ${course.title}</div>
+      <div class="it-course-hero-sub">${course.description}. Учись шаг за шагом внутри Donish AI.</div>
+      <div class="it-progress-top"><span>Прогресс курса</span><span>0%</span></div>
+      <div class="it-progress-track"><div class="it-progress-fill"></div></div>
+    </div>
+    <div class="it-course-shell">
+      <div class="it-sidebar">
+        <button class="it-sidebar-btn on">📚 Уроки</button>
+        <button class="it-sidebar-btn">🧩 Задачи</button>
+        <button class="it-sidebar-btn">🚀 Проекты</button>
+        <button class="it-sidebar-btn">🗺️ Роадмап</button>
+      </div>
+      <div class="it-course-content">
+        <div class="it-course-content-title">Первый модуль</div>
+        <div class="it-course-desc">Здесь будет теория, примеры кода и задачи выбранного курса. Сейчас готов красивый шаблон страницы курса.</div>
+        <div class="it-lesson-preview">
+          <div class="it-lesson-item">✅ Введение в курс</div>
+          <div class="it-lesson-item">🔒 Базовые понятия</div>
+          <div class="it-lesson-item">🔒 Первая практика</div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function isCoreSubject(id){
@@ -1231,6 +1496,18 @@ function pickSub(s){
   renderSubs();
   document.getElementById('empty-learn').style.display='none';
   document.getElementById('lesson-section').style.display='none';
+  if(s.id==='it'){
+    itState.view='catalog';
+    itState.courseId=null;
+    coreState.subjectId=null;
+    document.getElementById('learn-scroll').style.display='block';
+    document.getElementById('topics-section').style.display='none';
+    document.getElementById('core-subject-wrap').style.display='none';
+    document.getElementById('it-start-wrap').style.display='block';
+    renderItStart();
+    document.getElementById('learn-scroll').scrollTop=0;
+    return;
+  }
   if(isCoreSubject(s.id)){
     coreState.subjectId=s.id;
     coreState.tab='lessons';
@@ -1245,11 +1522,13 @@ function pickSub(s){
     document.getElementById('learn-scroll').style.display='block';
     document.getElementById('topics-section').style.display='none';
     document.getElementById('core-subject-wrap').style.display='block';
+    document.getElementById('it-start-wrap').style.display='none';
     renderCoreHub();
     return;
   }
   coreState.subjectId=null;
   document.getElementById('core-subject-wrap').style.display='none';
+  document.getElementById('it-start-wrap').style.display='none';
   renderTopics();
   document.getElementById('learn-scroll').style.display='block';
   document.getElementById('topics-section').style.display='block';
@@ -1569,7 +1848,7 @@ function quickPick(subId){
   if(!s) return;
   switchNav('learn');
   pickSub(s);
-  const target=isCoreSubject(subId)?'core-subject-wrap':'topics-section';
+  const target=subId==='it'?'it-start-wrap':(isCoreSubject(subId)?'core-subject-wrap':'topics-section');
   setTimeout(()=>document.getElementById(target).scrollIntoView({behavior:'smooth',block:'start'}),80);
 }
 
@@ -1577,6 +1856,7 @@ function renderSubs(){
   const g=document.getElementById('sgrid'); g.innerHTML='';
   const doneWord=lang==='ru'?'пройдено':(lang==='tg'?'гузашт':'done');
   SUBJECTS[lang].forEach(s=>{
+    if(isItStandaloneCourse(s.id)) return;
     const d=document.createElement('div');
     d.className='scard'+(curSub&&curSub.id===s.id?' on':'');
     const pct=getSubjectPct(s.id);
@@ -1935,6 +2215,7 @@ function renderProgress(){
   const list=document.getElementById('prog-list');
   list.innerHTML='';
   SUBJECTS[lang].forEach(s=>{
+    if(isItStandaloneCourse(s.id)) return;
     const pct=getSubjectPct(s.id);
     const doneCount=isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length;
     const totalCount=getTotalSubjectUnits(s);
