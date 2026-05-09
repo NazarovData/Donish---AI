@@ -748,7 +748,15 @@ body::before{
 .it-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--course-color,var(--accent)),var(--green));border-radius:100px}
 .it-course-content-title{font-size:15px;font-weight:800;color:#1a1916;margin-bottom:7px}
 .it-lesson-preview{margin-top:10px;display:grid;gap:8px}
-.it-lesson-item{border:1.5px solid var(--border);border-radius:13px;background:#faf7f3;padding:9px 10px;font-size:11px;font-weight:700;color:var(--text2)}
+.it-lesson-item{border:1.5px solid var(--border);border-radius:13px;background:#faf7f3;padding:9px 10px;font-size:11px;font-weight:700;color:var(--text2);text-align:left;font-family:'Sora',sans-serif;cursor:pointer}
+.it-lesson-item.on{border-color:color-mix(in srgb,var(--course-color,var(--accent)) 46%,white);background:color-mix(in srgb,var(--course-color,var(--accent)) 10%,white);color:#1a1916}
+.it-lesson-meta{font-size:10px;color:var(--muted);font-weight:800;margin-top:3px}
+.it-course-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.it-mini-btn{border:none;border-radius:12px;background:linear-gradient(135deg,var(--course-color,var(--accent)),#d97757);color:#fff;padding:10px 12px;font-family:'Sora',sans-serif;font-size:11px;font-weight:800;cursor:pointer}
+.it-mini-btn.soft{background:#f4eee8;color:#1a1916;border:1.5px solid var(--border)}
+.it-task-input{width:100%;min-height:94px;margin-top:10px;border:1.5px solid var(--border);border-radius:14px;background:#fffaf5;padding:10px 12px;font-family:'Sora',sans-serif;font-size:12px;color:#1a1916;resize:vertical;outline:none}
+.it-task-input:focus{border-color:var(--course-color,var(--accent));box-shadow:0 0 0 4px color-mix(in srgb,var(--course-color,var(--accent)) 12%,transparent)}
+.it-task-result{margin-top:10px;font-size:12px;line-height:1.6;color:var(--text2);background:#f8f2ec;border:1.5px solid var(--border);border-radius:14px;padding:10px;display:none}
 @media (max-width:420px){
   .it-course-grid{grid-template-columns:1fr}
   .it-course-shell{grid-template-columns:1fr}
@@ -1134,18 +1142,50 @@ let photoBase64=null, photoAnalyzed=false;
 let progress=JSON.parse(localStorage.getItem('donish_progress')||'{}');
 let stats=JSON.parse(localStorage.getItem('donish_stats')||'{"topics":0,"photos":0,"streak":0,"lastDate":""}');
 let coreProgress=JSON.parse(localStorage.getItem('donish_core_progress')||'{}');
+let itProgress=JSON.parse(localStorage.getItem('donish_it_progress')||'{}');
+let itAnswers=JSON.parse(localStorage.getItem('donish_it_answers')||'{}');
 let coreState={subjectId:null,levelId:null,tab:'lessons',topicId:null,timer:null,secondsLeft:30};
-let itState={view:'catalog',courseId:null};
+let itState={view:'catalog',courseId:null,tab:'lessons',lessonId:null};
 
 const CORE_IDS=['math','phys','eng'];
 const IT_COURSE_IDS=['python','frontend','backend','devops','docker','git'];
 const IT_COURSES=[
-  {id:'python',title:'Python',emoji:'🐍',description:'От нуля до проектов',tasks:'700+ задач',color:'#3B82F6'},
-  {id:'frontend',title:'Frontend разработчик',emoji:'🖥️',description:'HTML / CSS / JS / React',tasks:'1000 задач',color:'#8B5CF6'},
-  {id:'backend',title:'Backend разработчик',emoji:'🔧',description:'Python + API + базы данных',tasks:'1000 задач',color:'#10B981'},
-  {id:'devops',title:'DevOps',emoji:'🛠️',description:'CI/CD, облако и автоматизация',tasks:'700 задач',color:'#F59E0B'},
-  {id:'docker',title:'Docker понятным языком',emoji:'🐳',description:'Контейнеры от нуля. Пошаговый курс',tasks:'Пошаговый курс',color:'#0EA5E9'},
-  {id:'git',title:'Git понятным языком',emoji:'🌿',description:'От init до командной работы',tasks:'От init до PR',color:'#F97316'},
+  {id:'python',title:'Python',emoji:'🐍',description:'От нуля до проектов',tasks:'700+ задач',color:'#3B82F6',lessons:[
+    {id:'py-1',title:'Переменные и типы данных',time:'12 мин',content:'Python начинается с переменных. Переменная хранит значение: число, текст, список или другой объект.',code:'name = "Donish"\nage = 16\nis_student = True\nprint(name, age)',task:'Создай переменную city со значением "Dushanbe" и выведи её через print().'},
+    {id:'py-2',title:'Условия if / else',time:'15 мин',content:'Условия помогают программе принимать решения. Если условие истинно, выполняется один блок, иначе другой.',code:'score = 85\nif score >= 60:\n    print("Passed")\nelse:\n    print("Try again")',task:'Напиши условие: если age >= 18, вывести "adult", иначе "teen".'},
+    {id:'py-3',title:'Циклы for и while',time:'18 мин',content:'Циклы повторяют действие много раз. for удобен для списков, while — пока условие истинно.',code:'for i in range(5):\n    print(i)',task:'Выведи числа от 1 до 10 через цикл for.'},
+    {id:'py-4',title:'Функции',time:'20 мин',content:'Функция — это reusable блок кода. Она принимает данные и возвращает результат.',code:'def add(a, b):\n    return a + b\n\nprint(add(2, 3))',task:'Создай функцию square(n), которая возвращает n*n.'}
+  ],projects:['CLI калькулятор','Todo в терминале','Мини-бот на Python'],roadmap:['Неделя 1: основы Python','Неделя 2: условия и циклы','Неделя 3: функции и файлы','Неделя 4: первый проект']},
+  {id:'frontend',title:'Frontend разработчик',emoji:'🖥️',description:'HTML / CSS / JS / React',tasks:'1000 задач',color:'#8B5CF6',lessons:[
+    {id:'fe-1',title:'HTML структура страницы',time:'14 мин',content:'HTML задаёт смысл и структуру страницы: заголовки, текст, ссылки, формы.',code:'<main>\n  <h1>IT-Старт</h1>\n  <p>Учимся frontend</p>\n</main>',task:'Создай блок с h1 и двумя p.'},
+    {id:'fe-2',title:'CSS карточки и отступы',time:'18 мин',content:'CSS отвечает за внешний вид. Карточки строятся через padding, border-radius, shadow.',code:'.card {\n  padding: 16px;\n  border-radius: 20px;\n  box-shadow: 0 12px 30px rgba(0,0,0,.1);\n}',task:'Напиши CSS для кнопки с border-radius 12px.'},
+    {id:'fe-3',title:'JavaScript события',time:'20 мин',content:'События позволяют реагировать на действия пользователя: клики, ввод, отправку формы.',code:'button.addEventListener("click", () => {\n  alert("Clicked!");\n});',task:'Добавь обработчик click для кнопки.'},
+    {id:'fe-4',title:'React компоненты',time:'22 мин',content:'Компонент — маленькая часть интерфейса, которую можно переиспользовать.',code:'function CourseCard({ title }) {\n  return <div>{title}</div>;\n}',task:'Создай компонент Button с текстом внутри.'}
+  ],projects:['Сайт-портфолио','Todo на JavaScript','React карточки курсов'],roadmap:['Неделя 1: HTML/CSS','Неделя 2: Flexbox/Grid','Неделя 3: JavaScript','Неделя 4: React старт']},
+  {id:'backend',title:'Backend разработчик',emoji:'🔧',description:'Python + API + базы данных',tasks:'1000 задач',color:'#10B981',lessons:[
+    {id:'be-1',title:'Что такое API',time:'12 мин',content:'API — это способ общения frontend и backend. Клиент отправляет запрос, сервер возвращает ответ.',code:'GET /users\nPOST /users\nPUT /users/1\nDELETE /users/1',task:'Назови 4 основных HTTP метода.'},
+    {id:'be-2',title:'Первый endpoint FastAPI',time:'18 мин',content:'Endpoint — адрес, по которому backend отдаёт данные или принимает действие.',code:'from fastapi import FastAPI\napp = FastAPI()\n\n@app.get("/")\ndef home():\n    return {"message": "Hello"}',task:'Создай endpoint /health, который возвращает ok.'},
+    {id:'be-3',title:'Pydantic модели',time:'16 мин',content:'Модели описывают структуру входных данных и помогают валидировать запросы.',code:'from pydantic import BaseModel\n\nclass User(BaseModel):\n    name: str\n    age: int',task:'Создай модель Product с title и price.'},
+    {id:'be-4',title:'SQL основы',time:'20 мин',content:'SQL нужен для работы с таблицами: читать, добавлять, обновлять и удалять данные.',code:'SELECT * FROM users;\nINSERT INTO users(name) VALUES ("Ali");',task:'Напиши SQL для выбора всех товаров.'}
+  ],projects:['Auth API','Blog CRUD API','API интернет-магазина'],roadmap:['Неделя 1: HTTP/API','Неделя 2: FastAPI','Неделя 3: базы данных','Неделя 4: auth проект']},
+  {id:'devops',title:'DevOps',emoji:'🛠️',description:'CI/CD, облако и автоматизация',tasks:'700 задач',color:'#F59E0B',lessons:[
+    {id:'do-1',title:'Linux команды',time:'15 мин',content:'DevOps начинается с Linux: навигация, файлы, права и процессы.',code:'pwd\nls\ncd app\nmkdir logs',task:'Напиши команду для просмотра файлов в папке.'},
+    {id:'do-2',title:'SSH и сервер',time:'18 мин',content:'SSH позволяет безопасно подключаться к удалённому серверу.',code:'ssh root@server_ip',task:'Объясни, зачем нужен SSH.'},
+    {id:'do-3',title:'CI/CD простыми словами',time:'20 мин',content:'CI/CD автоматически проверяет, собирает и доставляет приложение.',code:'push code → run tests → build → deploy',task:'Назови 3 шага CI/CD.'},
+    {id:'do-4',title:'Nginx reverse proxy',time:'22 мин',content:'Nginx принимает запросы пользователей и направляет их к приложению.',code:'location / {\n  proxy_pass http://localhost:8000;\n}',task:'Что делает proxy_pass?'}
+  ],projects:['Деплой приложения','GitHub Actions pipeline','Nginx + SSL'],roadmap:['Неделя 1: Linux','Неделя 2: SSH и сервер','Неделя 3: CI/CD','Неделя 4: deploy']},
+  {id:'docker',title:'Docker понятным языком',emoji:'🐳',description:'Контейнеры от нуля. Пошаговый курс',tasks:'Пошаговый курс',color:'#0EA5E9',lessons:[
+    {id:'dk-1',title:'Что такое контейнер',time:'12 мин',content:'Контейнер — коробка для приложения: код, зависимости и настройки идут вместе.',code:'docker run hello-world',task:'Запусти hello-world контейнер.'},
+    {id:'dk-2',title:'Image vs Container',time:'15 мин',content:'Image — шаблон. Container — запущенный экземпляр этого шаблона.',code:'docker images\ndocker ps',task:'Какая команда показывает запущенные контейнеры?'},
+    {id:'dk-3',title:'Dockerfile',time:'20 мин',content:'Dockerfile описывает, как собрать образ приложения.',code:'FROM python:3.12\nWORKDIR /app\nCOPY . .\nCMD ["python", "main.py"]',task:'Назови назначение CMD.'},
+    {id:'dk-4',title:'docker-compose',time:'22 мин',content:'Compose запускает несколько сервисов одной командой.',code:'services:\n  app:\n    build: .\n  db:\n    image: postgres',task:'Зачем нужен docker-compose?'}
+  ],projects:['Dockerize Python app','Compose app + db','Publish image'],roadmap:['Неделя 1: контейнеры','Неделя 2: Dockerfile','Неделя 3: volumes/networks','Неделя 4: compose + deploy']},
+  {id:'git',title:'Git понятным языком',emoji:'🌿',description:'От init до командной работы',tasks:'От init до PR',color:'#F97316',lessons:[
+    {id:'gt-1',title:'Git = машина времени',time:'10 мин',content:'Git сохраняет версии кода. Commit — точка сохранения, к которой можно вернуться.',code:'git init\ngit status',task:'Создай новый git репозиторий.'},
+    {id:'gt-2',title:'add и commit',time:'14 мин',content:'git add выбирает изменения, git commit сохраняет их в историю.',code:'git add .\ngit commit -m "first commit"',task:'Какая команда сохраняет изменения в историю?'},
+    {id:'gt-3',title:'Ветки',time:'16 мин',content:'Ветка позволяет работать над задачей отдельно от основной версии.',code:'git branch feature-login\ngit checkout feature-login',task:'Создай ветку feature-home.'},
+    {id:'gt-4',title:'Pull Request',time:'18 мин',content:'Pull Request — запрос на объединение изменений и код-ревью.',code:'git push origin feature-login',task:'Зачем нужен Pull Request?'}
+  ],projects:['Git workflow','Resolve conflict','Team PR simulation'],roadmap:['Неделя 1: init/add/commit','Неделя 2: branch/merge','Неделя 3: GitHub','Неделя 4: PR workflow']},
 ];
 const CORE_UI={
   ru:{tabs:{lessons:'📚 Уроки',tasks:'🧩 Задачи',projects:'🚀 Проекты',roadmap:'🗺️ Роадмап'},search:'Поиск по темам...',hintBtn:'💡 Подсказка',checkBtn:'Проверить',bookmark:'🔖 В закладки',doneBtn:'Пройдено ✓',prev:'← Предыдущий',next:'Следующий →',timer:'⏱ Осталось',locked:'🔒 Откроется после предыдущей темы',topics:'тем',result:'Результат: ',streak:'дней подряд',solved:'решено',of:'из',timedOut:'⏰ Время вышло. Попробуй ещё раз.',start:'🏁 Начни с первой темы'},
@@ -1348,6 +1388,22 @@ function isItStandaloneCourse(id){
   return IT_COURSE_IDS.includes(id);
 }
 
+function ensureItProgress(courseId){
+  if(!itProgress[courseId]) itProgress[courseId]={doneLessons:[]};
+  if(!Array.isArray(itProgress[courseId].doneLessons)) itProgress[courseId].doneLessons=[];
+}
+
+function saveItProgress(){
+  localStorage.setItem('donish_it_progress',JSON.stringify(itProgress));
+}
+
+function getItCourseProgress(course){
+  ensureItProgress(course.id);
+  const total=course.lessons.length||1;
+  const done=itProgress[course.id].doneLessons.length;
+  return {done,total,pct:Math.round(done/total*100)};
+}
+
 function renderItStart(){
   const title=document.getElementById('it-start-title');
   const sub=document.getElementById('it-start-sub');
@@ -1371,6 +1427,7 @@ function renderItCatalog(){
   const grid=document.getElementById('it-course-grid');
   grid.innerHTML='';
   IT_COURSES.forEach(course=>{
+    const prog=getItCourseProgress(course);
     const d=document.createElement('button');
     d.className='it-course-card';
     d.style.setProperty('--course-color',course.color);
@@ -1379,7 +1436,8 @@ function renderItCatalog(){
       <div class="it-course-title">${course.title}</div>
       <div class="it-course-desc">${course.description}</div>
       <div class="it-course-meta">${course.tasks}</div>
-      <div class="it-card-progress"><span></span></div>
+      <div class="it-card-progress"><span style="width:${prog.pct}%"></span></div>
+      <div class="it-lesson-meta">${prog.done}/${prog.total} уроков пройдено</div>
       <div class="it-course-open"><span>${lang==='en'?'Start':(lang==='tg'?'Оғоз':'Начать')}</span><span>→</span></div>
     `;
     d.onclick=()=>openItCourse(course.id);
@@ -1390,42 +1448,214 @@ function renderItCatalog(){
 function openItCourse(courseId){
   itState.view='course';
   itState.courseId=courseId;
+  itState.tab='lessons';
+  const course=getItCourse(courseId);
+  itState.lessonId=course.lessons[0]?.id||null;
   renderItStart();
 }
 
 function backToItCatalog(){
   itState.view='catalog';
   itState.courseId=null;
+  itState.tab='lessons';
+  itState.lessonId=null;
   renderItStart();
 }
 
+function getItCourse(courseId=itState.courseId){
+  return IT_COURSES.find(c=>c.id===courseId)||IT_COURSES[0];
+}
+
+function getItLesson(course=getItCourse()){
+  return course.lessons.find(l=>l.id===itState.lessonId)||course.lessons[0];
+}
+
+function setItTab(tab){
+  itState.tab=tab;
+  renderItCourseShell();
+}
+
+function openItLesson(lessonId){
+  itState.tab='lessons';
+  itState.lessonId=lessonId;
+  renderItCourseShell();
+}
+
+function navigateItLesson(step){
+  const course=getItCourse();
+  const idx=course.lessons.findIndex(l=>l.id===itState.lessonId);
+  const next=course.lessons[idx+step];
+  if(!next) return;
+  openItLesson(next.id);
+}
+
+function completeItLesson(){
+  const course=getItCourse();
+  const lesson=getItLesson(course);
+  ensureItProgress(course.id);
+  if(!itProgress[course.id].doneLessons.includes(lesson.id)){
+    itProgress[course.id].doneLessons.push(lesson.id);
+    saveItProgress();
+    stats.topics++;
+    saveStats();
+    showToast(TX[lang].toastDone);
+    renderItCourseShell();
+    renderSubs();
+  }else{
+    showToast(lang==='en'?'Already completed':(lang==='tg'?'Аллакай гузашт':'Уже пройдено'));
+  }
+}
+
+function completeItLessonAndNext(){
+  const course=getItCourse();
+  const lesson=getItLesson(course);
+  ensureItProgress(course.id);
+  if(!itProgress[course.id].doneLessons.includes(lesson.id)){
+    itProgress[course.id].doneLessons.push(lesson.id);
+    saveItProgress();
+    stats.topics++;
+    saveStats();
+    showToast(TX[lang].toastDone);
+  }
+  const idx=course.lessons.findIndex(l=>l.id===lesson.id);
+  const next=course.lessons[idx+1];
+  if(next){
+    itState.lessonId=next.id;
+    itState.tab='lessons';
+  }
+  renderItCourseShell();
+  renderSubs();
+}
+
+function getItAnswerKey(courseId=itState.courseId,lessonId=itState.lessonId){
+  return `${courseId}:${lessonId}`;
+}
+
+function saveItAnswerDraft(){
+  const input=document.getElementById('it-task-answer');
+  if(!input) return;
+  itAnswers[getItAnswerKey()]=input.value;
+  localStorage.setItem('donish_it_answers',JSON.stringify(itAnswers));
+}
+
+function checkItTask(){
+  const input=document.getElementById('it-task-answer');
+  const result=document.getElementById('it-task-result');
+  if(!input||!result) return;
+  saveItAnswerDraft();
+  const value=input.value.trim();
+  result.style.display='block';
+  if(value.length<8){
+    result.textContent='Пока мало. Напиши хотя бы 1-2 строки ответа или кода, потом проверь ещё раз.';
+    return;
+  }
+  result.textContent='✅ Хорошо! Ответ сохранён. Теперь сравни его с примером в уроке и можешь отметить урок как пройденный.';
+  completeItLesson();
+}
+
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,ch=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#039;',
+  }[ch]));
+}
+
 function renderItCourseShell(){
-  const course=IT_COURSES.find(c=>c.id===itState.courseId)||IT_COURSES[0];
+  const course=getItCourse();
+  const lesson=getItLesson(course);
+  const prog=getItCourseProgress(course);
+  itState.lessonId=lesson?.id||null;
   const el=document.getElementById('it-course-view');
   el.style.setProperty('--course-color',course.color);
+  const tabs=[
+    {id:'lessons',label:'📚 Уроки'},
+    {id:'tasks',label:'🧩 Задачи'},
+    {id:'projects',label:'🚀 Проекты'},
+    {id:'roadmap',label:'🗺️ Роадмап'},
+  ];
   el.innerHTML=`
     <div class="it-course-hero">
       <div class="core-breadcrumbs" style="color:rgba(255,255,255,.72)">IT-Старт → ${course.title}</div>
       <div class="it-course-hero-title">${course.emoji} ${course.title}</div>
       <div class="it-course-hero-sub">${course.description}. Учись шаг за шагом внутри Donish AI.</div>
-      <div class="it-progress-top"><span>Прогресс курса</span><span>0%</span></div>
-      <div class="it-progress-track"><div class="it-progress-fill"></div></div>
+      <div class="it-progress-top"><span>Прогресс курса</span><span>${prog.pct}%</span></div>
+      <div class="it-progress-track"><div class="it-progress-fill" style="width:${prog.pct}%"></div></div>
     </div>
     <div class="it-course-shell">
       <div class="it-sidebar">
-        <button class="it-sidebar-btn on">📚 Уроки</button>
-        <button class="it-sidebar-btn">🧩 Задачи</button>
-        <button class="it-sidebar-btn">🚀 Проекты</button>
-        <button class="it-sidebar-btn">🗺️ Роадмап</button>
+        ${tabs.map(t=>`<button class="it-sidebar-btn${itState.tab===t.id?' on':''}" onclick="setItTab('${t.id}')">${t.label}</button>`).join('')}
       </div>
+      ${renderItCourseContent(course,lesson)}
+    </div>
+  `;
+}
+
+function renderItCourseContent(course,lesson){
+  ensureItProgress(course.id);
+  const doneLessons=itProgress[course.id].doneLessons;
+  if(itState.tab==='tasks'){
+    const savedAnswer=itAnswers[getItAnswerKey(course.id,lesson.id)]||'';
+    return `
       <div class="it-course-content">
-        <div class="it-course-content-title">Первый модуль</div>
-        <div class="it-course-desc">Здесь будет теория, примеры кода и задачи выбранного курса. Сейчас готов красивый шаблон страницы курса.</div>
-        <div class="it-lesson-preview">
-          <div class="it-lesson-item">✅ Введение в курс</div>
-          <div class="it-lesson-item">🔒 Базовые понятия</div>
-          <div class="it-lesson-item">🔒 Первая практика</div>
+        <div class="it-course-content-title">🧩 Практика по курсу</div>
+        <div class="it-course-desc">Напиши решение по текущему уроку. Ответ сохранится в браузере.</div>
+        <div class="task-box">
+          <strong>Задание:</strong><br>${escapeHtml(lesson.task)}
         </div>
+        <textarea id="it-task-answer" class="it-task-input" oninput="saveItAnswerDraft()" placeholder="Напиши ответ или код...">${escapeHtml(savedAnswer)}</textarea>
+        <div class="it-course-actions">
+          <button class="it-mini-btn" onclick="checkItTask()">Проверить</button>
+          <button class="it-mini-btn soft" onclick="setItTab('lessons')">Назад к уроку</button>
+          <button class="it-mini-btn" onclick="completeItLessonAndNext()">Пройдено и дальше →</button>
+        </div>
+        <div id="it-task-result" class="it-task-result"></div>
+      </div>
+    `;
+  }
+  if(itState.tab==='projects'){
+    return `
+      <div class="it-course-content">
+        <div class="it-course-content-title">🚀 Проекты</div>
+        <div class="it-course-desc">Готовые проекты для портфолио по курсу ${course.title}.</div>
+        <div class="it-lesson-preview">
+          ${course.projects.map(p=>`<button class="it-lesson-item">🚀 ${p}<div class="it-lesson-meta">проект</div></button>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+  if(itState.tab==='roadmap'){
+    return `
+      <div class="it-course-content">
+        <div class="it-course-content-title">🗺️ Роадмап</div>
+        <div class="it-course-desc">Путь прохождения курса ${course.title}.</div>
+        <div class="it-lesson-preview">
+          ${course.roadmap.map((r,i)=>`<button class="it-lesson-item">${i+1}. ${r}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+  return `
+    <div class="it-course-content">
+      <div class="it-course-content-title">${lesson.title}</div>
+      <div class="it-course-desc">${escapeHtml(lesson.content)}</div>
+      <div class="core-code" style="margin-top:10px">${escapeHtml(lesson.code)}</div>
+      <div class="task-box">
+        <strong>Практика:</strong><br>${escapeHtml(lesson.task)}
+      </div>
+      <div class="it-course-actions">
+        <button class="it-mini-btn" onclick="setItTab('tasks')">Открыть задачи</button>
+        <button class="it-mini-btn soft" onclick="completeItLesson()">${doneLessons.includes(lesson.id)?'Пройдено ✅':'Пройдено ✓'}</button>
+        <button class="it-mini-btn" onclick="completeItLessonAndNext()">Пройдено и дальше →</button>
+      </div>
+      <div class="core-nav-row">
+        <button class="core-btn core-btn-soft" onclick="navigateItLesson(-1)">← Предыдущий</button>
+        <button class="core-btn core-btn-soft" onclick="navigateItLesson(1)">Следующий →</button>
+      </div>
+      <div class="it-lesson-preview">
+        ${course.lessons.map(l=>`<button class="it-lesson-item${l.id===lesson.id?' on':''}" onclick="openItLesson('${l.id}')">${doneLessons.includes(l.id)?'✅':'📚'} ${l.title}<div class="it-lesson-meta">${l.time}</div></button>`).join('')}
       </div>
     </div>
   `;
@@ -1477,10 +1707,25 @@ function getCorePct(subId){
 }
 
 function getTotalSubjectUnits(sub){
+  if(sub.id==='it'){
+    return IT_COURSES.reduce((sum,course)=>sum+course.lessons.length,0);
+  }
   if(isCoreSubject(sub.id)){
     return getFlatCoreTopics(getCoreSubjectData(sub.id)).length;
   }
   return sub.topics.length;
+}
+
+function getItTotalDone(){
+  return IT_COURSES.reduce((sum,course)=>{
+    ensureItProgress(course.id);
+    return sum+itProgress[course.id].doneLessons.length;
+  },0);
+}
+
+function getItOverallPct(){
+  const total=getTotalSubjectUnits({id:'it'});
+  return Math.round(getItTotalDone()/(total||1)*100);
 }
 
 function pickCoreFirstTopicIfNeeded(data){
@@ -1860,7 +2105,7 @@ function renderSubs(){
     const d=document.createElement('div');
     d.className='scard'+(curSub&&curSub.id===s.id?' on':'');
     const pct=getSubjectPct(s.id);
-    const doneCount=isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length;
+    const doneCount=s.id==='it'?getItTotalDone():(isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length);
     d.innerHTML=`
       <span class="sico">${s.ico}</span>
       <div class="sname">${s.name}</div>
@@ -2203,6 +2448,7 @@ function saveStats(){
 function getSubjectPct(subId){
   const subs=SUBJECTS[lang].find(s=>s.id===subId);
   if(!subs) return 0;
+  if(subId==='it') return getItOverallPct();
   if(isCoreSubject(subId)) return getCorePct(subId);
   const d=progress[subId]||[];
   return Math.round(d.length/(subs.topics.length||1)*100);
@@ -2217,7 +2463,7 @@ function renderProgress(){
   SUBJECTS[lang].forEach(s=>{
     if(isItStandaloneCourse(s.id)) return;
     const pct=getSubjectPct(s.id);
-    const doneCount=isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length;
+    const doneCount=s.id==='it'?getItTotalDone():(isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length);
     const totalCount=getTotalSubjectUnits(s);
     const d=document.createElement('div');
     d.className='prog-subject';
