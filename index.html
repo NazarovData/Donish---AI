@@ -242,6 +242,97 @@ body::before{
 .tpill.on{background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-color:transparent;color:#fff;box-shadow:0 10px 20px rgba(109,93,252,0.22)}
 .tpill.done-pill{border-color:var(--green);color:var(--green);background:var(--green-light)}
 
+/* ===== CORE SUBJECT HUB (MATH/PHYS/ENG) ===== */
+.core-wrap{padding:0 16px 22px;display:none}
+.core-card{
+  background:rgba(255,255,255,0.88);
+  border:1.5px solid rgba(255,255,255,0.96);
+  border-radius:22px;
+  box-shadow:var(--shadow-sm);
+  padding:14px;
+  backdrop-filter:blur(14px);
+}
+.core-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.core-title{font-size:17px;font-weight:800;letter-spacing:-.4px}
+.core-sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.core-streak{font-size:11px;font-weight:800;color:#c96f00;background:#fff2da;border-radius:100px;padding:5px 9px;white-space:nowrap}
+.core-progress{margin-top:11px}
+.core-progress-top{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:5px}
+.core-progress-track{height:8px;border-radius:99px;background:#e6ecfa;overflow:hidden}
+.core-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0;transition:width .5s}
+.core-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.core-search-row{display:flex;gap:8px;margin-top:12px}
+.core-search{
+  flex:1;border:1.5px solid var(--border);border-radius:14px;padding:10px 12px;
+  font-size:12px;font-family:'Sora',sans-serif;background:#f2f6ff;color:var(--text)
+}
+.core-search:focus{outline:none;border-color:var(--accent);background:#fff}
+.core-levels{display:flex;gap:7px;overflow-x:auto;padding:4px 0 2px;margin-top:12px}
+.core-levels::-webkit-scrollbar{height:0}
+.lvl-pill{
+  border:1.5px solid var(--border);background:#fff;border-radius:100px;padding:8px 12px;
+  font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;font-family:'Sora',sans-serif
+}
+.lvl-pill.on{background:var(--accent-light);border-color:var(--accent);color:var(--accent-dark)}
+.core-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.core-tab{
+  border:1.5px solid var(--border);background:#fff;border-radius:12px;padding:8px 5px;
+  font-size:10px;font-weight:800;color:var(--muted);cursor:pointer;font-family:'Sora',sans-serif
+}
+.core-tab.on{border-color:var(--accent);background:var(--accent-light);color:var(--accent-dark)}
+.core-topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.core-topic{
+  border:1.5px solid var(--border);background:#fff;border-radius:14px;padding:10px 10px;
+  font-size:11px;line-height:1.45;color:var(--text2);cursor:pointer;position:relative
+}
+.core-topic.done{border-color:var(--green);background:var(--green-light);color:#0d7251}
+.core-topic.locked{opacity:.5;cursor:not-allowed}
+.core-topic .mark{position:absolute;top:7px;right:8px;font-size:12px}
+.core-panel{margin-top:12px;border:1.5px solid var(--border);background:#fff;border-radius:14px;padding:12px;font-size:12px;line-height:1.65;color:var(--text2)}
+.core-breadcrumbs{font-size:10px;color:var(--muted);margin-bottom:8px}
+.core-lesson-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px}
+.core-code{
+  font-family:'JetBrains Mono',monospace;font-size:11px;background:#f3f6ff;border:1px solid var(--border);
+  border-radius:10px;padding:10px;white-space:pre-wrap;line-height:1.55;color:#22315a
+}
+.core-lesson-actions{display:flex;gap:7px;margin-top:10px}
+.core-btn{
+  border:none;border-radius:11px;padding:9px 12px;font-size:11px;font-weight:800;
+  font-family:'Sora',sans-serif;cursor:pointer
+}
+.core-btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff}
+.core-btn-soft{background:#edf2ff;color:var(--accent-dark);border:1.5px solid var(--border)}
+.core-nav-row{display:flex;justify-content:space-between;margin-top:12px}
+.task-box{
+  border:1.5px dashed var(--border2);border-radius:12px;padding:10px;background:#fafcff;margin-top:8px
+}
+.task-options{display:grid;gap:6px;margin-top:8px}
+.task-opt{
+  border:1.5px solid var(--border);background:#fff;border-radius:10px;padding:8px 9px;
+  text-align:left;font-size:11px;color:var(--text2);cursor:pointer
+}
+.task-opt.ok{border-color:var(--green);background:var(--green-light);color:#0d7251}
+.task-opt.bad{border-color:#e68ea3;background:#fff1f4;color:#b53b5a}
+.task-input{
+  width:100%;margin-top:8px;border:1.5px solid var(--border);border-radius:10px;padding:9px 10px;
+  font-size:12px;font-family:'Sora',sans-serif
+}
+.task-hint{margin-top:8px;font-size:11px;color:var(--muted)}
+.bookmarks-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.bm-chip{
+  background:#fff;border:1.5px solid var(--border);border-radius:100px;padding:5px 9px;
+  font-size:10px;font-weight:700;color:var(--text2)
+}
+.unlock-anim{animation:unlockPop .45s ease}
+@keyframes unlockPop{
+  0%{transform:scale(.96);opacity:.6}
+  55%{transform:scale(1.03);opacity:1}
+  100%{transform:scale(1)}
+}
+@media (max-width:390px){
+  .core-topic-grid{grid-template-columns:1fr}
+}
+
 /* ===== LESSON BOX ===== */
 .lesson-wrap{display:flex;flex-direction:column;flex:1;min-height:0;background:linear-gradient(180deg,#f7f9ff,#eef3ff)}
 .lesson-topbar{display:flex;justify-content:flex-start;padding:11px 12px 6px;background:rgba(255,255,255,0.8);backdrop-filter:blur(14px)}
@@ -594,6 +685,34 @@ body::before{
         </div>
       </div>
 
+      <div class="core-wrap" id="core-subject-wrap">
+        <div class="core-card">
+          <div class="core-head">
+            <div>
+              <div class="core-title" id="core-title">📐 Математика</div>
+              <div class="core-sub" id="core-subtitle">6 класс → Высшая математика</div>
+            </div>
+            <div class="core-streak" id="core-streak">🔥 0 дней</div>
+          </div>
+          <div class="core-progress">
+            <div class="core-progress-top">
+              <span id="core-counter">0 / 0</span>
+              <span id="core-percent">0%</span>
+            </div>
+            <div class="core-progress-track"><div class="core-progress-fill" id="core-progress-fill"></div></div>
+          </div>
+          <div class="core-badges" id="core-badges"></div>
+          <div class="core-search-row">
+            <input id="core-search" class="core-search" type="text" placeholder="Поиск темы..." oninput="renderCoreHub()">
+          </div>
+          <div class="bookmarks-row" id="core-bookmarks"></div>
+          <div class="core-levels" id="core-levels"></div>
+          <div class="core-tabs" id="core-tabs"></div>
+          <div class="core-topic-grid" id="core-topic-grid"></div>
+          <div class="core-panel" id="core-panel"></div>
+        </div>
+      </div>
+
       <div class="empty-state" id="empty-learn">
         <span class="eico">🎓</span>
         <h3 id="empty-title">Выбери предмет выше</h3>
@@ -713,9 +832,9 @@ body::before{
 <script>
 const SUBJECTS={
   ru:[
-    {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика',meta:'2500+ задач и пошаговые решения',color:'#3b6ea8',topics:['6 класс: натуральные числа','6 класс: дроби','6 класс: проценты','6 класс: пропорции','7 класс: выражения и формулы','7 класс: линейные уравнения','7 класс: координатная плоскость','8 класс: квадратные корни','8 класс: квадратные уравнения','8 класс: теорема Пифагора','9 класс: функции и графики','9 класс: системы уравнений','9 класс: неравенства','10 класс: тригонометрия','10 класс: степени и логарифмы','10 класс: прогрессии','11 класс: производная','11 класс: интеграл','11 класс: стереометрия','Вуз: пределы','Вуз: математический анализ','Вуз: линейная алгебра','Вуз: матрицы и векторы','Вуз: дифференциальные уравнения','Вуз: теория вероятностей','Вуз: статистика']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика',meta:'1800+ задач и формулы простым языком',color:'#b8860b',topics:['6 класс: физические величины','6 класс: измерения','7 класс: движение и скорость','7 класс: масса и плотность','7 класс: сила и давление','8 класс: работа и энергия','8 класс: тепловые явления','8 класс: электрический ток','8 класс: закон Ома','9 класс: законы Ньютона','9 класс: импульс','9 класс: механические колебания','10 класс: кинематика','10 класс: динамика','10 класс: молекулярная физика','10 класс: термодинамика','11 класс: электромагнетизм','11 класс: оптика','11 класс: волны','11 класс: атомная физика','Вуз: теоретическая механика','Вуз: электродинамика','Вуз: квантовая физика','Вуз: статистическая физика']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 tests',meta:'1000 тестов: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'math',ico:'📐',name:'Математика',hint:'6 класс → Высшая математика • 2500+ задач',meta:'4 уровня: 6-7, 8-9, 10-11, Университет',color:'#3b6ea8',topics:['6 класс: натуральные числа','6 класс: дроби','6 класс: проценты','6 класс: пропорции','7 класс: выражения и формулы','7 класс: линейные уравнения','7 класс: координатная плоскость','8 класс: квадратные корни','8 класс: квадратные уравнения','8 класс: теорема Пифагора','9 класс: функции и графики','9 класс: системы уравнений','9 класс: неравенства','10 класс: тригонометрия','10 класс: степени и логарифмы','10 класс: прогрессии','11 класс: производная','11 класс: интеграл','11 класс: стереометрия','Вуз: пределы','Вуз: математический анализ','Вуз: линейная алгебра','Вуз: матрицы и векторы','Вуз: дифференциальные уравнения','Вуз: теория вероятностей','Вуз: статистика']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'6 класс → Высшая физика • 1800+ задач',meta:'4 уровня + формулы простым языком',color:'#b8860b',topics:['6 класс: физические величины','6 класс: измерения','7 класс: движение и скорость','7 класс: масса и плотность','7 класс: сила и давление','8 класс: работа и энергия','8 класс: тепловые явления','8 класс: электрический ток','8 класс: закон Ома','9 класс: законы Ньютона','9 класс: импульс','9 класс: механические колебания','10 класс: кинематика','10 класс: динамика','10 класс: молекулярная физика','10 класс: термодинамика','11 класс: электромагнетизм','11 класс: оптика','11 класс: волны','11 класс: атомная физика','Вуз: теоретическая механика','Вуз: электродинамика','Вуз: квантовая физика','Вуз: статистическая физика']},
+    {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 тестов',meta:'Грамматика + тестовый режим',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
     {id:'frontend',ico:'🖥️',name:'Frontend разработчик',hint:'HTML/CSS/JS/React',meta:'1000 задач + уроки по проектам',color:'#d97757',topics:['Урок 1: HTML структура страницы','Урок 2: Формы и таблицы','Урок 3: CSS selectors','Урок 4: Flexbox','Урок 5: CSS Grid','Урок 6: Responsive дизайн','Урок 7: JavaScript basics','Урок 8: DOM events','Урок 9: Fetch API','Урок 10: async/await','Урок 11: Git для frontend','Урок 12: React components','Урок 13: State and props','Урок 14: React Hooks','Урок 15: React Router','Урок 16: API integration','Урок 17: UI/UX basics','Урок 18: Portfolio project','1000 frontend задач: от кнопки до SPA']},
     {id:'backend',ico:'🧠',name:'Backend разработчик',hint:'Python + API + базы данных',meta:'1000 задач + backend lessons',color:'#7c4fa8',topics:['Урок 1: Python core','Урок 2: Функции и модули','Урок 3: OOP','Урок 4: Exceptions','Урок 5: Files and JSON','Урок 6: HTTP basics','Урок 7: FastAPI start','Урок 8: REST API routes','Урок 9: PostgreSQL basics','Урок 10: SQL joins','Урок 11: SQLAlchemy ORM','Урок 12: Auth and JWT','Урок 13: Redis cache','Урок 14: API testing','Урок 15: Docker для backend','Урок 16: Deploy backend','Урок 17: Clean architecture','1000 backend задач: API, DB, auth, deploy']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD, облако и автоматизация',meta:'700 задач',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD базово','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Мониторинг и логирование','Релизный процесс']},
@@ -725,9 +844,9 @@ const SUBJECTS={
     {id:'aicv',ico:'🤖',name:'ИИ и CV',hint:'AI, ML, Computer Vision',meta:'Практика с проектами',color:'#6f55d9',topics:['Что такое AI','Что такое ML','Данные и признаки','Нейронные сети простыми словами','Computer Vision','OpenCV basics','YOLO модели','Prompt Engineering','Claude API','RAG простыми словами','AI проект для портфолио']},
   ],
   tg:[
-    {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ',meta:'2500+ машқ ва ҳалҳои қадам ба қадам',color:'#3b6ea8',topics:['Синфи 6: ададҳои натуралӣ','Синфи 6: касрҳо','Синфи 6: фоизҳо','Синфи 6: таносуб','Синфи 7: ифодаҳо ва формулаҳо','Синфи 7: муодилаҳои хаттӣ','Синфи 8: решаҳои квадратӣ','Синфи 8: муодилаҳои квадратӣ','Синфи 8: теоремаи Пифагор','Синфи 9: функсияҳо ва графикҳо','Синфи 9: системаҳои муодила','Синфи 9: нобаробарӣ','Синфи 10: тригонометрия','Синфи 10: логарифмҳо','Синфи 11: ҳосила','Синфи 11: интеграл','Донишгоҳ: ҳадҳо','Донишгоҳ: анализи математикӣ','Донишгоҳ: алгебраи хаттӣ','Донишгоҳ: муодилаҳои дифференсиалӣ','Донишгоҳ: эҳтимолият ва статистика']},
-    {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ',meta:'1800+ машқ ва формулаҳо сода',color:'#b8860b',topics:['Синфи 6: бузургиҳои физикӣ','Синфи 6: ченкунӣ','Синфи 7: ҳаракат ва суръат','Синфи 7: масса ва зичӣ','Синфи 7: қувва ва фишор','Синфи 8: кор ва энергия','Синфи 8: гармӣ','Синфи 8: ҷараёни барқ','Синфи 8: қонуни Ом','Синфи 9: қонунҳои Нютон','Синфи 9: импулс','Синфи 10: кинематика','Синфи 10: динамика','Синфи 10: термодинамика','Синфи 11: электромагнетизм','Синфи 11: оптика','Синфи 11: мавҷҳо','Донишгоҳ: механикаи назариявӣ','Донишгоҳ: электродинамика','Донишгоҳ: физикаи квантӣ']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 тест',meta:'1000 тест: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'math',ico:'📐',name:'Математика',hint:'Синфи 6 → математикаи олӣ • 2500+ машқ',meta:'4 сатҳ: 6-7, 8-9, 10-11, донишгоҳ',color:'#3b6ea8',topics:['Синфи 6: ададҳои натуралӣ','Синфи 6: касрҳо','Синфи 6: фоизҳо','Синфи 6: таносуб','Синфи 7: ифодаҳо ва формулаҳо','Синфи 7: муодилаҳои хаттӣ','Синфи 8: решаҳои квадратӣ','Синфи 8: муодилаҳои квадратӣ','Синфи 8: теоремаи Пифагор','Синфи 9: функсияҳо ва графикҳо','Синфи 9: системаҳои муодила','Синфи 9: нобаробарӣ','Синфи 10: тригонометрия','Синфи 10: логарифмҳо','Синфи 11: ҳосила','Синфи 11: интеграл','Донишгоҳ: ҳадҳо','Донишгоҳ: анализи математикӣ','Донишгоҳ: алгебраи хаттӣ','Донишгоҳ: муодилаҳои дифференсиалӣ','Донишгоҳ: эҳтимолият ва статистика']},
+    {id:'phys',ico:'⚡',name:'Физика',hint:'Синфи 6 → физикаи олӣ • 1800+ машқ',meta:'4 сатҳ + формулаҳо сода',color:'#b8860b',topics:['Синфи 6: бузургиҳои физикӣ','Синфи 6: ченкунӣ','Синфи 7: ҳаракат ва суръат','Синфи 7: масса ва зичӣ','Синфи 7: қувва ва фишор','Синфи 8: кор ва энергия','Синфи 8: гармӣ','Синфи 8: ҷараёни барқ','Синфи 8: қонуни Ом','Синфи 9: қонунҳои Нютон','Синфи 9: импулс','Синфи 10: кинематика','Синфи 10: динамика','Синфи 10: термодинамика','Синфи 11: электромагнетизм','Синфи 11: оптика','Синфи 11: мавҷҳо','Донишгоҳ: механикаи назариявӣ','Донишгоҳ: электродинамика','Донишгоҳ: физикаи квантӣ']},
+    {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 тест',meta:'Грамматика + тестҳо',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
     {id:'frontend',ico:'🖥️',name:'Frontend developer',hint:'HTML/CSS/JS/React',meta:'1000 машқ + project lessons',color:'#d97757',topics:['Lesson 1: HTML structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','1000 frontend tasks']},
     {id:'backend',ico:'🧠',name:'Backend developer',hint:'Python + API + DB',meta:'1000 машқ + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD ва абр',meta:'700 машқ',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
@@ -737,9 +856,9 @@ const SUBJECTS={
     {id:'aicv',ico:'🤖',name:'AI ва CV',hint:'AI, ML, Computer Vision',meta:'Project practice',color:'#6f55d9',topics:['AI чист','ML чист','Data and features','Neural networks simple','Computer Vision','OpenCV basics','YOLO models','Prompt Engineering','Claude API','RAG simple','AI portfolio project']},
   ],
   en:[
-    {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 to university',meta:'2500+ problems and steps',color:'#3b6ea8',topics:['Grade 6: natural numbers','Grade 6: fractions','Grade 6: percentages','Grade 6: proportions','Grade 7: expressions and formulas','Grade 7: linear equations','Grade 8: square roots','Grade 8: quadratic equations','Grade 8: Pythagorean theorem','Grade 9: functions and graphs','Grade 9: systems of equations','Grade 9: inequalities','Grade 10: trigonometry','Grade 10: logarithms','Grade 11: derivatives','Grade 11: integrals','University: limits','University: calculus','University: linear algebra','University: matrices and vectors','University: differential equations','University: probability and statistics']},
-    {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 to university',meta:'1800+ problems and formulas',color:'#b8860b',topics:['Grade 6: physical quantities','Grade 6: measurement','Grade 7: motion and speed','Grade 7: mass and density','Grade 7: force and pressure','Grade 8: work and energy','Grade 8: heat','Grade 8: electric current','Grade 8: Ohm law','Grade 9: Newton laws','Grade 9: momentum','Grade 10: kinematics','Grade 10: dynamics','Grade 10: thermodynamics','Grade 11: electromagnetism','Grade 11: optics','Grade 11: waves','University: theoretical mechanics','University: electrodynamics','University: quantum physics']},
-    {id:'eng',ico:'🇬🇧',name:'English A1/A2',hint:'Grammar names + 1000 tests',meta:'1000 tests: A1/A2 grammar',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
+    {id:'math',ico:'📐',name:'Mathematics',hint:'Grade 6 → Higher math • 2500+ tasks',meta:'4 levels + roadmap',color:'#3b6ea8',topics:['Grade 6: natural numbers','Grade 6: fractions','Grade 6: percentages','Grade 6: proportions','Grade 7: expressions and formulas','Grade 7: linear equations','Grade 8: square roots','Grade 8: quadratic equations','Grade 8: Pythagorean theorem','Grade 9: functions and graphs','Grade 9: systems of equations','Grade 9: inequalities','Grade 10: trigonometry','Grade 10: logarithms','Grade 11: derivatives','Grade 11: integrals','University: limits','University: calculus','University: linear algebra','University: matrices and vectors','University: differential equations','University: probability and statistics']},
+    {id:'phys',ico:'⚡',name:'Physics',hint:'Grade 6 → Higher physics • 1800+ tasks',meta:'4 levels + formulas',color:'#b8860b',topics:['Grade 6: physical quantities','Grade 6: measurement','Grade 7: motion and speed','Grade 7: mass and density','Grade 7: force and pressure','Grade 8: work and energy','Grade 8: heat','Grade 8: electric current','Grade 8: Ohm law','Grade 9: Newton laws','Grade 9: momentum','Grade 10: kinematics','Grade 10: dynamics','Grade 10: thermodynamics','Grade 11: electromagnetism','Grade 11: optics','Grade 11: waves','University: theoretical mechanics','University: electrodynamics','University: quantum physics']},
+    {id:'eng',ico:'🇬🇧',name:'English',hint:'A1 → B2 • 1000 tests',meta:'Grammar + tests mode',color:'#2a7a5c',topics:['A1 Grammar: Verb to be','A1 Grammar: Subject Pronouns','A1 Grammar: Possessive Adjectives','A1 Grammar: Present Simple','A1 Grammar: Articles (a / an / the)','A1 Grammar: Plural Nouns','A1 Grammar: There is / There are','A1 Grammar: Basic Questions','A1 Grammar: Can / Can’t','A1 Grammar: Prepositions (in / on / at)','A2 Grammar: Past Simple','A2 Grammar: Future (going to)','A2 Grammar: Comparatives & Superlatives','A2 Grammar: Countable / Uncountable Nouns','A2 Grammar: Some / Any','A2 Grammar: Present Continuous','A2 Grammar: Adverbs of Frequency','A2 Grammar: Modal Verbs (have to / should)','A2 Grammar: Object Pronouns','A2 Grammar: Linking Words']},
     {id:'frontend',ico:'🖥️',name:'Frontend Developer',hint:'HTML/CSS/JS/React',meta:'1000 tasks + project lessons',color:'#d97757',topics:['Lesson 1: HTML page structure','Lesson 2: Forms and tables','Lesson 3: CSS selectors','Lesson 4: Flexbox','Lesson 5: CSS Grid','Lesson 6: Responsive design','Lesson 7: JavaScript basics','Lesson 8: DOM events','Lesson 9: Fetch API','Lesson 10: async/await','Lesson 11: Git for frontend','Lesson 12: React components','Lesson 13: State and props','Lesson 14: React Hooks','Lesson 15: React Router','Lesson 16: API integration','Lesson 17: UI/UX basics','Lesson 18: Portfolio project','1000 frontend tasks']},
     {id:'backend',ico:'🧠',name:'Backend Developer',hint:'Python + APIs + DB',meta:'1000 tasks + backend lessons',color:'#7c4fa8',topics:['Lesson 1: Python core','Lesson 2: Functions and modules','Lesson 3: OOP','Lesson 4: Exceptions','Lesson 5: Files and JSON','Lesson 6: HTTP basics','Lesson 7: FastAPI start','Lesson 8: REST API routes','Lesson 9: PostgreSQL basics','Lesson 10: SQL joins','Lesson 11: SQLAlchemy ORM','Lesson 12: Auth and JWT','Lesson 13: Redis cache','Lesson 14: API testing','Lesson 15: Docker for backend','Lesson 16: Deploy backend','Lesson 17: Clean architecture','1000 backend tasks']},
     {id:'devops',ico:'🛠️',name:'DevOps',hint:'CI/CD and cloud basics',meta:'700 tasks',color:'#2f8a68',topics:['Linux CLI','Bash scripting','CI/CD basics','GitHub Actions','AWS basics','Infrastructure as Code','Terraform intro','Kubernetes intro','Monitoring and logging','Release process']},
@@ -853,6 +972,113 @@ let lang='ru', curSub=null, curTopic=null, curStep=1, done=[], mid=0;
 let photoBase64=null, photoAnalyzed=false;
 let progress=JSON.parse(localStorage.getItem('donish_progress')||'{}');
 let stats=JSON.parse(localStorage.getItem('donish_stats')||'{"topics":0,"photos":0,"streak":0,"lastDate":""}');
+let coreProgress=JSON.parse(localStorage.getItem('donish_core_progress')||'{}');
+let coreState={subjectId:null,levelId:null,tab:'lessons',topicId:null,timer:null,secondsLeft:30};
+
+const CORE_IDS=['math','phys','eng'];
+const CORE_UI={
+  ru:{tabs:{lessons:'📚 Уроки',tasks:'🧩 Задачи',projects:'🚀 Проекты',roadmap:'🗺️ Роадмап'},search:'Поиск по темам...',hintBtn:'💡 Подсказка',checkBtn:'Проверить',bookmark:'🔖 В закладки',doneBtn:'Пройдено ✓',prev:'← Предыдущий',next:'Следующий →',timer:'⏱ Осталось',locked:'🔒 Откроется после предыдущей темы',topics:'тем',result:'Результат: ',streak:'дней подряд',solved:'решено',of:'из',timedOut:'⏰ Время вышло. Попробуй ещё раз.',start:'🏁 Начни с первой темы'},
+  tg:{tabs:{lessons:'📚 Дарсҳо',tasks:'🧩 Машқҳо',projects:'🚀 Лоиҳаҳо',roadmap:'🗺️ Нақша'},search:'Ҷустуҷӯи мавзӯъ...',hintBtn:'💡 Ёрӣ',checkBtn:'Санҷиш',bookmark:'🔖 Нишона',doneBtn:'Гузашт ✓',prev:'← Пешина',next:'Баъдӣ →',timer:'⏱ Боқӣ монд',locked:'🔒 Баъд аз мавзӯи пешина боз мешавад',topics:'мавзӯъ',result:'Натиҷа: ',streak:'рӯз пайдарпай',solved:'ҳал шуд',of:'аз',timedOut:'⏰ Вақт тамом шуд. Боз як бор кӯшиш кун.',start:'🏁 Аз мавзӯи аввал оғоз кун'},
+  en:{tabs:{lessons:'📚 Lessons',tasks:'🧩 Tasks',projects:'🚀 Projects',roadmap:'🗺️ Roadmap'},search:'Search topics...',hintBtn:'💡 Hint',checkBtn:'Check',bookmark:'🔖 Bookmark',doneBtn:'Done ✓',prev:'← Previous',next:'Next →',timer:'⏱ Left',locked:'🔒 Unlock after previous topic',topics:'topics',result:'Result: ',streak:'day streak',solved:'solved',of:'of',timedOut:'⏰ Time is over. Try again.',start:'🏁 Start from first topic'},
+};
+
+const CORE_SUBJECTS={
+  ru:{
+    math:{
+      title:'📐 Математика', subtitle:'6 класс → Высшая математика', totalTasks:2500,
+      levels:[
+        {id:'m67',name:'6-7 кл',topics:[
+          {id:'m-numbers',title:'Натуральные числа и действия',lesson:'Базовые операции: сложение, вычитание, умножение, деление.',code:'Пример:\n245 + 37 = 282\n245 - 37 = 208',task:{type:'code_input',question:'Найди значение: 3x² - 5x + 2 при x=3',answer:'14',hint:'Сначала x², потом умножение и сложение.',explanation:'3*9 - 15 + 2 = 14'}},
+          {id:'m-fractions',title:'Обыкновенные и десятичные дроби',lesson:'Дробь показывает часть целого. Важно приводить к общему знаменателю.',code:'1/2 + 1/4 = 2/4 + 1/4 = 3/4',task:{type:'multiple_choice',question:'Что больше?',options:['1/3','1/2','1/4','1/5'],correct:1,hint:'Чем меньше знаменатель, тем больше дробь.',explanation:'1/2 — самая большая из этих дробей.'}},
+          {id:'m-percent',title:'Проценты в жизни',lesson:'Процент это часть от 100. Используется в скидках и налогах.',code:'20% от 500 = 500 * 20 / 100 = 100',task:{type:'code_input',question:'Скидка 15% от 1200. Итоговая цена?',answer:'1020',hint:'Найди скидку и вычти из 1200.',explanation:'15% от 1200 = 180; 1200 - 180 = 1020.'}},
+          {id:'m-geom-basics',title:'Основы геометрии',lesson:'Точка, прямая, угол, периметр и площадь — база для следующих классов.',code:'P(прямоугольник) = 2(a+b)',task:{type:'multiple_choice',question:'Формула площади прямоугольника?',options:['a+b','2(a+b)','a*b','a²+b²'],correct:2,hint:'Площадь = длина * ширина.',explanation:'Площадь прямоугольника равна произведению сторон.'}}
+        ]},
+        {id:'m89',name:'8-9 кл',topics:[
+          {id:'m-linear',title:'Линейные уравнения и системы',lesson:'Уравнения вида ax+b=0 решаются переносом и делением.',code:'2x + 3 = 7\n2x = 4\nx = 2',task:{type:'code_input',question:'Реши: 3x - 5 = 10',answer:'5',hint:'Перенеси -5 вправо.',explanation:'3x = 15, x = 5'}},
+          {id:'m-quadratic',title:'Квадратные уравнения и Виет',lesson:'ax²+bx+c=0, используем дискриминант или Виета.',code:'x² - 5x + 6 = 0\nD = 25 - 24 = 1',task:{type:'multiple_choice',question:'Корни x²-5x+6=0',options:['1 и 6','2 и 3','-2 и -3','1 и -6'],correct:1,hint:'Нужна пара чисел с суммой 5 и произведением 6.',explanation:'Корни: 2 и 3'}},
+          {id:'m-functions',title:'Функции и графики',lesson:'Функция связывает x и y. Линейная функция y=kx+b задает прямую.',code:'y = 2x + 1',task:{type:'multiple_choice',question:'Парабола открыта вверх, вершина (2,-3). Что подходит?',options:['y=a(x-2)^2-3','y=2x-3','y=(x+2)^2+3','y=-a(x-2)^2-3'],correct:0,hint:'Форма вершины: y=a(x-h)^2+k',explanation:'Вершинная форма дает нужную вершину.'}},
+          {id:'m-progressions',title:'Арифметическая и геометрическая прогрессии',lesson:'Последовательности с постоянной разностью или знаменателем.',code:'a_n = a_1 + (n-1)d',task:{type:'code_input',question:'a1=2, d=3. Найди a5',answer:'14',hint:'Подставь n=5.',explanation:'a5 = 2 + 4*3 = 14'}}
+        ]},
+        {id:'m1011',name:'10-11 кл',topics:[
+          {id:'m-trig',title:'Тригонометрия',lesson:'sin, cos, tan описывают углы и отношения сторон.',code:'sin²x + cos²x = 1',task:{type:'multiple_choice',question:'sin²x + cos²x = ?',options:['0','1','2','sin x'],correct:1,hint:'Главное тождество.',explanation:'Равно 1'}},
+          {id:'m-logs',title:'Показательная функция и логарифмы',lesson:'Логарифм отвечает на вопрос: в какую степень возвести основание.',code:'log₂8 = 3',task:{type:'code_input',question:'log10(1000) = ?',answer:'3',hint:'10^3=1000',explanation:'Ответ 3'}},
+          {id:'m-derivative',title:'Производная и применение',lesson:'Производная показывает скорость изменения функции.',code:'(x²)\' = 2x',task:{type:'code_input',question:'f(x)=x², найди f\'(3)',answer:'6',hint:'f\'(x)=2x',explanation:'2*3=6'}},
+          {id:'m-integral',title:'Интеграл и площадь',lesson:'Интеграл суммирует бесконечно малые части.',code:'∫x dx = x²/2 + C',task:{type:'multiple_choice',question:'∫1 dx =',options:['0','x + C','1/x','ln x'],correct:1,hint:'Интеграл константы.',explanation:'Равно x + C'}}
+        ]},
+        {id:'muni',name:'Университет',topics:[
+          {id:'m-limits',title:'Пределы и непрерывность',lesson:'Предел описывает поведение функции рядом с точкой.',code:'lim (x→0) sinx/x = 1',task:{type:'multiple_choice',question:'lim sinx/x при x→0',options:['0','1','∞','-1'],correct:1,hint:'Классический предел.',explanation:'Равен 1'}},
+          {id:'m-matrices',title:'Матрицы и метод Гаусса',lesson:'Матрицы удобны для систем уравнений и линейной алгебры.',code:'A = [[1,2],[3,4]]',task:{type:'code_input',question:'det [[1,2],[3,4]] = ?',answer:'-2',hint:'ad-bc',explanation:'1*4 - 2*3 = -2'}},
+          {id:'m-diffeq',title:'Дифференциальные уравнения',lesson:'Связывают функцию и ее производную.',code:'y\' = ky => y = Ce^(kx)',task:{type:'multiple_choice',question:'Решение y\'=ky имеет вид',options:['Ce^(kx)','kx+C','C/x','sin(kx)'],correct:0,hint:'Экспонента.',explanation:'Классическое решение экспонентой'}},
+          {id:'m-stat',title:'Теория вероятностей и статистика',lesson:'Вероятность оценивает случайность, статистика — данные.',code:'P(A)=m/n',task:{type:'code_input',question:'Монета: вероятность орла?',answer:'0.5',hint:'1 благоприятный из 2.',explanation:'1/2 = 0.5'}}
+        ]}
+      ],
+      projects:['📊 Калькулятор процентов','📈 Построитель графиков функции','🧮 Тренажёр уравнений','📐 Геометрический калькулятор','🎯 Генератор задач'],
+      roadmap:['Неделя 1-2: Арифметика и дроби','Неделя 3-4: Проценты и геометрия','Неделя 5-6: Уравнения и функции','Неделя 7-8: Квадратные уравнения','Неделя 9-10: Тригонометрия и логарифмы','Неделя 11-12: Производные и интегралы','Неделя 13-14: Университетский блок','Результат: Junior STEM-ready'],
+      motivation:['💡 Математика — язык вселенной.','🧠 Каждая задача делает мозг сильнее.','🚀 Программисты используют математику каждый день.','⚡ Сложно сейчас — значит мозг растёт!']
+    },
+    phys:{
+      title:'⚡ Физика', subtitle:'6 класс → Высшая физика', totalTasks:1800,
+      levels:[
+        {id:'p67',name:'6-7 кл',topics:[
+          {id:'p-motion',title:'Движение: скорость, путь, время',lesson:'Базовая формула движения: S = v * t.',code:'v = 72 км/ч, t = 2.5 ч\nS = 72 * 2.5 = 180 км',task:{type:'code_input',question:'72 км/ч за 2.5 ч. Путь?',answer:'180',hint:'S=v*t',explanation:'S=180 км'}},
+          {id:'p-density',title:'Масса и плотность',lesson:'Плотность показывает массу в единице объема.',code:'ρ = m / V',task:{type:'multiple_choice',question:'Формула плотности',options:['ρ=mV','ρ=m/V','ρ=V/m','m=ρ/V'],correct:1,hint:'Масса делится на объем.',explanation:'ρ = m / V'}},
+          {id:'p-pressure',title:'Давление и Архимед',lesson:'Давление: p = F/S. Выталкивающая сила зависит от жидкости.',code:'p = F / S',task:{type:'multiple_choice',question:'Почему дерево не тонет?',options:['Из-за цвета','Из-за плотности меньше воды','Потому что легкое','Из-за формы'],correct:1,hint:'Сравни плотность тела и воды.',explanation:'Если плотность меньше воды, тело всплывает.'}}
+        ]},
+        {id:'p89',name:'8-9 кл',topics:[
+          {id:'p-newton',title:'Законы Ньютона',lesson:'Связь силы, массы и ускорения: F = ma.',code:'F = m * a',task:{type:'code_input',question:'m=2 кг, a=3 м/с². Найди F',answer:'6',hint:'Умножь m на a.',explanation:'2*3=6 Н'}},
+          {id:'p-ohm',title:'Электрический ток и закон Ома',lesson:'Ток зависит от напряжения и сопротивления.',code:'I = U / R',task:{type:'multiple_choice',question:'Выбери формулу закона Ома',options:['I=U/R','U=I/R','R=U*I','I=U*R'],correct:0,hint:'Ток равен напряжение/сопротивление.',explanation:'Правильная формула I=U/R'}},
+          {id:'p-optics',title:'Оптика: отражение и преломление',lesson:'Свет отражается и меняет направление в разных средах.',code:'Угол падения = углу отражения',task:{type:'multiple_choice',question:'Линза, собирающая свет',options:['Рассеивающая','Собирающая','Плоская','Нет верного'],correct:1,hint:'Фокусирует лучи.',explanation:'Собирающая линза фокусирует свет.'}}
+        ]},
+        {id:'p1011',name:'10-11 кл',topics:[
+          {id:'p-thermo',title:'Термодинамика',lesson:'Энергия переходит между работой и теплом.',code:'Q = cmΔt',task:{type:'code_input',question:'Q=cmΔt: c=1, m=2, Δt=5. Q=?',answer:'10',hint:'Умножь три значения.',explanation:'Q=10'}},
+          {id:'p-coulomb',title:'Электростатика и закон Кулона',lesson:'Сила между зарядами обратно пропорциональна квадрату расстояния.',code:'F = k q1 q2 / r²',task:{type:'multiple_choice',question:'При увеличении r в 2 раза сила...',options:['увеличится в 2','уменьшится в 2','уменьшится в 4','не изменится'],correct:2,hint:'Смотри r².',explanation:'Сила уменьшается в 4 раза'}},
+          {id:'p-quantum',title:'Квантовая физика',lesson:'Фотоэффект подтверждает квантовую природу света.',code:'E = hν',task:{type:'multiple_choice',question:'Кто объяснил фотоэффект?',options:['Ньютон','Эйнштейн','Максвелл','Бор'],correct:1,hint:'Nobel 1921.',explanation:'Эйнштейн объяснил фотоэффект.'}}
+        ]},
+        {id:'puni',name:'Университет',topics:[
+          {id:'p-maxwell',title:'Электродинамика (Максвелл)',lesson:'Уравнения Максвелла объединяют электричество и магнетизм.',code:'∇·E = ρ/ε₀',task:{type:'multiple_choice',question:'Максвелл описывает...',options:['Только механику','Электромагнитное поле','Только оптику','Только гравитацию'],correct:1,hint:'Электричество + магнетизм.',explanation:'Это теория электромагнитного поля'}},
+          {id:'p-relativity',title:'Специальная теория относительности',lesson:'Вблизи скорости света время и длина меняются.',code:'E = mc²',task:{type:'multiple_choice',question:'Формула Эйнштейна',options:['F=ma','E=mc²','pV=nRT','I=U/R'],correct:1,hint:'Самая известная формула.',explanation:'E=mc²'}},
+          {id:'p-astro',title:'Астрофизика',lesson:'Изучает звезды, галактики и эволюцию Вселенной.',code:'v = H0 * d',task:{type:'multiple_choice',question:'Что изучает астрофизика?',options:['Только атомы','Только жидкости','Космические объекты','Только магниты'],correct:2,hint:'Космос.',explanation:'Астрофизика изучает объекты во Вселенной.'}}
+        ]}
+      ],
+      projects:['🚗 Калькулятор движения','🔌 Симулятор цепей по закону Ома','🌈 Оптический тренажёр','🌡️ Тепловой калькулятор','🛰️ Мини-проект по астрофизике'],
+      roadmap:['Неделя 1-2: Базовые величины и движение','Неделя 3-4: Сила, давление, Архимед','Неделя 5-6: Законы Ньютона и энергия','Неделя 7-8: Электричество и Ом','Неделя 9-10: Оптика и волны','Неделя 11-12: Термодинамика и электростатика','Неделя 13-14: Квантовая и высшая физика','Результат: Junior Physics-ready'],
+      motivation:['⚡ Физика объясняет как работает мир.','🌍 Смартфоны и GPS = физика в действии.','🚀 Будущие инженеры учат физику сегодня.']
+    },
+    eng:{
+      title:'🇬🇧 English A1→B2', subtitle:'Грамматика + 1000 тестов', totalTasks:1000,
+      levels:[
+        {id:'eA1',name:'A1',topics:[
+          {id:'e-be',title:'Verb to be (am/is/are)',lesson:'Используем am/is/are для описания состояния и фактов.',code:'I am a student.\nShe is not tired.\nAre you from Tajikistan?',task:{type:'multiple_choice',question:'She ___ English every day.',options:['speak','speaks','speaking','spoke'],correct:1,hint:'В Present Simple с she добавляем -s.',explanation:'She speaks English every day.'}},
+          {id:'e-present',title:'Present Simple',lesson:'Для регулярных действий и фактов.',code:'I work.\nShe works.\nDo you work?',task:{type:'multiple_choice',question:'He ___ in Dushanbe.',options:['live','lives','living','lived'],correct:1,hint:'he/she/it + s',explanation:'He lives in Dushanbe.'}},
+          {id:'e-articles',title:'Articles a/an/the',lesson:'a/an для общего, the для конкретного.',code:'a book\nan apple\nthe sun',task:{type:'multiple_choice',question:'I have ___ apple.',options:['a','an','the','-'],correct:1,hint:'Перед гласным звуком.',explanation:'an apple'}},
+          {id:'e-there',title:'There is / There are',lesson:'Описывает наличие предметов.',code:'There is a book.\nThere are two students.',task:{type:'multiple_choice',question:'___ three pens on the table.',options:['There is','There are','It is','They is'],correct:1,hint:'three = множественное',explanation:'There are three pens...'}}
+        ]},
+        {id:'eA2',name:'A2',topics:[
+          {id:'e-past',title:'Past Simple',lesson:'Прошедшие действия: did, V2, did not.',code:'I worked yesterday.\nDid you go?',task:{type:'multiple_choice',question:'They ___ football yesterday.',options:['play','played','plays','playing'],correct:1,hint:'Past Simple regular +ed.',explanation:'played'}},
+          {id:'e-cont',title:'Present Continuous',lesson:'Действие происходит сейчас: am/is/are + V-ing.',code:'I am reading now.',task:{type:'multiple_choice',question:'She ___ now.',options:['work','works','is working','worked'],correct:2,hint:'is + V-ing',explanation:'She is working now.'}},
+          {id:'e-comp',title:'Comparatives & Superlatives',lesson:'Сравнение: bigger, more beautiful, the best.',code:'tall → taller → tallest',task:{type:'multiple_choice',question:'This task is ___ than that one.',options:['easy','easier','easiest','more easy'],correct:1,hint:'short adjective + er',explanation:'easier'}},
+          {id:'e-modal',title:'Modal verbs: have to / should',lesson:'have to = обязанность, should = совет.',code:'I have to study.\nYou should rest.',task:{type:'multiple_choice',question:'You ___ drink more water.',options:['have','should','had','are'],correct:1,hint:'Совет.',explanation:'should'}}
+        ]},
+        {id:'eB1',name:'B1',topics:[
+          {id:'e-perfect',title:'Present Perfect',lesson:'Связь прошлого и настоящего: have/has + V3.',code:'I have finished.\nShe has gone.',task:{type:'multiple_choice',question:'I ___ my homework already.',options:['did','have done','am doing','do'],correct:1,hint:'already + Present Perfect',explanation:'have done'}},
+          {id:'e-cond',title:'Conditionals 0/1/2',lesson:'Условные предложения для правил, реального и нереального будущего.',code:'If it rains, I will stay home.',task:{type:'multiple_choice',question:'If I ___ rich, I would travel.',options:['am','was','were','be'],correct:2,hint:'Second conditional',explanation:'If I were rich...'}},
+          {id:'e-passive',title:'Passive Voice',lesson:'Фокус на действии: be + V3.',code:'The letter was sent yesterday.',task:{type:'multiple_choice',question:'The book ___ by Tolstoy.',options:['wrote','is written','is writing','writes'],correct:1,hint:'Passive form.',explanation:'is written'}},
+          {id:'e-phrasal',title:'Phrasal Verbs',lesson:'Важные сочетания: look up, give up, turn on.',code:'Please turn on the light.',task:{type:'multiple_choice',question:'look after means...',options:['искать','заботиться','сдаваться','включать'],correct:1,hint:'after = care',explanation:'look after = заботиться'}}
+        ]},
+        {id:'eTests',name:'Тесты',topics:[
+          {id:'e-test-a1',title:'A1 Tests (250)',lesson:'Тренажёр A1: Verb to be, Present Simple, Articles.',code:'Формат: вопрос + 4 варианта + объяснение',task:{type:'multiple_choice',question:'Are you from Tajikistan?',options:['Yes, I am.','Yes, you are.','Yes, I do.','Yes, from.'],correct:0,hint:'Краткий ответ с to be.',explanation:'Yes, I am.'}},
+          {id:'e-test-a2',title:'A2 Tests (350)',lesson:'Past Simple, Comparatives, vocabulary.',code:'Did you...?\nI went...',task:{type:'multiple_choice',question:'We ___ to school yesterday.',options:['go','went','gone','going'],correct:1,hint:'Past form of go.',explanation:'went'}},
+          {id:'e-test-b1',title:'B1 Tests (400)',lesson:'Perfect tenses, conditionals, passive voice.',code:'have/has + V3',task:{type:'multiple_choice',question:'She has ___ this movie.',options:['see','saw','seen','seeing'],correct:2,hint:'V3 of see.',explanation:'seen'}}
+        ]}
+      ],
+      projects:['🗣️ Speaking diary bot','📝 Grammar quiz app','📚 Vocabulary trainer','🎯 30-day English challenge','🤖 Telegram English Bot'],
+      roadmap:['Week 1-2: A1 core grammar','Week 3-4: A1 speaking patterns','Week 5-6: A2 tenses','Week 7-8: A2 comparisons and modals','Week 9-10: B1 perfect/passive','Week 11-12: B1 conditionals + phrasal verbs','Week 13-14: Mixed tests and speaking routine','Result: Confident A2/B1 communicator'],
+      motivation:['🌍 Английский открывает весь мир.','💼 90% IT вакансий требуют English.','🗣️ Каждое новое слово — новая возможность!','🚀 20 минут в день дают большой рост.']
+    }
+  }
+};
+CORE_SUBJECTS.tg=JSON.parse(JSON.stringify(CORE_SUBJECTS.ru));
+CORE_SUBJECTS.en=JSON.parse(JSON.stringify(CORE_SUBJECTS.ru));
 
 // Telegram init
 const tg=window.Telegram?.WebApp;
@@ -916,7 +1142,19 @@ function setLang(l){
   document.getElementById('stat-lbl3').textContent=tx.stat3;
   document.getElementById('lbl-prog-subjects').textContent=tx.lblProgSub;
   document.getElementById('btn-back-topics').textContent=tx.backTopics;
-  renderSubs(); if(curSub) renderTopics(); updateSteps(); renderProgress();
+  renderSubs();
+  if(curSub){
+    if(isCoreSubject(curSub.id)){
+      document.getElementById('core-subject-wrap').style.display='block';
+      document.getElementById('topics-section').style.display='none';
+      renderCoreHub();
+    }else{
+      document.getElementById('core-subject-wrap').style.display='none';
+      renderTopics();
+    }
+  }
+  updateSteps();
+  renderProgress();
 }
 
 function switchNav(screen){
@@ -924,7 +1162,406 @@ function switchNav(screen){
     document.getElementById('screen-'+s).classList.toggle('active',s===screen);
     document.getElementById('nav-'+s).classList.toggle('on',s===screen);
   });
+  stopCoreTimer();
   if(screen==='progress') renderProgress();
+}
+
+function isCoreSubject(id){
+  return CORE_IDS.includes(id);
+}
+
+function getCoreSubjectData(subId){
+  return CORE_SUBJECTS[lang]?.[subId]||CORE_SUBJECTS.ru[subId];
+}
+
+function getCoreLangUi(){
+  return CORE_UI[lang]||CORE_UI.ru;
+}
+
+function getCoreKey(levelId,topicId){
+  return `${levelId}:${topicId}`;
+}
+
+function ensureCoreProgress(subId){
+  if(!coreProgress[subId]) coreProgress[subId]={doneTopics:[],bookmarks:[]};
+  if(!Array.isArray(coreProgress[subId].doneTopics)) coreProgress[subId].doneTopics=[];
+  if(!Array.isArray(coreProgress[subId].bookmarks)) coreProgress[subId].bookmarks=[];
+}
+
+function saveCoreProgress(){
+  localStorage.setItem('donish_core_progress',JSON.stringify(coreProgress));
+}
+
+function getFlatCoreTopics(data){
+  const out=[];
+  data.levels.forEach(level=>{
+    level.topics.forEach(topic=>out.push({levelId:level.id,levelName:level.name,topic}));
+  });
+  return out;
+}
+
+function getCoreSolvedCount(subId){
+  ensureCoreProgress(subId);
+  return coreProgress[subId].doneTopics.length;
+}
+
+function getCorePct(subId){
+  const data=getCoreSubjectData(subId);
+  const total=getFlatCoreTopics(data).length||1;
+  return Math.round(getCoreSolvedCount(subId)/total*100);
+}
+
+function getTotalSubjectUnits(sub){
+  if(isCoreSubject(sub.id)){
+    return getFlatCoreTopics(getCoreSubjectData(sub.id)).length;
+  }
+  return sub.topics.length;
+}
+
+function pickCoreFirstTopicIfNeeded(data){
+  if(coreState.topicId) return;
+  const level=data.levels.find(l=>l.id===coreState.levelId) || data.levels[0];
+  if(!level) return;
+  const first=level.topics[0];
+  if(first) coreState.topicId=first.id;
+}
+
+function pickSub(s){
+  curSub=s; curTopic=null; curStep=1; done=[];
+  renderSubs();
+  document.getElementById('empty-learn').style.display='none';
+  document.getElementById('lesson-section').style.display='none';
+  if(isCoreSubject(s.id)){
+    coreState.subjectId=s.id;
+    coreState.tab='lessons';
+    coreState.secondsLeft=30;
+    ensureCoreProgress(s.id);
+    const data=getCoreSubjectData(s.id);
+    if(!coreState.levelId || !data.levels.some(l=>l.id===coreState.levelId)){
+      coreState.levelId=data.levels[0].id;
+      coreState.topicId=null;
+    }
+    pickCoreFirstTopicIfNeeded(data);
+    document.getElementById('learn-scroll').style.display='block';
+    document.getElementById('topics-section').style.display='none';
+    document.getElementById('core-subject-wrap').style.display='block';
+    renderCoreHub();
+    return;
+  }
+  coreState.subjectId=null;
+  document.getElementById('core-subject-wrap').style.display='none';
+  renderTopics();
+  document.getElementById('learn-scroll').style.display='block';
+  document.getElementById('topics-section').style.display='block';
+  document.getElementById('learn-scroll').scrollTop=0;
+}
+
+function stopCoreTimer(){
+  if(coreState.timer){
+    clearInterval(coreState.timer);
+    coreState.timer=null;
+  }
+}
+
+function renderCoreHub(){
+  if(!curSub || !isCoreSubject(curSub.id)) return;
+  const data=getCoreSubjectData(curSub.id);
+  const ui=getCoreLangUi();
+  ensureCoreProgress(curSub.id);
+  pickCoreFirstTopicIfNeeded(data);
+  document.getElementById('core-search').placeholder=ui.search;
+  document.getElementById('core-title').textContent=data.title;
+  document.getElementById('core-subtitle').textContent=data.subtitle;
+  document.getElementById('core-streak').textContent=`🔥 ${stats.streak} ${ui.streak}`;
+
+  const solved=getCoreSolvedCount(curSub.id);
+  const total=getFlatCoreTopics(data).length;
+  const pct=Math.round((solved/(total||1))*100);
+  document.getElementById('core-counter').textContent=`${ui.solved} ${solved} ${ui.of} ${data.totalTasks}`;
+  document.getElementById('core-percent').textContent=`${pct}%`;
+  document.getElementById('core-progress-fill').style.width=`${pct}%`;
+
+  const badgeWrap=document.getElementById('core-badges');
+  badgeWrap.innerHTML='';
+  const badgeList=[
+    {need:3,label:'🥉 Starter'},
+    {need:8,label:'🥈 Explorer'},
+    {need:14,label:'🥇 Finisher'},
+  ];
+  badgeList.forEach(b=>{
+    if(solved>=b.need){
+      const d=document.createElement('span');
+      d.className='chip chip-green';
+      d.textContent=b.label;
+      badgeWrap.appendChild(d);
+    }
+  });
+  if(!badgeWrap.children.length){
+    const d=document.createElement('span');
+    d.className='chip chip-orange';
+    d.textContent=ui.start;
+    badgeWrap.appendChild(d);
+  }
+
+  const bookmarks=document.getElementById('core-bookmarks');
+  bookmarks.innerHTML='';
+  coreProgress[curSub.id].bookmarks.slice(-4).forEach(k=>{
+    const [levelId,topicId]=k.split(':');
+    const lv=data.levels.find(l=>l.id===levelId);
+    const tp=lv?.topics.find(t=>t.id===topicId);
+    if(!tp) return;
+    const b=document.createElement('button');
+    b.className='bm-chip';
+    b.textContent=`🔖 ${tp.title}`;
+    b.onclick=()=>{coreState.levelId=levelId;coreState.topicId=topicId;coreState.tab='lessons';renderCoreHub();};
+    bookmarks.appendChild(b);
+  });
+
+  const levelsEl=document.getElementById('core-levels');
+  levelsEl.innerHTML='';
+  data.levels.forEach(level=>{
+    const b=document.createElement('button');
+    b.className='lvl-pill'+(coreState.levelId===level.id?' on':'');
+    b.textContent=level.name;
+    b.onclick=()=>{
+      coreState.levelId=level.id;
+      coreState.topicId=level.topics[0]?.id||null;
+      renderCoreHub();
+    };
+    levelsEl.appendChild(b);
+  });
+
+  const tabsEl=document.getElementById('core-tabs');
+  tabsEl.innerHTML='';
+  ['lessons','tasks','projects','roadmap'].forEach(tab=>{
+    const b=document.createElement('button');
+    b.className='core-tab'+(coreState.tab===tab?' on':'');
+    b.textContent=ui.tabs[tab];
+    b.onclick=()=>{coreState.tab=tab;renderCoreHub();};
+    tabsEl.appendChild(b);
+  });
+
+  const grid=document.getElementById('core-topic-grid');
+  const level=data.levels.find(l=>l.id===coreState.levelId) || data.levels[0];
+  const q=document.getElementById('core-search').value.trim().toLowerCase();
+  grid.innerHTML='';
+  level.topics.forEach((topic,idx)=>{
+    const key=getCoreKey(level.id,topic.id);
+    const prev=idx===0?null:getCoreKey(level.id,level.topics[idx-1].id);
+    const done=coreProgress[curSub.id].doneTopics.includes(key);
+    const unlocked=idx===0 || coreProgress[curSub.id].doneTopics.includes(prev);
+    if(q && !topic.title.toLowerCase().includes(q) && !topic.lesson.toLowerCase().includes(q)) return;
+    const d=document.createElement('button');
+    d.className='core-topic'+(done?' done':'')+(!unlocked?' locked':'');
+    d.innerHTML=`${topic.title}<span class="mark">${done?'✅':(unlocked?'📍':'🔒')}</span>`;
+    d.title=unlocked?'':'Locked';
+    d.onclick=()=>{
+      if(!unlocked){ showToast(ui.locked); return; }
+      coreState.topicId=topic.id;
+      if(coreState.tab==='tasks' && curSub.id==='eng'){ coreState.secondsLeft=30; }
+      renderCoreHub();
+    };
+    grid.appendChild(d);
+  });
+
+  renderCorePanel(data,level);
+}
+
+function getCoreTopic(data,levelId,topicId){
+  const level=data.levels.find(l=>l.id===levelId)||data.levels[0];
+  const topic=level.topics.find(t=>t.id===topicId)||level.topics[0];
+  return {level,topic};
+}
+
+function renderCorePanel(data,level){
+  const ui=getCoreLangUi();
+  const panel=document.getElementById('core-panel');
+  if(coreState.tab==='projects'){
+    stopCoreTimer();
+    panel.innerHTML=`<div class="core-lesson-title">${ui.tabs.projects}</div>${data.projects.map(p=>`<div style="margin-bottom:6px">${p}</div>`).join('')}`;
+    return;
+  }
+  if(coreState.tab==='roadmap'){
+    stopCoreTimer();
+    panel.innerHTML=`<div class="core-lesson-title">${ui.tabs.roadmap}</div>${data.roadmap.map(r=>`<div style="margin-bottom:6px">• ${r}</div>`).join('')}<div style="margin-top:10px">${data.motivation[0]}</div>`;
+    return;
+  }
+  const cur=getCoreTopic(data,level.id,coreState.topicId);
+  coreState.topicId=cur.topic.id;
+  const breadcrumb=`${data.title} → ${cur.level.name} → ${cur.topic.title}`;
+
+  if(coreState.tab==='lessons'){
+    stopCoreTimer();
+    panel.innerHTML=`
+      <div class="core-breadcrumbs">${breadcrumb}</div>
+      <div class="core-lesson-title">${cur.topic.title}</div>
+      <div>${cur.topic.lesson}</div>
+      <div class="core-code" style="margin-top:8px">${cur.topic.code}</div>
+      <div class="core-lesson-actions">
+        <button class="core-btn core-btn-soft" onclick="toggleCoreBookmark()">${ui.bookmark}</button>
+        <button class="core-btn core-btn-primary" onclick="completeCoreTopic()">${ui.doneBtn}</button>
+      </div>
+      <div class="core-nav-row">
+        <button class="core-btn core-btn-soft" onclick="navigateCoreTopic(-1)">${ui.prev}</button>
+        <button class="core-btn core-btn-soft" onclick="navigateCoreTopic(1)">${ui.next}</button>
+      </div>
+    `;
+    return;
+  }
+  renderCoreTask(cur.topic);
+}
+
+function renderCoreTask(topic){
+  const ui=getCoreLangUi();
+  const panel=document.getElementById('core-panel');
+  const t=topic.task;
+  const timeBox=(curSub.id==='eng')?`<div class="task-hint" id="core-timer">${ui.timer}: ${coreState.secondsLeft}s</div>`:'';
+  if(t.type==='multiple_choice'){
+    panel.innerHTML=`
+      <div class="core-breadcrumbs">${topic.title}</div>
+      <div class="core-lesson-title">${t.question}</div>
+      ${timeBox}
+      <div class="task-options">
+        ${t.options.map((o,i)=>`<button class="task-opt" onclick="checkCoreOption(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+      </div>
+      <div class="task-hint" id="core-hint" style="display:none">${t.hint}</div>
+      <button class="core-btn core-btn-soft" style="margin-top:8px" onclick="document.getElementById('core-hint').style.display='block'">${ui.hintBtn}</button>
+      <div class="task-hint" id="core-result"></div>
+    `;
+  } else {
+    panel.innerHTML=`
+      <div class="core-breadcrumbs">${topic.title}</div>
+      <div class="core-lesson-title">${t.question}</div>
+      ${timeBox}
+      <input id="core-answer" class="task-input" placeholder="Ответ...">
+      <div class="task-hint" id="core-hint" style="display:none">${t.hint}</div>
+      <div class="core-lesson-actions">
+        <button class="core-btn core-btn-primary" onclick="checkCoreInput()">${ui.checkBtn}</button>
+        <button class="core-btn core-btn-soft" onclick="document.getElementById('core-hint').style.display='block'">${ui.hintBtn}</button>
+      </div>
+      <div class="task-hint" id="core-result"></div>
+    `;
+  }
+  if(curSub.id==='eng') startCoreTimer();
+}
+
+function startCoreTimer(){
+  stopCoreTimer();
+  const timerEl=document.getElementById('core-timer');
+  if(!timerEl) return;
+  coreState.timer=setInterval(()=>{
+    coreState.secondsLeft=Math.max(0,coreState.secondsLeft-1);
+    const ui=getCoreLangUi();
+    const el=document.getElementById('core-timer');
+    if(el) el.textContent=`${ui.timer}: ${coreState.secondsLeft}s`;
+    if(coreState.secondsLeft===0){
+      stopCoreTimer();
+      const res=document.getElementById('core-result');
+      if(res) res.textContent=ui.timedOut;
+    }
+  },1000);
+}
+
+function getCurrentCoreTopic(){
+  const data=getCoreSubjectData(curSub.id);
+  const level=data.levels.find(l=>l.id===coreState.levelId)||data.levels[0];
+  return level.topics.find(t=>t.id===coreState.topicId)||level.topics[0];
+}
+
+function checkCoreOption(index){
+  const topic=getCurrentCoreTopic();
+  const task=topic.task;
+  const res=document.getElementById('core-result');
+  const opts=[...document.querySelectorAll('.task-opt')];
+  opts.forEach((o,i)=>{
+    if(i===task.correct) o.classList.add('ok');
+    else if(i===index) o.classList.add('bad');
+  });
+  const ok=index===task.correct;
+  if(res){
+    res.textContent=(ok?'✅ ':'❌ ')+task.explanation;
+  }
+  if(ok) completeCoreTopic();
+}
+
+function checkCoreInput(){
+  const topic=getCurrentCoreTopic();
+  const task=topic.task;
+  const val=(document.getElementById('core-answer')?.value||'').trim().toLowerCase();
+  const right=String(task.answer).toLowerCase();
+  const ok=val===right || val.includes(right);
+  const res=document.getElementById('core-result');
+  if(res){
+    res.textContent=(ok?'✅ ':'❌ ')+task.explanation;
+  }
+  if(ok) completeCoreTopic();
+}
+
+function completeCoreTopic(){
+  if(!curSub || !isCoreSubject(curSub.id)) return;
+  ensureCoreProgress(curSub.id);
+  const key=getCoreKey(coreState.levelId,coreState.topicId);
+  if(!coreProgress[curSub.id].doneTopics.includes(key)){
+    coreProgress[curSub.id].doneTopics.push(key);
+    stats.topics++;
+    saveStats();
+    saveCoreProgress();
+    showToast(TX[lang].toastDone);
+    renderSubs();
+    renderCoreHub();
+    playUnlockAnimation();
+  }
+}
+
+function playUnlockAnimation(){
+  for(let i=0;i<10;i++){
+    const dot=document.createElement('span');
+    dot.textContent='✨';
+    dot.style.position='fixed';
+    dot.style.left=`${Math.random()*100}%`;
+    dot.style.top='64%';
+    dot.style.zIndex='999';
+    dot.style.pointerEvents='none';
+    dot.style.transition='transform .65s ease, opacity .65s ease';
+    document.body.appendChild(dot);
+    requestAnimationFrame(()=>{
+      dot.style.transform=`translateY(${-40-Math.random()*60}px)`;
+      dot.style.opacity='0';
+    });
+    setTimeout(()=>dot.remove(),700);
+  }
+}
+
+function navigateCoreTopic(step){
+  const data=getCoreSubjectData(curSub.id);
+  const level=data.levels.find(l=>l.id===coreState.levelId)||data.levels[0];
+  const idx=level.topics.findIndex(t=>t.id===coreState.topicId);
+  if(idx<0) return;
+  const next=level.topics[idx+step];
+  if(!next) return;
+  const prevKey=getCoreKey(level.id,level.topics[Math.max(0,idx+step-1)].id);
+  const unlocked=(idx+step===0)||coreProgress[curSub.id].doneTopics.includes(prevKey);
+  if(!unlocked && step>0){
+    showToast(getCoreLangUi().locked);
+    return;
+  }
+  coreState.topicId=next.id;
+  coreState.secondsLeft=30;
+  renderCoreHub();
+}
+
+function toggleCoreBookmark(){
+  if(!curSub || !isCoreSubject(curSub.id)) return;
+  ensureCoreProgress(curSub.id);
+  const key=getCoreKey(coreState.levelId,coreState.topicId);
+  const arr=coreProgress[curSub.id].bookmarks;
+  if(arr.includes(key)){
+    coreProgress[curSub.id].bookmarks=arr.filter(x=>x!==key);
+  }else{
+    arr.push(key);
+  }
+  saveCoreProgress();
+  renderCoreHub();
 }
 
 function quickPick(subId){
@@ -932,7 +1569,8 @@ function quickPick(subId){
   if(!s) return;
   switchNav('learn');
   pickSub(s);
-  setTimeout(()=>document.getElementById('topics-section').scrollIntoView({behavior:'smooth',block:'start'}),80);
+  const target=isCoreSubject(subId)?'core-subject-wrap':'topics-section';
+  setTimeout(()=>document.getElementById(target).scrollIntoView({behavior:'smooth',block:'start'}),80);
 }
 
 function renderSubs(){
@@ -942,7 +1580,7 @@ function renderSubs(){
     const d=document.createElement('div');
     d.className='scard'+(curSub&&curSub.id===s.id?' on':'');
     const pct=getSubjectPct(s.id);
-    const doneCount=(progress[s.id]||[]).length;
+    const doneCount=isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length;
     d.innerHTML=`
       <span class="sico">${s.ico}</span>
       <div class="sname">${s.name}</div>
@@ -955,16 +1593,6 @@ function renderSubs(){
     d.onclick=()=>pickSub(s);
     g.appendChild(d);
   });
-}
-
-function pickSub(s){
-  curSub=s; curTopic=null; curStep=1; done=[];
-  renderSubs(); renderTopics();
-  document.getElementById('learn-scroll').style.display='block';
-  document.getElementById('topics-section').style.display='block';
-  document.getElementById('lesson-section').style.display='none';
-  document.getElementById('empty-learn').style.display='none';
-  document.getElementById('learn-scroll').scrollTop=0;
 }
 
 function renderTopics(){
@@ -1295,8 +1923,9 @@ function saveStats(){
 function getSubjectPct(subId){
   const subs=SUBJECTS[lang].find(s=>s.id===subId);
   if(!subs) return 0;
+  if(isCoreSubject(subId)) return getCorePct(subId);
   const d=progress[subId]||[];
-  return Math.round(d.length/subs.topics.length*100);
+  return Math.round(d.length/(subs.topics.length||1)*100);
 }
 
 function renderProgress(){
@@ -1307,7 +1936,8 @@ function renderProgress(){
   list.innerHTML='';
   SUBJECTS[lang].forEach(s=>{
     const pct=getSubjectPct(s.id);
-    const doneCount=(progress[s.id]||[]).length;
+    const doneCount=isCoreSubject(s.id)?getCoreSolvedCount(s.id):(progress[s.id]||[]).length;
+    const totalCount=getTotalSubjectUnits(s);
     const d=document.createElement('div');
     d.className='prog-subject';
     d.innerHTML=`
@@ -1315,7 +1945,7 @@ function renderProgress(){
         <span class="prog-ico">${s.ico}</span>
         <div class="prog-info">
           <div class="prog-name">${s.name}</div>
-          <div class="prog-meta">${doneCount}/${s.topics.length} ${lang==='ru'?'тем':(lang==='en'?'topics':'мавзӯъ')}</div>
+          <div class="prog-meta">${doneCount}/${totalCount} ${lang==='ru'?'тем':(lang==='en'?'topics':'мавзӯъ')}</div>
         </div>
         <span class="prog-pct-badge">${pct}%</span>
       </div>
